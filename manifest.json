@@ -1,0 +1,19 @@
+{
+  "name": "Companheiro Robô",
+  "short_name": "Robô",
+  "description": "Painel Bluetooth para controle do Robô Assistente ESP32",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0f19",
+  "theme_color": "#0b0f19",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='110' fill='%230b0f19'/%3E%3Crect x='56' y='116' width='400' height='280' rx='60' fill='%23161f30' stroke='%2300e5ff' stroke-width='20'/%3E%3Crect x='125' y='200' width='90' height='110' rx='30' fill='%2300e5ff'/%3E%3Crect x='297' y='200' width='90' height='110' rx='30' fill='%2300e5ff'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
