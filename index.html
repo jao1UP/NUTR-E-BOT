@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0b0f19">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Companheiro Robô</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #161f30;
+      --accent: #00e5ff;
+      --accent-glow: rgba(0, 229, 255, 0.25);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --success: #10b981;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 16px;
+      max-width: 480px;
+      margin: 0 auto;
+      padding-bottom: 50px;
+    }
+    .ble-bar {
+      width: 100%;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid var(--accent);
+      background: linear-gradient(135deg, #00e5ff, #0284c7);
+      color: #05101a;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 6px 20px var(--accent-glow);
+      transition: all 0.2s;
+    }
+    .ble-bar.connected {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: var(--success);
+      color: #34d399;
+      box-shadow: none;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 18px;
+      padding: 20px 16px;
+      background: linear-gradient(145deg, #161f30, #0f1624);
+      border-radius: 22px;
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.45);
+    }
+    .title { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 6px; font-weight: 700; }
+    .clock { font-size: 44px; font-weight: 800; letter-spacing: 1px; color: #fff; text-shadow: 0 0 15px var(--accent-glow); }
+    .mood-box {
+      margin-top: 12px;
+      display: inline-block;
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+    .card {
+      background-color: var(--card);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(255,255,255,0.05);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: var(--text);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .badge {
+      font-size: 12px;
+      background: rgba(0, 229, 255, 0.15);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+      user-select: none;
+      margin-bottom: 10px;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-cyan { background: linear-gradient(135deg, #00e5ff, #0099cc); color: #05101a; box-shadow: 0 4px 14px var(--accent-glow); }
+    .btn-green { background: linear-gradient(135deg, #10b981, #059669); }
+    .btn-red { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .btn-purple { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+    .btn-test { background: #26354d; color: #cbd5e1; font-size: 13px; padding: 10px; }
+
+    .alarm-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0,0,0,0.25);
+      padding: 12px 14px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+    .alarm-label { font-size: 14px; font-weight: 600; color: var(--muted); }
+    input[type="time"], input[type="text"] {
+      background: #0b0f19;
+      color: var(--accent);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      outline: none;
+    }
+    input[type="text"] { width: 100%; margin-bottom: 10px; color: #fff; }
+    .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px; }
+    .btn-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 6px; }
+    .btn-row .btn, .btn-row-3 .btn { margin-bottom: 0; }
+
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #10b981;
+      color: #05101a;
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 14px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+      transition: transform 0.25s ease;
+      z-index: 999;
+      white-space: nowrap;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+  <button id="bleBtn" class="ble-bar" onclick="connectBLE()">
+    🔗 Conectar Bluetooth ao Robô
+  </button>
+
+  <header>
+    <div class="title">Relógio e Humor do Robô</div>
+    <div class="clock" id="clock">--:--</div>
+    <div class="mood-box" id="mood">Desconectado (Toque acima)</div>
+  </header>
+
+  <div class="card">
+    <div class="card-title">💖 Cuidar do Robô (Acende LED Verde)</div>
+    <div class="btn-row">
+      <button class="btn btn-green" onclick="sendCmd('FOOD', 'Alimentação confirmada! 🟢')">🍽️ Já me Alimentei</button>
+      <button class="btn btn-cyan" onclick="sendCmd('WATER', 'Hidratação confirmada! 🟢')">💧 Bebi Água</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span>🎯 Modo Pomodoro</span>
+      <span class="badge" id="pomoStatus">Inativo</span>
+    </div>
+    <div class="btn-row-3">
+      <button class="btn btn-cyan" onclick="sendCmd('POMO_FOCUS', 'Foco 25m iniciado! 🎯')">▶️ Foco 25m</button>
+      <button class="btn btn-green" onclick="sendCmd('POMO_BREAK', 'Pausa 5m iniciada! ☕')">☕ Pausa 5m</button>
+      <button class="btn btn-red" onclick="sendCmd('POMO_STOP', 'Pomodoro parado.')">⏹️ Parar</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📌 Mural de Recados na Tela OLED</div>
+    <input type="text" id="noteInput" maxlength="28" placeholder="Ex: Em aula / Volto logo...">
+    <div class="btn-row-3">
+      <button class="btn btn-cyan" onclick="sendNote(false)">👀 Alternar</button>
+      <button class="btn btn-purple" onclick="sendNote(true)">📌 Fixar Tela</button>
+      <button class="btn btn-red" onclick="clearNote()">🗑️ Limpar</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span>🌙 Modo Não Perturbe</span>
+      <span class="badge" id="dndBadge">DESATIVADO</span>
+    </div>
+    <button class="btn btn-purple" onclick="sendCmd('DND', 'Modo Não Perturbe alternado! 🌙')">🔇 Alternar Silencioso + Brilho Baixo</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⏰ Horários de Lembrete</div>
+    <div class="alarm-row">
+      <span class="alarm-label">🍽️ Hora de Comer</span>
+      <input type="time" id="food" value="12:00">
+    </div>
+    <div class="alarm-row">
+      <span class="alarm-label">💧 Beber Água</span>
+      <input type="time" id="water" value="14:00">
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-green" onclick="saveAlarms()">💾 Salvar</button>
+      <button class="btn btn-red" onclick="sendCmd('STOP', 'Alarme confirmado! 🟢')">✅ Confirmar / Parar</button>
+    </div>
+    <div class="btn-row" style="margin-top: 10px;">
+      <button class="btn btn-test" onclick="sendCmd('TEST_FOOD', 'Testando COMER!')">🔔 Testar "COMER!"</button>
+      <button class="btn btn-test" onclick="sendCmd('TEST_WATER', 'Testando AGUA!')">🔔 Testar "AGUA!"</button>
+    </div>
+  </div>
+
+  <div id="toast">Comando enviado!</div>
+
+  <script>
+    const SERVICE_UUID = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
+    const CHAR_UUID    = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
+
+    let bleDevice = null;
+    let bleChar = null;
+    let alarmsLoaded = false;
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2200);
+    }
+
+    async function connectBLE() {
+      try {
+        bleDevice = await navigator.bluetooth.requestDevice({
+          filters: [{ name: 'Robo-Assistente' }],
+          optionalServices: [SERVICE_UUID]
+        });
+
+        bleDevice.addEventListener('gattserverdisconnected', onDisconnected);
+        const server = await bleDevice.gatt.connect();
+        const service = await server.getPrimaryService(SERVICE_UUID);
+        bleChar = await service.getCharacteristic(CHAR_UUID);
+
+        await bleChar.startNotifications();
+        bleChar.addEventListener('characteristicvaluechanged', handleNotification);
+
+        const btn = document.getElementById('bleBtn');
+        btn.classList.add('connected');
+        btn.innerText = "🟢 Conectado ao Robo-Assistente (Hora Sincronizada)";
+
+        // Sincroniza automaticamente a hora do telemóvel com o robô!
+        const now = new Date();
+        const hh = String(now.getHours()).padStart(2, '0');
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        const ss = String(now.getSeconds()).padStart(2, '0');
+        await writeBle("TIME:" + hh + ":" + mm + ":" + ss);
+
+        showToast("Robô conectado via Bluetooth! 🤖");
+      } catch (err) {
+        showToast("Erro ao conectar: ative o Bluetooth");
+        console.error(err);
+      }
+    }
+
+    function onDisconnected() {
+      const btn = document.getElementById('bleBtn');
+      btn.classList.remove('connected');
+      btn.innerText = "🔗 Conectar Bluetooth ao Robô";
+      document.getElementById('mood').innerText = "Bluetooth Desconectado";
+      showToast("Robô desconectado");
+    }
+
+    function handleNotification(event) {
+      const str = new TextDecoder().decode(event.target.value);
+      try {
+        const data = JSON.parse(str);
+        document.getElementById('clock').innerText = data.time;
+        document.getElementById('mood').innerText = data.mood;
+        document.getElementById('pomoStatus').innerText = data.pomo;
+        document.getElementById('dndBadge').innerText = data.dnd ? 'ATIVADO' : 'DESATIVADO';
+        if (!alarmsLoaded && data.food && data.water) {
+          document.getElementById('food').value = data.food;
+          document.getElementById('water').value = data.water;
+          alarmsLoaded = true;
+        }
+      } catch (e) {}
+    }
+
+    async function writeBle(text) {
+      if (!bleChar) {
+        showToast("Conecte o Bluetooth primeiro!");
+        return false;
+      }
+      const encoder = new TextEncoder();
+      await bleChar.writeValue(encoder.encode(text));
+      return true;
+    }
+
+    async function sendCmd(cmd, toastMsg) {
+      if (await writeBle(cmd)) showToast(toastMsg);
+    }
+
+    async function sendNote(fixed) {
+      const txt = document.getElementById('noteInput').value.trim();
+      if (!txt) return;
+      const prefix = fixed ? "FIXED:" : "NOTE:";
+      if (await writeBle(prefix + txt)) {
+        showToast(fixed ? 'Recado fixado na tela OLED! 📌' : 'Recado alternando com os olhos! 👀');
+      }
+    }
+
+    async function clearNote() {
+      document.getElementById('noteInput').value = '';
+      if (await writeBle("CLEAR_NOTE")) showToast('Recado removido da tela.');
+    }
+
+    async function saveAlarms() {
+      const f = document.getElementById('food').value;
+      const w = document.getElementById('water').value;
+      if (await writeBle("ALARMS:" + f + "," + w)) showToast('Horários salvos no Robô! 💾');
+    }
+  </script>
+</body>
+</html>
