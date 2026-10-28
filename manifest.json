@@ -1,7 +1,7 @@
 {
-  "name": "Companheiro Robô",
-  "short_name": "Robô",
-  "description": "Painel Bluetooth para controle do Robô Assistente ESP32",
+  "name": "NUTR-E",
+  "short_name": "NUTR-E",
+  "description": "Painel Bluetooth de controle do assistente NUTR-E",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
