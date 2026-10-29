@@ -7,18 +7,19 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="NUTR-E">
-  <title>NUTR-E OS</title>
+  <title>NUTR-E</title>
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon.png">
   <style>
     :root {
       --bg: #070b14;
-      --card: rgba(18, 26, 43, 0.88);
+      --card: rgba(18, 26, 43, 0.9);
       --accent: #00e5ff;
       --accent-glow: rgba(0, 229, 255, 0.35);
       --text: #f1f5f9;
       --muted: #94a3b8;
       --success: #10b981;
+      --warning: #f59e0b;
       --danger: #ef4444;
       --purple: #8b5cf6;
     }
@@ -27,7 +28,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: var(--bg);
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.12), transparent 60%),
+        radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.14), transparent 60%),
         linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
       background-size: 100% 100%, 24px 24px, 24px 24px;
@@ -36,9 +37,127 @@
       max-width: 480px;
       margin: 0 auto;
       padding-bottom: 60px;
+      min-height: 100vh;
     }
 
-    /* Cabeçalho Cyber NUTR-E */
+    .hidden { display: none !important; }
+
+    /* =====================================================
+       TELA DE BOAS-VINDAS E TUTORIAL (PRIMEIRA VEZ)
+       ===================================================== */
+    .welcome-hero {
+      text-align: center;
+      padding: 24px 16px 20px;
+      margin-bottom: 16px;
+    }
+    .hero-icon {
+      width: 115px;
+      height: 115px;
+      border-radius: 26px;
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 30px var(--accent-glow);
+      margin-bottom: 14px;
+      object-fit: cover;
+    }
+    .hero-title {
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      color: #fff;
+      text-shadow: 0 0 15px var(--accent);
+      margin-bottom: 8px;
+    }
+    .hero-title span { color: var(--accent); }
+    .hero-subtitle {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--muted);
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    /* Aviso de Obrigatoriedade do Google Chrome */
+    .chrome-alert {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .chrome-alert.ok {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.45);
+    }
+    .chrome-alert-icon { font-size: 26px; flex-shrink: 0; }
+    .chrome-alert-text { font-size: 13px; line-height: 1.4; color: #e2e8f0; }
+    .chrome-alert-text strong { color: #fbbf24; display: block; margin-bottom: 2px; font-size: 14px; }
+    .chrome-alert.ok .chrome-alert-text strong { color: #34d399; }
+
+    /* Passos do Tutorial */
+    .step-card {
+      background: var(--card);
+      border: 1px solid rgba(0, 229, 255, 0.18);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+      position: relative;
+    }
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #041019;
+      font-weight: 900;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+    .step-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .step-desc {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+    .step-desc code {
+      background: rgba(0, 229, 255, 0.15);
+      color: var(--accent);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+    .chrome-steps-box {
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 13px;
+      color: #e2e8f0;
+      border-left: 3px solid var(--accent);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    /* =====================================================
+       ESTILOS DO PAINEL PRINCIPAL DO NUTR-E
+       ===================================================== */
     .brand-bar {
       display: flex;
       justify-content: space-between;
@@ -47,25 +166,32 @@
       padding: 6px 4px;
     }
     .brand-logo {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 900;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       color: #fff;
       text-shadow: 0 0 12px var(--accent);
       display: flex;
       align-items: center;
       gap: 8px;
     }
+    .brand-logo img {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      border: 1px solid var(--accent);
+    }
     .brand-logo span { color: var(--accent); }
+    .top-actions { display: flex; gap: 6px; align-items: center; }
     .sys-tag {
       font-size: 11px;
       font-weight: 700;
       color: var(--accent);
       background: rgba(0, 229, 255, 0.1);
       border: 1px solid rgba(0, 229, 255, 0.3);
-      padding: 4px 10px;
+      padding: 5px 10px;
       border-radius: 20px;
-      letter-spacing: 1px;
+      cursor: pointer;
     }
 
     .ble-bar {
@@ -95,7 +221,6 @@
       box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
     }
 
-    /* Moldura Física do Display OLED SSD1306 */
     .oled-pcb {
       background: #0d131f;
       border: 2px solid #1e293b;
@@ -154,7 +279,6 @@
       font-weight: 800;
       color: #fff;
       text-shadow: 0 0 10px var(--accent-glow);
-      font-variant-numeric: tabular-nums;
     }
     .mood-pill {
       background: rgba(0, 229, 255, 0.12);
@@ -166,7 +290,6 @@
       color: #e2e8f0;
     }
 
-    /* Cartões do Painel */
     .card {
       background: var(--card);
       backdrop-filter: blur(10px);
@@ -196,7 +319,6 @@
       border: 1px solid rgba(0, 229, 255, 0.3);
     }
 
-    /* Estúdio de Desenho Pixel Art */
     .draw-wrapper {
       background: #020408;
       border: 2px solid var(--accent);
@@ -206,13 +328,11 @@
       margin-bottom: 12px;
       overflow: hidden;
       touch-action: none;
-      box-shadow: inset 0 0 15px rgba(0, 229, 255, 0.15);
     }
     #drawCanvas {
       width: 100%;
       height: 100%;
       display: block;
-      cursor: crosshair;
       image-rendering: pixelated;
     }
     .stamp-bar {
@@ -240,7 +360,6 @@
       border-color: var(--accent);
     }
 
-    /* Botões e Controles */
     .btn {
       display: flex;
       align-items: center;
@@ -310,117 +429,200 @@
 </head>
 <body>
 
-  <!-- TOPO DE IDENTIDADE DO NUTR-E -->
-  <div class="brand-bar">
-    <div class="brand-logo">🤖 NUTR<span>-E</span></div>
-    <div class="sys-tag" id="bleTag">OFFLINE</div>
-  </div>
-
-  <button id="bleBtn" class="ble-bar" onclick="connectBLE()">
-    🔗 Conectar Bluetooth ao NUTR-E
-  </button>
-
-  <!-- MINI MONITOR OLED EM TEMPO REAL -->
-  <div class="oled-pcb">
-    <div class="pcb-hole tl"></div>
-    <div class="pcb-hole tr"></div>
-    <div class="pcb-hole bl"></div>
-    <div class="pcb-hole br"></div>
-    <div class="pcb-pins">GND &nbsp; VCC &nbsp; SCL &nbsp; SDA</div>
-    
-    <div class="oled-glass">
-      <canvas id="oledPreview" width="128" height="64"></canvas>
+  <!-- =========================================================
+       1. TELA DE PRIMEIRA VEZ (BOAS-VINDAS + TUTORIAL CHROME)
+       ========================================================= -->
+  <div id="onboardingView">
+    <div class="welcome-hero">
+      <img src="icon.png" alt="NUTR-E" class="hero-icon">
+      <div class="hero-title">NUTR<span>-E</span></div>
+      <p class="hero-subtitle">
+        Bem-vindo! O seu companheiro robótico de escrivaninha está pronto. Siga o rápido tutorial abaixo para instalar o aplicativo e conectar ao seu <strong>NUTR-E</strong>.
+      </p>
     </div>
 
-    <div class="oled-status-bar">
-      <div class="clock-mini" id="clock">--:--</div>
-      <div class="mood-pill" id="mood">Simulador OLED Ativo 👀</div>
+    <!-- Detector e Aviso Obrigatório do Google Chrome -->
+    <div id="chromeBanner" class="chrome-alert">
+      <div class="chrome-alert-icon">🌐</div>
+      <div class="chrome-alert-text">
+        <strong id="chromeBannerTitle">⚠️ Obrigatório usar o Google Chrome!</strong>
+        <span id="chromeBannerDesc">Para que a comunicação Bluetooth direta com o NUTR-E e a instalação do aplicativo funcionem, abra este link utilizando o navegador <b>Google Chrome</b>.</span>
+      </div>
     </div>
-  </div>
 
-  <!-- 1. ESTÚDIO DE DESENHO PIXEL ART PARA O OLED -->
-  <div class="card">
-    <div class="card-title">
-      <span>🎨 Desenhar na Tela do NUTR-E</span>
-      <span class="badge">OLED 32x16</span>
+    <!-- PASSO 1: Instalar o Aplicativo pelo Chrome -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num">1</div>
+        <div class="step-title">Instalar o Aplicativo pelo Chrome</div>
+      </div>
+      <p class="step-desc">
+        Você pode transformar esta página em um aplicativo nativo na tela inicial do seu celular usando o <strong>Google Chrome</strong>:
+      </p>
+      <div class="chrome-steps-box">
+        1️⃣ Verifique se você está no navegador <strong>Google Chrome</strong>.<br>
+        2️⃣ Toque no menu de <strong>3 pontinhos (⋮)</strong> no canto superior direito do Chrome.<br>
+        3️⃣ Selecione <strong>"Instalar aplicativo"</strong> (ou <em>"Adicionar à tela inicial"</em>) e confirme!
+      </div>
+      <button id="installPwaBtn" class="btn btn-purple hidden" onclick="installPWA()">
+        📲 Instalar Aplicativo NUTR-E Agora
+      </button>
     </div>
-    <div class="draw-wrapper">
-      <canvas id="drawCanvas" width="32" height="16"></canvas>
-    </div>
-    <div class="stamp-bar">
-      <button class="stamp-btn active" id="toolPen" onclick="setDrawTool(1)">✏️ Lápis</button>
-      <button class="stamp-btn" id="toolEraser" onclick="setDrawTool(0)">🧽 Borracha</button>
-      <button class="stamp-btn" onclick="loadStamp('heart')">❤️ Coração</button>
-      <button class="stamp-btn" onclick="loadStamp('happy')">😊 Feliz</button>
-      <button class="stamp-btn" onclick="loadStamp('coffee')">☕ Café</button>
-    </div>
-    <div class="btn-row-3">
-      <button class="btn btn-cyan" onclick="sendDrawingToNutre()">📡 Enviar</button>
-      <button class="btn btn-purple" onclick="invertDrawing()">🌗 Inverter</button>
-      <button class="btn btn-red" onclick="clearDrawing()">🗑️ Limpar</button>
-    </div>
-  </div>
 
-  <!-- 2. HÁBITOS E CUIDADO -->
-  <div class="card">
-    <div class="card-title">💖 Cuidar do NUTR-E (LED Verde D18)</div>
-    <div class="btn-row">
-      <button class="btn btn-green" onclick="triggerPreviewMood('happy'); sendCmd('FOOD', 'Alimentação confirmada no NUTR-E! 🟢')">🍽️ Já me Alimentei</button>
-      <button class="btn btn-cyan" onclick="triggerPreviewMood('happy'); sendCmd('WATER', 'Hidratação confirmada no NUTR-E! 🟢')">💧 Bebi Água</button>
+    <!-- PASSO 2: Ativar Bluetooth e Localização -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num">2</div>
+        <div class="step-title">Ativar Bluetooth e Localização</div>
+      </div>
+      <p class="step-desc">
+        Ligue o <strong>Bluetooth</strong> e a <strong>Localização (GPS)</strong> na barra superior do seu celular (o Android exige o GPS ativo para o Chrome encontrar dispositivos Bluetooth próximos). Não é necessário parear nas configurações do celular!
+      </p>
     </div>
-  </div>
 
-  <!-- 3. MODO POMODORO -->
-  <div class="card">
-    <div class="card-title">
-      <span>🎯 Modo Pomodoro</span>
-      <span class="badge" id="pomoStatus">Inativo</span>
-    </div>
-    <div class="btn-row-3">
-      <button class="btn btn-cyan" onclick="triggerPreviewMood('focused'); sendCmd('POMO_FOCUS', 'Foco 25m iniciado! 🎯')">▶️ Foco 25m</button>
-      <button class="btn btn-green" onclick="triggerPreviewMood('happy'); sendCmd('POMO_BREAK', 'Pausa 5m iniciada! ☕')">☕ Pausa 5m</button>
-      <button class="btn btn-red" onclick="triggerPreviewMood('neutral'); sendCmd('POMO_STOP', 'Pomodoro parado.')">⏹️ Parar</button>
+    <!-- PASSO 3: Conectar ao NUTR-E -->
+    <div class="step-card">
+      <div class="step-header">
+        <div class="step-num">3</div>
+        <div class="step-title">Conectar ao seu NUTR-E</div>
+      </div>
+      <p class="step-desc">
+        Toque no botão abaixo. Quando a janela do Chrome abrir, selecione o dispositivo <code>NUTRE</code> na lista e toque em <strong>Parear</strong>. O relógio do seu robô será sincronizado automaticamente!
+      </p>
+      <button class="btn btn-cyan" onclick="connectFromTutorial()">
+        🔗 Conectar ao NUTR-E e Abrir Painel
+      </button>
+      <button class="btn btn-test" style="margin-top: 8px; margin-bottom: 0;" onclick="finishTutorial()">
+        👉 Já conheço o painel (Entrar sem conectar agora)
+      </button>
     </div>
   </div>
 
-  <!-- 4. MURAL DE RECADOS -->
-  <div class="card">
-    <div class="card-title">📌 Mural de Recados do NUTR-E</div>
-    <input type="text" id="noteInput" maxlength="28" placeholder="Ex: Em aula / Volto logo...">
-    <div class="btn-row-3">
-      <button class="btn btn-cyan" onclick="sendNote(false)">👀 Alternar</button>
-      <button class="btn btn-purple" onclick="sendNote(true)">📌 Fixar Tela</button>
-      <button class="btn btn-red" onclick="clearNote()">🗑️ Limpar</button>
+  <!-- =========================================================
+       2. PAINEL DE CONTROLE PRINCIPAL DO NUTR-E
+       ========================================================= -->
+  <div id="dashboardView" class="hidden">
+    <div class="brand-bar">
+      <div class="brand-logo">
+        <img src="icon.png" alt="NUTR-E">
+        <div>NUTR<span>-E</span></div>
+      </div>
+      <div class="top-actions">
+        <button class="sys-tag" onclick="openTutorial()">❔ Tutorial</button>
+        <div class="sys-tag" id="bleTag">OFFLINE</div>
+      </div>
     </div>
-  </div>
 
-  <!-- 5. MODO NÃO PERTURBE -->
-  <div class="card">
-    <div class="card-title">
-      <span>🌙 Modo Não Perturbe</span>
-      <span class="badge" id="dndBadge">DESATIVADO</span>
-    </div>
-    <button class="btn btn-purple" onclick="triggerPreviewMood('sleepy'); sendCmd('DND', 'Modo Não Perturbe alternado! 🌙')">🔇 Alternar Silencioso + Brilho Baixo</button>
-  </div>
+    <button id="bleBtn" class="ble-bar" onclick="connectBLE()">
+      🔗 Conectar Bluetooth ao NUTR-E
+    </button>
 
-  <!-- 6. HORÁRIOS DE ALARME -->
-  <div class="card">
-    <div class="card-title">⏰ Horários de Lembrete</div>
-    <div class="alarm-row">
-      <span class="alarm-label">🍽️ Hora de Comer</span>
-      <input type="time" id="food" value="12:00">
+    <!-- MINI MONITOR OLED EM TEMPO REAL -->
+    <div class="oled-pcb">
+      <div class="pcb-hole tl"></div>
+      <div class="pcb-hole tr"></div>
+      <div class="pcb-hole bl"></div>
+      <div class="pcb-hole br"></div>
+      <div class="pcb-pins">GND &nbsp; VCC &nbsp; SCL &nbsp; SDA</div>
+      
+      <div class="oled-glass">
+        <canvas id="oledPreview" width="128" height="64"></canvas>
+      </div>
+
+      <div class="oled-status-bar">
+        <div class="clock-mini" id="clock">--:--</div>
+        <div class="mood-pill" id="mood">Simulador OLED Ativo 👀</div>
+      </div>
     </div>
-    <div class="alarm-row">
-      <span class="alarm-label">💧 Beber Água</span>
-      <input type="time" id="water" value="14:00">
+
+    <!-- 1. ESTÚDIO DE DESENHO PIXEL ART -->
+    <div class="card">
+      <div class="card-title">
+        <span>🎨 Desenhar na Tela do NUTR-E</span>
+        <span class="badge">OLED 32x16</span>
+      </div>
+      <div class="draw-wrapper">
+        <canvas id="drawCanvas" width="32" height="16"></canvas>
+      </div>
+      <div class="stamp-bar">
+        <button class="stamp-btn active" id="toolPen" onclick="setDrawTool(1)">✏️ Lápis</button>
+        <button class="stamp-btn" id="toolEraser" onclick="setDrawTool(0)">🧽 Borracha</button>
+        <button class="stamp-btn" onclick="loadStamp('heart')">❤️ Coração</button>
+        <button class="stamp-btn" onclick="loadStamp('happy')">😊 Feliz</button>
+        <button class="stamp-btn" onclick="loadStamp('coffee')">☕ Café</button>
+      </div>
+      <div class="btn-row-3">
+        <button class="btn btn-cyan" onclick="sendDrawingToNutre()">📡 Enviar</button>
+        <button class="btn btn-purple" onclick="invertDrawing()">🌗 Inverter</button>
+        <button class="btn btn-red" onclick="clearDrawing()">🗑️ Limpar</button>
+      </div>
     </div>
-    <div class="btn-row">
-      <button class="btn btn-green" onclick="saveAlarms()">💾 Salvar</button>
-      <button class="btn btn-red" onclick="triggerPreviewMood('happy'); sendCmd('STOP', 'Alarme confirmado! 🟢')">✅ Confirmar / Parar</button>
+
+    <!-- 2. HÁBITOS E CUIDADO -->
+    <div class="card">
+      <div class="card-title">💖 Cuidar do NUTR-E (LED Verde D18)</div>
+      <div class="btn-row">
+        <button class="btn btn-green" onclick="triggerPreviewMood('happy'); sendCmd('FOOD', 'Alimentação confirmada no NUTR-E! 🟢')">🍽️ Já me Alimentei</button>
+        <button class="btn btn-cyan" onclick="triggerPreviewMood('happy'); sendCmd('WATER', 'Hidratação confirmada no NUTR-E! 🟢')">💧 Bebi Água</button>
+      </div>
     </div>
-    <div class="btn-row" style="margin-top: 10px;">
-      <button class="btn btn-test" onclick="sendCmd('TEST_FOOD', 'Testando COMER no NUTR-E!')">🔔 Testar "COMER!"</button>
-      <button class="btn btn-test" onclick="sendCmd('TEST_WATER', 'Testando AGUA no NUTR-E!')">🔔 Testar "AGUA!"</button>
+
+    <!-- 3. MODO POMODORO -->
+    <div class="card">
+      <div class="card-title">
+        <span>🎯 Modo Pomodoro</span>
+        <span class="badge" id="pomoStatus">Inativo</span>
+      </div>
+      <div class="btn-row-3">
+        <button class="btn btn-cyan" onclick="triggerPreviewMood('focused'); sendCmd('POMO_FOCUS', 'Foco 25m iniciado! 🎯')">▶️ Foco 25m</button>
+        <button class="btn btn-green" onclick="triggerPreviewMood('happy'); sendCmd('POMO_BREAK', 'Pausa 5m iniciada! ☕')">☕ Pausa 5m</button>
+        <button class="btn btn-red" onclick="triggerPreviewMood('neutral'); sendCmd('POMO_STOP', 'Pomodoro parado.')">⏹️ Parar</button>
+      </div>
+    </div>
+
+    <!-- 4. MURAL DE RECADOS -->
+    <div class="card">
+      <div class="card-title">📌 Mural de Recados do NUTR-E</div>
+      <input type="text" id="noteInput" maxlength="28" placeholder="Ex: Em aula / Volto logo...">
+      <div class="btn-row-3">
+        <button class="btn btn-cyan" onclick="sendNote(false)">👀 Alternar</button>
+        <button class="btn btn-purple" onclick="sendNote(true)">📌 Fixar Tela</button>
+        <button class="btn btn-red" onclick="clearNote()">🗑️ Limpar</button>
+      </div>
+    </div>
+
+    <!-- 5. MODO NÃO PERTURBE E QR CODE NO ROBÔ -->
+    <div class="card">
+      <div class="card-title">
+        <span>🌙 Sistema & QR Code</span>
+        <span class="badge" id="dndBadge">ATIVO</span>
+      </div>
+      <button class="btn btn-purple" onclick="triggerPreviewMood('sleepy'); sendCmd('DND', 'Modo Não Perturbe alternado! 🌙')">🔇 Alternar Silencioso + Brilho Baixo</button>
+      <div class="btn-row">
+        <button class="btn btn-test" onclick="sendCmd('SHOW_QR', 'QR Code exibido na tela do NUTR-E! 📱')">📱 Mostrar QR no OLED</button>
+        <button class="btn btn-test" onclick="sendCmd('HIDE_QR', 'Olhos ativados no NUTR-E! 👀')">👀 Voltar para Olhos</button>
+      </div>
+    </div>
+
+    <!-- 6. HORÁRIOS DE ALARME -->
+    <div class="card">
+      <div class="card-title">⏰ Horários de Lembrete</div>
+      <div class="alarm-row">
+        <span class="alarm-label">🍽️ Hora de Comer</span>
+        <input type="time" id="food" value="12:00">
+      </div>
+      <div class="alarm-row">
+        <span class="alarm-label">💧 Beber Água</span>
+        <input type="time" id="water" value="14:00">
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-green" onclick="saveAlarms()">💾 Salvar</button>
+        <button class="btn btn-red" onclick="triggerPreviewMood('happy'); sendCmd('STOP', 'Alarme confirmado! 🟢')">✅ Confirmar / Parar</button>
+      </div>
+      <div class="btn-row" style="margin-top: 10px;">
+        <button class="btn btn-test" onclick="sendCmd('TEST_FOOD', 'Testando COMER no NUTR-E!')">🔔 Testar "COMER!"</button>
+        <button class="btn btn-test" onclick="sendCmd('TEST_WATER', 'Testando AGUA no NUTR-E!')">🔔 Testar "AGUA!"</button>
+      </div>
     </div>
   </div>
 
@@ -433,12 +635,68 @@
     let bleDevice = null;
     let bleChar = null;
     let alarmsLoaded = false;
+    let deferredInstallPrompt = null;
+
+    // === CONTROLE DE PRIMEIRA VEZ (ONBOARDING) E DETECÇÃO DO CHROME ===
+    function checkFirstTimeAndBrowser() {
+      const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+      const banner = document.getElementById('chromeBanner');
+      const title = document.getElementById('chromeBannerTitle');
+      const desc = document.getElementById('chromeBannerDesc');
+
+      if (isChrome && navigator.bluetooth) {
+        banner.classList.add('ok');
+        title.innerText = "✅ Google Chrome Detectado!";
+        desc.innerHTML = "Seu navegador é 100% compatível com a instalação do aplicativo e com o Bluetooth do <b>NUTR-E</b>.";
+      }
+
+      const alreadyOnboarded = localStorage.getItem('nutre_onboarded');
+      if (alreadyOnboarded === 'true') {
+        finishTutorial();
+      }
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      document.getElementById('installPwaBtn').classList.remove('hidden');
+    });
+
+    async function installPWA() {
+      if (!deferredInstallPrompt) return;
+      deferredInstallPrompt.prompt();
+      const { outcome } = await deferredInstallPrompt.userChoice;
+      if (outcome === 'accepted') {
+        showToast("Instalando aplicativo NUTR-E! 📲");
+        document.getElementById('installPwaBtn').classList.add('hidden');
+      }
+      deferredInstallPrompt = null;
+    }
+
+    function finishTutorial() {
+      localStorage.setItem('nutre_onboarded', 'true');
+      document.getElementById('onboardingView').classList.add('hidden');
+      document.getElementById('dashboardView').classList.remove('hidden');
+      renderDrawCanvas();
+      renderOledPreview();
+    }
+
+    function openTutorial() {
+      document.getElementById('dashboardView').classList.add('hidden');
+      document.getElementById('onboardingView').classList.remove('hidden');
+      window.scrollTo(0, 0);
+    }
+
+    async function connectFromTutorial() {
+      await connectBLE();
+      finishTutorial();
+    }
 
     // === SIMULADOR DO DISPLAY OLED AO VIVO ===
     const oledCanvas = document.getElementById('oledPreview');
     const oCtx = oledCanvas.getContext('2d');
-    let previewMode = 'eyes'; // 'eyes', 'note', 'draw'
-    let previewMood = 'happy'; // 'neutral', 'happy', 'focused', 'sleepy'
+    let previewMode = 'eyes';
+    let previewMood = 'happy';
     let previewNoteText = '';
     let blinkState = 0;
     let eyeOffsetX = 0;
@@ -458,9 +716,7 @@
       if (previewMode === 'draw') {
         for (let y = 0; y < 16; y++) {
           for (let x = 0; x < 32; x++) {
-            if (pixelGrid[y][x]) {
-              oCtx.fillRect(x * 4, y * 4, 4, 4);
-            }
+            if (pixelGrid[y][x]) oCtx.fillRect(x * 4, y * 4, 4, 4);
           }
         }
         return;
@@ -478,7 +734,6 @@
         return;
       }
 
-      // Desenha os Olhos do NUTR-E com efeito de linhas de scan OLED
       const lx = 38 + eyeOffsetX;
       const rx = 90 + eyeOffsetX;
       const cy = 32 + eyeOffsetY;
@@ -487,7 +742,6 @@
         oCtx.fillRect(lx - 18, cy, 36, 4);
         oCtx.fillRect(rx - 18, cy, 36, 4);
       } else if (previewMood === 'happy') {
-        // Olhinhos em arco feliz idênticos à foto do NUTR-E
         for (let ex of [lx, rx]) {
           oCtx.beginPath();
           oCtx.arc(ex, cy + 6, 18, Math.PI, 0, false);
@@ -502,14 +756,12 @@
         oCtx.fillRect(lx - 18, cy - 8, 36, 16);
         oCtx.fillRect(rx - 18, cy - 8, 36, 16);
       } else {
-        // Olhos normais arredondados
         oCtx.beginPath();
         oCtx.roundRect(lx - 16, cy - 14, 32, 28, 8);
         oCtx.roundRect(rx - 16, cy - 14, 32, 28, 8);
         oCtx.fill();
       }
 
-      // Efeito scanline característico do OLED
       oCtx.fillStyle = 'rgba(2, 4, 8, 0.32)';
       for (let y = 0; y < 64; y += 2) {
         oCtx.fillRect(0, y, 128, 1);
@@ -629,7 +881,6 @@
       renderDrawCanvas();
     }
 
-    // Empacota a matriz 32x16 em 64 bytes Hex (8 blocos curtos compatíveis com qualquer BLE)
     async function sendDrawingToNutre() {
       if (!bleChar) {
         showToast("Conecte ao NUTR-E primeiro!");
@@ -664,7 +915,7 @@
 
     async function connectBLE() {
       if (!navigator.bluetooth) {
-        showToast("Use o Chrome (Android) ou Bluefy (iPhone)!");
+        showToast("Abra este link no navegador Google Chrome!");
         return;
       }
       try {
@@ -692,7 +943,7 @@
         const ss = String(now.getSeconds()).padStart(2, '0');
         await writeBle("TIME:" + hh + ":" + mm + ":" + ss);
 
-        showToast("NUTR-E sincronizado com sucesso! 🤖");
+        showToast("NUTR-E conectado e sincronizado! 🤖");
       } catch (err) {
         showToast("Erro: " + err.message);
       }
@@ -712,9 +963,8 @@
         document.getElementById('clock').innerText = data.time;
         document.getElementById('mood').innerText = data.mood;
         document.getElementById('pomoStatus').innerText = data.pomo;
-        document.getElementById('dndBadge').innerText = data.dnd ? 'ATIVADO' : 'DESATIVADO';
+        document.getElementById('dndBadge').innerText = data.dnd ? 'SILENCIOSO' : 'ATIVO';
 
-        // Sincroniza a mini tela OLED do app com o humor real do NUTR-E
         if (previewMode === 'eyes') {
           if (data.dnd || data.mood.includes('Dormindo')) previewMood = 'sleepy';
           else if (data.mood.includes('Focado')) previewMood = 'focused';
@@ -770,8 +1020,7 @@
       if (await writeBle("ALARMS:" + f + "," + w)) showToast('Horários salvos no NUTR-E! 💾');
     }
 
-    renderDrawCanvas();
-    renderOledPreview();
+    checkFirstTimeAndBrowser();
   </script>
 </body>
 </html>
