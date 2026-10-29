@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#0b0f19">
+  <meta name="theme-color" content="#070b14">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="NUTR-E">
-  <title>NUTR-E</title>
+  <title>NUTR-E OS</title>
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon.png">
   <style>
     :root {
-      --bg: #0b0f19;
-      --card: #161f30;
+      --bg: #070b14;
+      --card: rgba(18, 26, 43, 0.88);
       --accent: #00e5ff;
-      --accent-glow: rgba(0, 229, 255, 0.25);
+      --accent-glow: rgba(0, 229, 255, 0.35);
       --text: #f1f5f9;
       --muted: #94a3b8;
       --success: #10b981;
@@ -24,23 +24,61 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: var(--bg);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.12), transparent 60%),
+        linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 24px 24px, 24px 24px;
       color: var(--text);
       padding: 16px;
       max-width: 480px;
       margin: 0 auto;
-      padding-bottom: 50px;
+      padding-bottom: 60px;
     }
+
+    /* Cabeçalho Cyber NUTR-E */
+    .brand-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 6px 4px;
+    }
+    .brand-logo {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: #fff;
+      text-shadow: 0 0 12px var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand-logo span { color: var(--accent); }
+    .sys-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+    }
+
     .ble-bar {
       width: 100%;
       padding: 14px;
-      border-radius: 16px;
+      border-radius: 14px;
       border: 1px solid var(--accent);
       background: linear-gradient(135deg, #00e5ff, #0284c7);
-      color: #05101a;
+      color: #041019;
       font-weight: 800;
-      font-size: 15px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
       cursor: pointer;
       margin-bottom: 16px;
       display: flex;
@@ -54,54 +92,155 @@
       background: rgba(16, 185, 129, 0.15);
       border-color: var(--success);
       color: #34d399;
-      box-shadow: none;
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
     }
-    header {
-      text-align: center;
+
+    /* Moldura Física do Display OLED SSD1306 */
+    .oled-pcb {
+      background: #0d131f;
+      border: 2px solid #1e293b;
+      border-radius: 16px;
+      padding: 12px 16px 16px;
       margin-bottom: 18px;
-      padding: 20px 16px;
-      background: linear-gradient(145deg, #161f30, #0f1624);
-      border-radius: 22px;
-      border: 1px solid rgba(0, 229, 255, 0.25);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.45);
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6), inset 0 0 15px rgba(0, 229, 255, 0.08);
+      text-align: center;
     }
-    .title { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 6px; font-weight: 700; }
-    .clock { font-size: 44px; font-weight: 800; letter-spacing: 1px; color: #fff; text-shadow: 0 0 15px var(--accent-glow); }
-    .mood-box {
+    .pcb-hole {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid #475569;
+      background: #070b14;
+      position: absolute;
+    }
+    .pcb-hole.tl { top: 8px; left: 8px; }
+    .pcb-hole.tr { top: 8px; right: 8px; }
+    .pcb-hole.bl { bottom: 8px; left: 8px; }
+    .pcb-hole.br { bottom: 8px; right: 8px; }
+    .pcb-pins {
+      font-family: monospace;
+      font-size: 10px;
+      color: #64748b;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    .oled-glass {
+      background: #020408;
+      border: 2px solid rgba(0, 229, 255, 0.35);
+      border-radius: 8px;
+      width: 256px;
+      height: 128px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(0, 229, 255, 0.15);
+    }
+    #oledPreview {
+      width: 100%;
+      height: 100%;
+      image-rendering: pixelated;
+    }
+    .oled-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-top: 12px;
-      display: inline-block;
-      background: rgba(0, 229, 255, 0.1);
+      padding: 0 8px;
+    }
+    .clock-mini {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+      text-shadow: 0 0 10px var(--accent-glow);
+      font-variant-numeric: tabular-nums;
+    }
+    .mood-pill {
+      background: rgba(0, 229, 255, 0.12);
       border: 1px solid rgba(0, 229, 255, 0.3);
-      padding: 8px 16px;
+      padding: 6px 12px;
       border-radius: 20px;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 600;
       color: #e2e8f0;
     }
+
+    /* Cartões do Painel */
     .card {
-      background-color: var(--card);
+      background: var(--card);
+      backdrop-filter: blur(10px);
       border-radius: 18px;
       padding: 18px;
       margin-bottom: 16px;
-      border: 1px solid rgba(255,255,255,0.05);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+      border: 1px solid rgba(0, 229, 255, 0.14);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
     }
     .card-title {
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 800;
       margin-bottom: 14px;
-      color: var(--text);
+      color: var(--accent);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     .badge {
-      font-size: 12px;
+      font-size: 11px;
       background: rgba(0, 229, 255, 0.15);
-      color: var(--accent);
+      color: #fff;
       padding: 4px 10px;
       border-radius: 12px;
+      border: 1px solid rgba(0, 229, 255, 0.3);
     }
+
+    /* Estúdio de Desenho Pixel Art */
+    .draw-wrapper {
+      background: #020408;
+      border: 2px solid var(--accent);
+      border-radius: 10px;
+      width: 100%;
+      aspect-ratio: 2 / 1;
+      margin-bottom: 12px;
+      overflow: hidden;
+      touch-action: none;
+      box-shadow: inset 0 0 15px rgba(0, 229, 255, 0.15);
+    }
+    #drawCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: crosshair;
+      image-rendering: pixelated;
+    }
+    .stamp-bar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .stamp-btn {
+      background: #1e293b;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #e2e8f0;
+      padding: 7px 11px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      flex: 1;
+    }
+    .stamp-btn.active {
+      background: var(--accent);
+      color: #041019;
+      border-color: var(--accent);
+    }
+
+    /* Botões e Controles */
     .btn {
       display: flex;
       align-items: center;
@@ -110,35 +249,35 @@
       padding: 13px;
       border: none;
       border-radius: 12px;
-      font-size: 14px;
-      font-weight: 700;
+      font-size: 13px;
+      font-weight: 800;
       color: #fff;
       cursor: pointer;
       transition: transform 0.15s ease;
       user-select: none;
       margin-bottom: 10px;
     }
-    .btn:active { transform: scale(0.97); }
+    .btn:active { transform: scale(0.96); }
     .btn-cyan { background: linear-gradient(135deg, #00e5ff, #0099cc); color: #05101a; box-shadow: 0 4px 14px var(--accent-glow); }
     .btn-green { background: linear-gradient(135deg, #10b981, #059669); }
     .btn-red { background: linear-gradient(135deg, #ef4444, #dc2626); }
     .btn-purple { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
-    .btn-test { background: #26354d; color: #cbd5e1; font-size: 13px; padding: 10px; }
+    .btn-test { background: #1e293b; color: #cbd5e1; font-size: 12px; padding: 10px; border: 1px solid rgba(255,255,255,0.08); }
 
     .alarm-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(0,0,0,0.25);
-      padding: 12px 14px;
+      background: rgba(0,0,0,0.3);
+      padding: 10px 14px;
       border-radius: 12px;
       margin-bottom: 10px;
     }
     .alarm-label { font-size: 14px; font-weight: 600; color: var(--muted); }
     input[type="time"], input[type="text"] {
-      background: #0b0f19;
+      background: #070b14;
       color: var(--accent);
-      border: 1px solid rgba(0, 229, 255, 0.3);
+      border: 1px solid rgba(0, 229, 255, 0.35);
       padding: 10px 12px;
       border-radius: 10px;
       font-size: 15px;
@@ -155,13 +294,13 @@
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: #10b981;
+      background: var(--accent);
       color: #05101a;
       padding: 10px 22px;
       border-radius: 30px;
-      font-weight: 700;
-      font-size: 14px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+      font-weight: 800;
+      font-size: 13px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.6);
       transition: transform 0.25s ease;
       z-index: 999;
       white-space: nowrap;
@@ -171,36 +310,80 @@
 </head>
 <body>
 
+  <!-- TOPO DE IDENTIDADE DO NUTR-E -->
+  <div class="brand-bar">
+    <div class="brand-logo">🤖 NUTR<span>-E</span></div>
+    <div class="sys-tag" id="bleTag">OFFLINE</div>
+  </div>
+
   <button id="bleBtn" class="ble-bar" onclick="connectBLE()">
     🔗 Conectar Bluetooth ao NUTR-E
   </button>
 
-  <header>
-    <div class="title">Relógio e Humor do NUTR-E</div>
-    <div class="clock" id="clock">--:--</div>
-    <div class="mood-box" id="mood">NUTR-E Desconectado (Toque acima)</div>
-  </header>
+  <!-- MINI MONITOR OLED EM TEMPO REAL -->
+  <div class="oled-pcb">
+    <div class="pcb-hole tl"></div>
+    <div class="pcb-hole tr"></div>
+    <div class="pcb-hole bl"></div>
+    <div class="pcb-hole br"></div>
+    <div class="pcb-pins">GND &nbsp; VCC &nbsp; SCL &nbsp; SDA</div>
+    
+    <div class="oled-glass">
+      <canvas id="oledPreview" width="128" height="64"></canvas>
+    </div>
 
-  <div class="card">
-    <div class="card-title">💖 Cuidar do NUTR-E (Acende LED Verde)</div>
-    <div class="btn-row">
-      <button class="btn btn-green" onclick="sendCmd('FOOD', 'Alimentação confirmada no NUTR-E! 🟢')">🍽️ Já me Alimentei</button>
-      <button class="btn btn-cyan" onclick="sendCmd('WATER', 'Hidratação confirmada no NUTR-E! 🟢')">💧 Bebi Água</button>
+    <div class="oled-status-bar">
+      <div class="clock-mini" id="clock">--:--</div>
+      <div class="mood-pill" id="mood">Simulador OLED Ativo 👀</div>
     </div>
   </div>
 
+  <!-- 1. ESTÚDIO DE DESENHO PIXEL ART PARA O OLED -->
+  <div class="card">
+    <div class="card-title">
+      <span>🎨 Desenhar na Tela do NUTR-E</span>
+      <span class="badge">OLED 32x16</span>
+    </div>
+    <div class="draw-wrapper">
+      <canvas id="drawCanvas" width="32" height="16"></canvas>
+    </div>
+    <div class="stamp-bar">
+      <button class="stamp-btn active" id="toolPen" onclick="setDrawTool(1)">✏️ Lápis</button>
+      <button class="stamp-btn" id="toolEraser" onclick="setDrawTool(0)">🧽 Borracha</button>
+      <button class="stamp-btn" onclick="loadStamp('heart')">❤️ Coração</button>
+      <button class="stamp-btn" onclick="loadStamp('happy')">😊 Feliz</button>
+      <button class="stamp-btn" onclick="loadStamp('coffee')">☕ Café</button>
+    </div>
+    <div class="btn-row-3">
+      <button class="btn btn-cyan" onclick="sendDrawingToNutre()">📡 Enviar</button>
+      <button class="btn btn-purple" onclick="invertDrawing()">🌗 Inverter</button>
+      <button class="btn btn-red" onclick="clearDrawing()">🗑️ Limpar</button>
+    </div>
+  </div>
+
+  <!-- 2. HÁBITOS E CUIDADO -->
+  <div class="card">
+    <div class="card-title">💖 Cuidar do NUTR-E (LED Verde D18)</div>
+    <div class="btn-row">
+      <button class="btn btn-green" onclick="triggerPreviewMood('happy'); sendCmd('FOOD', 'Alimentação confirmada no NUTR-E! 🟢')">🍽️ Já me Alimentei</button>
+      <button class="btn btn-cyan" onclick="triggerPreviewMood('happy'); sendCmd('WATER', 'Hidratação confirmada no NUTR-E! 🟢')">💧 Bebi Água</button>
+    </div>
+  </div>
+
+  <!-- 3. MODO POMODORO -->
   <div class="card">
     <div class="card-title">
       <span>🎯 Modo Pomodoro</span>
       <span class="badge" id="pomoStatus">Inativo</span>
     </div>
     <div class="btn-row-3">
-      <button class="btn btn-cyan" onclick="sendCmd('POMO_FOCUS', 'Foco 25m iniciado! 🎯')">▶️ Foco 25m</button>
-      <button class="btn btn-green" onclick="sendCmd('POMO_BREAK', 'Pausa 5m iniciada! ☕')">☕ Pausa 5m</button>
-      <button class="btn btn-red" onclick="sendCmd('POMO_STOP', 'Pomodoro parado.')">⏹️ Parar</button>
+      <button class="btn btn-cyan" onclick="triggerPreviewMood('focused'); sendCmd('POMO_FOCUS', 'Foco 25m iniciado! 🎯')">▶️ Foco 25m</button>
+      <button class="btn btn-green" onclick="triggerPreviewMood('happy'); sendCmd('POMO_BREAK', 'Pausa 5m iniciada! ☕')">☕ Pausa 5m</button>
+      <button class="btn btn-red" onclick="triggerPreviewMood('neutral'); sendCmd('POMO_STOP', 'Pomodoro parado.')">⏹️ Parar</button>
     </div>
   </div>
 
+  <!-- 4. MURAL DE RECADOS -->
   <div class="card">
     <div class="card-title">📌 Mural de Recados do NUTR-E</div>
     <input type="text" id="noteInput" maxlength="28" placeholder="Ex: Em aula / Volto logo...">
@@ -211,14 +394,16 @@
     </div>
   </div>
 
+  <!-- 5. MODO NÃO PERTURBE -->
   <div class="card">
     <div class="card-title">
       <span>🌙 Modo Não Perturbe</span>
       <span class="badge" id="dndBadge">DESATIVADO</span>
     </div>
-    <button class="btn btn-purple" onclick="sendCmd('DND', 'Modo Não Perturbe alternado! 🌙')">🔇 Alternar Silencioso + Brilho Baixo</button>
+    <button class="btn btn-purple" onclick="triggerPreviewMood('sleepy'); sendCmd('DND', 'Modo Não Perturbe alternado! 🌙')">🔇 Alternar Silencioso + Brilho Baixo</button>
   </div>
 
+  <!-- 6. HORÁRIOS DE ALARME -->
   <div class="card">
     <div class="card-title">⏰ Horários de Lembrete</div>
     <div class="alarm-row">
@@ -231,7 +416,7 @@
     </div>
     <div class="btn-row">
       <button class="btn btn-green" onclick="saveAlarms()">💾 Salvar</button>
-      <button class="btn btn-red" onclick="sendCmd('STOP', 'Alarme confirmado! 🟢')">✅ Confirmar / Parar</button>
+      <button class="btn btn-red" onclick="triggerPreviewMood('happy'); sendCmd('STOP', 'Alarme confirmado! 🟢')">✅ Confirmar / Parar</button>
     </div>
     <div class="btn-row" style="margin-top: 10px;">
       <button class="btn btn-test" onclick="sendCmd('TEST_FOOD', 'Testando COMER no NUTR-E!')">🔔 Testar "COMER!"</button>
@@ -249,6 +434,227 @@
     let bleChar = null;
     let alarmsLoaded = false;
 
+    // === SIMULADOR DO DISPLAY OLED AO VIVO ===
+    const oledCanvas = document.getElementById('oledPreview');
+    const oCtx = oledCanvas.getContext('2d');
+    let previewMode = 'eyes'; // 'eyes', 'note', 'draw'
+    let previewMood = 'happy'; // 'neutral', 'happy', 'focused', 'sleepy'
+    let previewNoteText = '';
+    let blinkState = 0;
+    let eyeOffsetX = 0;
+    let eyeOffsetY = 0;
+
+    function triggerPreviewMood(m) {
+      previewMode = 'eyes';
+      previewMood = m;
+    }
+
+    function renderOledPreview() {
+      oCtx.fillStyle = '#020408';
+      oCtx.fillRect(0, 0, 128, 64);
+      oCtx.fillStyle = '#00e5ff';
+      oCtx.strokeStyle = '#00e5ff';
+
+      if (previewMode === 'draw') {
+        for (let y = 0; y < 16; y++) {
+          for (let x = 0; x < 32; x++) {
+            if (pixelGrid[y][x]) {
+              oCtx.fillRect(x * 4, y * 4, 4, 4);
+            }
+          }
+        }
+        return;
+      }
+
+      if (previewMode === 'note' && previewNoteText !== '') {
+        oCtx.strokeRect(1, 1, 126, 62);
+        oCtx.fillRect(2, 2, 124, 13);
+        oCtx.fillStyle = '#020408';
+        oCtx.font = 'bold 9px monospace';
+        oCtx.fillText('MURAL DO NUTR-E', 22, 11);
+        oCtx.fillStyle = '#00e5ff';
+        oCtx.font = 'bold 12px sans-serif';
+        oCtx.fillText(previewNoteText.substring(0, 16), 10, 38);
+        return;
+      }
+
+      // Desenha os Olhos do NUTR-E com efeito de linhas de scan OLED
+      const lx = 38 + eyeOffsetX;
+      const rx = 90 + eyeOffsetX;
+      const cy = 32 + eyeOffsetY;
+
+      if (blinkState > 0 || previewMood === 'sleepy') {
+        oCtx.fillRect(lx - 18, cy, 36, 4);
+        oCtx.fillRect(rx - 18, cy, 36, 4);
+      } else if (previewMood === 'happy') {
+        // Olhinhos em arco feliz idênticos à foto do NUTR-E
+        for (let ex of [lx, rx]) {
+          oCtx.beginPath();
+          oCtx.arc(ex, cy + 6, 18, Math.PI, 0, false);
+          oCtx.fill();
+          oCtx.fillStyle = '#020408';
+          oCtx.beginPath();
+          oCtx.arc(ex, cy + 12, 14, Math.PI, 0, false);
+          oCtx.fill();
+          oCtx.fillStyle = '#00e5ff';
+        }
+      } else if (previewMood === 'focused') {
+        oCtx.fillRect(lx - 18, cy - 8, 36, 16);
+        oCtx.fillRect(rx - 18, cy - 8, 36, 16);
+      } else {
+        // Olhos normais arredondados
+        oCtx.beginPath();
+        oCtx.roundRect(lx - 16, cy - 14, 32, 28, 8);
+        oCtx.roundRect(rx - 16, cy - 14, 32, 28, 8);
+        oCtx.fill();
+      }
+
+      // Efeito scanline característico do OLED
+      oCtx.fillStyle = 'rgba(2, 4, 8, 0.32)';
+      for (let y = 0; y < 64; y += 2) {
+        oCtx.fillRect(0, y, 128, 1);
+      }
+    }
+
+    setInterval(() => {
+      if (Math.random() < 0.18) {
+        blinkState = 1;
+        setTimeout(() => { blinkState = 0; renderOledPreview(); }, 160);
+      }
+      if (Math.random() < 0.3) {
+        eyeOffsetX = Math.floor(Math.random() * 9) - 4;
+        eyeOffsetY = Math.floor(Math.random() * 5) - 2;
+      }
+      renderOledPreview();
+    }, 900);
+
+    // === ESTÚDIO DE PIXEL ART (32x16) ===
+    const dCanvas = document.getElementById('drawCanvas');
+    const dCtx = dCanvas.getContext('2d');
+    let pixelGrid = Array.from({ length: 16 }, () => Array(32).fill(0));
+    let isDrawing = false;
+    let drawTool = 1;
+
+    function setDrawTool(val) {
+      drawTool = val;
+      document.getElementById('toolPen').classList.toggle('active', val === 1);
+      document.getElementById('toolEraser').classList.toggle('active', val === 0);
+    }
+
+    function renderDrawCanvas() {
+      dCtx.fillStyle = '#020408';
+      dCtx.fillRect(0, 0, 32, 16);
+      dCtx.fillStyle = '#00e5ff';
+      for (let y = 0; y < 16; y++) {
+        for (let x = 0; x < 32; x++) {
+          if (pixelGrid[y][x]) dCtx.fillRect(x, y, 1, 1);
+        }
+      }
+      if (previewMode === 'draw') renderOledPreview();
+    }
+
+    function paintAtEvent(e) {
+      const rect = dCanvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const x = Math.floor(((clientX - rect.left) / rect.width) * 32);
+      const y = Math.floor(((clientY - rect.top) / rect.height) * 16);
+      if (x >= 0 && x < 32 && y >= 0 && y < 16) {
+        pixelGrid[y][x] = drawTool;
+        previewMode = 'draw';
+        renderDrawCanvas();
+      }
+    }
+
+    dCanvas.addEventListener('mousedown', e => { isDrawing = true; paintAtEvent(e); });
+    window.addEventListener('mousemove', e => { if (isDrawing) paintAtEvent(e); });
+    window.addEventListener('mouseup', () => isDrawing = false);
+    dCanvas.addEventListener('touchstart', e => { e.preventDefault(); isDrawing = true; paintAtEvent(e); }, { passive: false });
+    dCanvas.addEventListener('touchmove', e => { e.preventDefault(); if (isDrawing) paintAtEvent(e); }, { passive: false });
+    dCanvas.addEventListener('touchend', () => isDrawing = false);
+
+    function invertDrawing() {
+      for (let y = 0; y < 16; y++)
+        for (let x = 0; x < 32; x++)
+          pixelGrid[y][x] = pixelGrid[y][x] ? 0 : 1;
+      previewMode = 'draw';
+      renderDrawCanvas();
+    }
+
+    function clearDrawing() {
+      pixelGrid = Array.from({ length: 16 }, () => Array(32).fill(0));
+      previewMode = 'eyes';
+      renderDrawCanvas();
+      renderOledPreview();
+      if (bleChar) writeBle("CLEAR_DRAW");
+      showToast("Tela de desenho limpa!");
+    }
+
+    function loadStamp(type) {
+      pixelGrid = Array.from({ length: 16 }, () => Array(32).fill(0));
+      if (type === 'heart') {
+        const h = [
+          "0011100011100",
+          "0111110111110",
+          "1111111111111",
+          "1111111111111",
+          "1111111111111",
+          "0111111111110",
+          "0011111111100",
+          "0001111111000",
+          "0000111110000",
+          "0000011100000",
+          "0000001000000"
+        ];
+        h.forEach((row, r) => {
+          for (let c = 0; c < row.length; c++)
+            if (row[c] === '1') pixelGrid[r + 2][c + 9] = 1;
+        });
+      } else if (type === 'happy') {
+        for (let x = 5; x <= 12; x++) { pixelGrid[5][x] = 1; pixelGrid[6][x] = 1; }
+        for (let x = 19; x <= 26; x++) { pixelGrid[5][x] = 1; pixelGrid[6][x] = 1; }
+        for (let x = 10; x <= 21; x++) pixelGrid[12][x] = 1;
+        pixelGrid[11][9] = 1; pixelGrid[11][22] = 1;
+        pixelGrid[10][8] = 1; pixelGrid[10][23] = 1;
+      } else if (type === 'coffee') {
+        for (let y = 5; y <= 12; y++)
+          for (let x = 10; x <= 20; x++) pixelGrid[y][x] = 1;
+        pixelGrid[6][21] = 1; pixelGrid[6][22] = 1; pixelGrid[7][22] = 1;
+        pixelGrid[8][22] = 1; pixelGrid[9][21] = 1; pixelGrid[9][22] = 1;
+        for (let x = 8; x <= 22; x++) pixelGrid[13][x] = 1;
+        pixelGrid[2][13] = 1; pixelGrid[3][12] = 1;
+        pixelGrid[2][17] = 1; pixelGrid[3][16] = 1;
+      }
+      previewMode = 'draw';
+      renderDrawCanvas();
+    }
+
+    // Empacota a matriz 32x16 em 64 bytes Hex (8 blocos curtos compatíveis com qualquer BLE)
+    async function sendDrawingToNutre() {
+      if (!bleChar) {
+        showToast("Conecte ao NUTR-E primeiro!");
+        return;
+      }
+      let hexStr = "";
+      for (let y = 0; y < 16; y++) {
+        for (let xByte = 0; xByte < 4; xByte++) {
+          let b = 0;
+          for (let bit = 0; bit < 8; bit++) {
+            if (pixelGrid[y][xByte * 8 + bit]) b |= (1 << (7 - bit));
+          }
+          hexStr += b.toString(16).padStart(2, '0').toUpperCase();
+        }
+      }
+      showToast("Enviando desenho ao NUTR-E...");
+      for (let i = 0; i < 8; i++) {
+        const chunk = hexStr.substring(i * 16, (i + 1) * 16);
+        await writeBle("D" + i + ":" + chunk);
+        await new Promise(r => setTimeout(r, 45));
+      }
+      showToast("Desenho exibido no OLED do NUTR-E! 🎨");
+    }
+
+    // === FUNÇÕES BLUETOOTH ===
     function showToast(msg) {
       const t = document.getElementById('toast');
       t.innerText = msg;
@@ -258,21 +664,17 @@
 
     async function connectBLE() {
       if (!navigator.bluetooth) {
-        showToast("Web Bluetooth bloqueado neste navegador!");
+        showToast("Use o Chrome (Android) ou Bluefy (iPhone)!");
         return;
       }
-
       try {
         showToast("Procurando NUTR-E...");
-        
         bleDevice = await navigator.bluetooth.requestDevice({
           acceptAllDevices: true,
           optionalServices: [SERVICE_UUID]
         });
 
-        showToast("Conectando ao " + (bleDevice.name || "NUTR-E") + "...");
         bleDevice.addEventListener('gattserverdisconnected', onDisconnected);
-        
         const server = await bleDevice.gatt.connect();
         const service = await server.getPrimaryService(SERVICE_UUID);
         bleChar = await service.getCharacteristic(CHAR_UUID);
@@ -280,30 +682,27 @@
         await bleChar.startNotifications();
         bleChar.addEventListener('characteristicvaluechanged', handleNotification);
 
-        const btn = document.getElementById('bleBtn');
-        btn.classList.add('connected');
-        btn.innerText = "🟢 Conectado ao NUTR-E";
+        document.getElementById('bleBtn').classList.add('connected');
+        document.getElementById('bleBtn').innerText = "🟢 NUTR-E Conectado via Bluetooth";
+        document.getElementById('bleTag').innerText = "ONLINE";
 
-        // Sincroniza a hora do celular com o NUTR-E
         const now = new Date();
         const hh = String(now.getHours()).padStart(2, '0');
         const mm = String(now.getMinutes()).padStart(2, '0');
         const ss = String(now.getSeconds()).padStart(2, '0');
         await writeBle("TIME:" + hh + ":" + mm + ":" + ss);
 
-        showToast("NUTR-E conectado com sucesso! 🤖");
+        showToast("NUTR-E sincronizado com sucesso! 🤖");
       } catch (err) {
         showToast("Erro: " + err.message);
-        console.error(err);
       }
     }
 
     function onDisconnected() {
-      const btn = document.getElementById('bleBtn');
-      btn.classList.remove('connected');
-      btn.innerText = "🔗 Conectar Bluetooth ao NUTR-E";
+      document.getElementById('bleBtn').classList.remove('connected');
+      document.getElementById('bleBtn').innerText = "🔗 Conectar Bluetooth ao NUTR-E";
+      document.getElementById('bleTag').innerText = "OFFLINE";
       document.getElementById('mood').innerText = "NUTR-E Desconectado";
-      showToast("NUTR-E desconectado");
     }
 
     function handleNotification(event) {
@@ -314,6 +713,16 @@
         document.getElementById('mood').innerText = data.mood;
         document.getElementById('pomoStatus').innerText = data.pomo;
         document.getElementById('dndBadge').innerText = data.dnd ? 'ATIVADO' : 'DESATIVADO';
+
+        // Sincroniza a mini tela OLED do app com o humor real do NUTR-E
+        if (previewMode === 'eyes') {
+          if (data.dnd || data.mood.includes('Dormindo')) previewMood = 'sleepy';
+          else if (data.mood.includes('Focado')) previewMood = 'focused';
+          else if (data.mood.includes('Feliz') || data.mood.includes('Humor')) previewMood = 'happy';
+          else previewMood = 'neutral';
+          renderOledPreview();
+        }
+
         if (!alarmsLoaded && data.food && data.water) {
           document.getElementById('food').value = data.food;
           document.getElementById('water').value = data.water;
@@ -339,6 +748,9 @@
     async function sendNote(fixed) {
       const txt = document.getElementById('noteInput').value.trim();
       if (!txt) return;
+      previewMode = 'note';
+      previewNoteText = txt;
+      renderOledPreview();
       const prefix = fixed ? "FIXED:" : "NOTE:";
       if (await writeBle(prefix + txt)) {
         showToast(fixed ? 'Recado fixado no NUTR-E! 📌' : 'Recado alternando no NUTR-E! 👀');
@@ -347,6 +759,8 @@
 
     async function clearNote() {
       document.getElementById('noteInput').value = '';
+      previewMode = 'eyes';
+      renderOledPreview();
       if (await writeBle("CLEAR_NOTE")) showToast('Recado removido do NUTR-E.');
     }
 
@@ -355,6 +769,9 @@
       const w = document.getElementById('water').value;
       if (await writeBle("ALARMS:" + f + "," + w)) showToast('Horários salvos no NUTR-E! 💾');
     }
+
+    renderDrawCanvas();
+    renderOledPreview();
   </script>
 </body>
 </html>
