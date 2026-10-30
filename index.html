@@ -263,7 +263,6 @@
       gap: 8px;
     }
 
-    /* Botão Simples de Mutar */
     .mute-single-btn {
       width: 100%;
       padding: 11px;
@@ -316,7 +315,6 @@
       border: 1px solid rgba(0, 229, 255, 0.3);
     }
 
-    /* Tela Inicial (Status Principal) */
     .clock-center { text-align: center; margin-bottom: 16px; }
     .main-clock {
       font-size: 52px;
@@ -353,7 +351,6 @@
     .time-chip-label { font-size: 10px; color: var(--muted); text-transform: uppercase; font-weight: 700; }
     .time-chip-val { font-size: 18px; font-weight: 800; color: var(--accent); margin-top: 2px; }
 
-    /* Mural & Agenda Estilo */
     .mural-active-screen {
       background: #03060c;
       border: 1px solid rgba(0, 229, 255, 0.35);
@@ -437,17 +434,34 @@
       background: rgba(0, 229, 255, 0.1); padding: 3px 6px; border-radius: 5px; flex-shrink: 0;
     }
     .item-title { font-size: 13px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .item-actions { display: flex; gap: 4px; flex-shrink: 0; }
-
-    .icon-btn {
-      background: #1e293b; border: 1px solid rgba(255,255,255,0.1);
-      color: #e2e8f0; padding: 5px 8px; border-radius: 7px; font-size: 10px; font-weight: 800; cursor: pointer;
+    
+    /* Botões de Ação Destacados do Mural & Agenda */
+    .item-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .agenda-btn-destacado {
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: transform 0.1s ease;
     }
-    .icon-btn.send { background: rgba(0, 229, 255, 0.15); border-color: rgba(0, 229, 255, 0.35); color: var(--accent); }
-    .icon-btn.pin { background: rgba(139, 92, 246, 0.18); border-color: rgba(139, 92, 246, 0.4); color: #c4b5fd; }
-    .icon-btn.del { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.35); color: #fca5a5; }
+    .agenda-btn-destacado:active { transform: scale(0.93); }
+    .agenda-btn-pin {
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+      border: 1px solid #a78bfa;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+    }
+    .agenda-btn-del {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      border: 1px solid #f87171;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+    }
 
-    /* Botões e Inputs Gerais */
     .btn {
       display: flex; align-items: center; justify-content: center;
       width: 100%; padding: 11px; border: none; border-radius: 11px;
@@ -587,7 +601,6 @@
       </div>
 
       <div class="drawer-footer-actions">
-        <!-- Botão Direto de Mutar -->
         <button class="mute-single-btn" id="muteBtn" onclick="toggleMute()">
           <span id="muteIco">🔊</span> <span id="muteTxt">Mutar Som</span>
         </button>
@@ -674,15 +687,14 @@
         <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:12px; margin-top:10px;">
           <div class="card-title" style="margin-bottom:6px;"><span>💬 Recado Rápido Avulso</span></div>
           <input type="text" id="noteInput" maxlength="28" placeholder="Digite uma frase rápida...">
-          <div class="btn-row-3" style="margin-top:6px;">
-            <button class="btn btn-cyan" onclick="sendNote(false)">👀 Alternar</button>
-            <button class="btn btn-purple" onclick="sendNote(true)">📌 Fixar</button>
-            <button class="btn btn-red" onclick="clearNote()">🗑️ Limpar</button>
+          <div class="btn-row" style="margin-top:6px;">
+            <button class="btn btn-purple" onclick="sendNote(true)">📌 Fixar no OLED</button>
+            <button class="btn btn-red" onclick="clearNote()">🗑️ Limpar OLED</button>
           </div>
         </div>
       </section>
 
-      <!-- 3. HORÁRIOS -->
+      <!-- 3. HORÁRIOS (Sem opções de teste) -->
       <section id="secAlarms" class="card hidden">
         <div class="card-title">⏰ Configurar Horários</div>
         <div class="alarm-row">
@@ -693,13 +705,9 @@
           <span class="alarm-label">💧 Água</span>
           <input type="time" id="water" value="14:00">
         </div>
-        <div class="btn-row" style="margin-bottom: 10px;">
+        <div class="btn-row">
           <button class="btn btn-green" onclick="saveAlarms()">💾 Salvar</button>
           <button class="btn btn-red" onclick="sendCmd('STOP', 'Alarme parado! 🟢')">✅ Parar Alarme</button>
-        </div>
-        <div class="btn-row">
-          <button class="btn btn-test" onclick="sendCmd('TEST_FOOD', 'Testando COMER!')">🔔 Testar Comer</button>
-          <button class="btn btn-test" onclick="sendCmd('TEST_WATER', 'Testando AGUA!')">🔔 Testar Água</button>
         </div>
       </section>
 
@@ -809,7 +817,7 @@
       renderAgenda();
 
       if (pinToOled) {
-        await sendAgendaItemToOled(newItem.id, true);
+        await sendAgendaItemToOled(newItem.id);
       } else {
         showToast("Compromisso salvo! 📅");
       }
@@ -833,14 +841,13 @@
       showToast("Concluídos removidos!");
     }
 
-    async function sendAgendaItemToOled(id, fixed) {
+    async function sendAgendaItemToOled(id) {
       const item = agendaItems.find(i => i.id === id);
       if (!item) return;
       const formatted = item.time + " " + item.title;
-      const prefix = fixed ? "FIXED:" : "NOTE:";
-      document.getElementById('activeNotePreview').innerText = (fixed ? "📌 " : "👀 ") + formatted;
-      if (await writeBle(prefix + formatted)) {
-        showToast(fixed ? "Fixado no OLED! 📌" : "Enviado ao OLED! 👀");
+      document.getElementById('activeNotePreview').innerText = "📌 " + formatted;
+      if (await writeBle("FIXED:" + formatted)) {
+        showToast("Fixado no OLED! 📌");
       }
     }
 
@@ -860,6 +867,7 @@
         return;
       }
 
+      // Agora com apenas 2 botões bem destacados: Fixar (📌) e Deletar (✕)
       list.innerHTML = filtered.map(item => `
         <div class="agenda-item prio-${item.prio} ${item.done ? 'done' : ''}">
           <div class="item-left">
@@ -868,9 +876,8 @@
             <span class="item-title">${item.title}</span>
           </div>
           <div class="item-actions">
-            <button class="icon-btn send" onclick="sendAgendaItemToOled(${item.id}, false)">👀</button>
-            <button class="icon-btn pin" onclick="sendAgendaItemToOled(${item.id}, true)">📌</button>
-            <button class="icon-btn del" onclick="deleteAgendaItem(${item.id})">✕</button>
+            <button class="agenda-btn-destacado agenda-btn-pin" onclick="sendAgendaItemToOled(${item.id})">📌 Fixar</button>
+            <button class="agenda-btn-destacado agenda-btn-del" onclick="deleteAgendaItem(${item.id})">✕ Excluir</button>
           </div>
         </div>
       `).join('');
@@ -1031,7 +1038,7 @@
 
     async function clearNote() {
       document.getElementById('noteInput').value = '';
-      document.getElementById('activeNotePreview').innerText = "Nenhum recado ou compromisso ativo";
+      document.getElementById('activeNotePreview').innerText = "Nenhum compromisso ativo";
       if (await writeBle("CLEAR_NOTE")) { showToast('Limpo na tela OLED.'); }
     }
 
