@@ -335,21 +335,6 @@
       font-weight: 700;
       color: #e2e8f0;
     }
-    .saved-times-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-    .time-chip {
-      background: rgba(0, 0, 0, 0.32);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 12px;
-      padding: 10px;
-      text-align: center;
-    }
-    .time-chip-label { font-size: 10px; color: var(--muted); text-transform: uppercase; font-weight: 700; }
-    .time-chip-val { font-size: 18px; font-weight: 800; color: var(--accent); margin-top: 2px; }
 
     .mural-active-screen {
       background: #03060c;
@@ -435,7 +420,6 @@
     }
     .item-title { font-size: 13px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     
-    /* Botões de Ação Destacados do Mural & Agenda */
     .item-actions { display: flex; gap: 6px; flex-shrink: 0; }
     .agenda-btn-destacado {
       padding: 7px 12px;
@@ -462,6 +446,9 @@
       box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
     }
 
+    .food-time-row { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
+    .food-time-row input { flex: 1; }
+
     .btn {
       display: flex; align-items: center; justify-content: center;
       width: 100%; padding: 11px; border: none; border-radius: 11px;
@@ -473,7 +460,6 @@
     .btn-green { background: linear-gradient(135deg, #10b981, #059669); }
     .btn-red { background: linear-gradient(135deg, #ef4444, #dc2626); }
     .btn-purple { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
-    .btn-test { background: #1e293b; color: #cbd5e1; font-size: 11px; padding: 9px; border: 1px solid rgba(255,255,255,0.08); }
 
     .alarm-row {
       display: flex; justify-content: space-between; align-items: center;
@@ -483,9 +469,8 @@
     input[type="time"], input[type="text"] {
       background: #070b14; color: var(--accent);
       border: 1px solid rgba(0, 229, 255, 0.35); padding: 9px 12px;
-      border-radius: 10px; font-size: 13px; font-weight: 600; outline: none;
+      border-radius: 10px; font-size: 13px; font-weight: 600; outline: none; width: 100%;
     }
-    input[type="text"] { width: 100%; color: #fff; }
     .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .btn-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
 
@@ -548,7 +533,7 @@
       <button class="btn btn-cyan" onclick="connectFromTutorial()">
         🔗 Conectar ao NUTR-E Agora
       </button>
-      <button class="btn btn-test" style="margin-top: 8px;" onclick="finishTutorial()">
+      <button class="btn btn-red" style="margin-top: 8px;" onclick="finishTutorial()">
         👉 Abrir painel sem conectar
       </button>
     </div>
@@ -596,7 +581,7 @@
           <span>🎯</span> Pomodoro
         </button>
         <button class="drawer-nav-item" id="navGame" onclick="switchSection('Game')">
-          <span>🦖</span> Mini-Game
+          <span>🦖</span> Mini-Game OLED
         </button>
       </div>
 
@@ -604,8 +589,8 @@
         <button class="mute-single-btn" id="muteBtn" onclick="toggleMute()">
           <span id="muteIco">🔊</span> <span id="muteTxt">Mutar Som</span>
         </button>
-        <button class="btn btn-test" onclick="sendCmd('SHOW_QR', 'QR Code no OLED! 📱'); toggleDrawer(false);">📱 QR no OLED</button>
-        <button class="btn btn-test" onclick="openTutorial()">❔ Tutorial</button>
+        <button class="btn btn-purple" style="margin-top:4px;" onclick="sendCmd('SHOW_QR', 'QR Code no OLED! 📱'); toggleDrawer(false);">📱 QR no OLED</button>
+        <button class="btn btn-red" style="margin-top:4px;" onclick="openTutorial()">❔ Tutorial</button>
       </div>
     </nav>
 
@@ -620,17 +605,6 @@
         <div class="clock-center">
           <div class="main-clock" id="clock">--:--</div>
           <div class="mood-pill" id="mood">Aguardando conexão... 👀</div>
-        </div>
-
-        <div class="saved-times-grid">
-          <div class="time-chip">
-            <div class="time-chip-label">🍽️ Alimentar</div>
-            <div class="time-chip-val" id="savedFoodTxt">12:00</div>
-          </div>
-          <div class="time-chip">
-            <div class="time-chip-label">💧 Beber Água</div>
-            <div class="time-chip-val" id="savedWaterTxt">14:00</div>
-          </div>
         </div>
 
         <div class="btn-row">
@@ -652,7 +626,7 @@
             <div style="font-size:10px; text-transform:uppercase; color:var(--muted); margin-bottom:2px;">Na Tela do Robô</div>
             <div class="mural-active-text" id="activeNotePreview">Nenhum compromisso ativo</div>
           </div>
-          <button class="icon-btn del" onclick="clearNote()">Limpar</button>
+          <button class="agenda-btn-destacado agenda-btn-del" onclick="clearNote()">Limpar OLED</button>
         </div>
 
         <!-- Adicionar Compromisso -->
@@ -678,7 +652,7 @@
             <button class="filter-chip" id="fltPending" onclick="setAgendaFilter('pending')">Pendentes</button>
             <button class="filter-chip" id="fltDone" onclick="setAgendaFilter('done')">Concluídos</button>
           </div>
-          <button class="icon-btn del" onclick="clearDoneItems()">🧹 Limpar Concluídos</button>
+          <button class="agenda-btn-destacado agenda-btn-del" onclick="clearDoneItems()">🧹 Limpar Concluídos</button>
         </div>
 
         <div class="agenda-list" id="agendaList"></div>
@@ -694,21 +668,15 @@
         </div>
       </section>
 
-      <!-- 3. HORÁRIOS (Sem opções de teste) -->
+      <!-- 3. HORÁRIOS (Múltiplas alimentações + Água 1h) -->
       <section id="secAlarms" class="card hidden">
-        <div class="card-title">⏰ Configurar Horários</div>
-        <div class="alarm-row">
-          <span class="alarm-label">🍽️ Comer</span>
-          <input type="time" id="food" value="12:00">
-        </div>
-        <div class="alarm-row">
-          <span class="alarm-label">💧 Água</span>
-          <input type="time" id="water" value="14:00">
-        </div>
-        <div class="btn-row">
-          <button class="btn btn-green" onclick="saveAlarms()">💾 Salvar</button>
-          <button class="btn btn-red" onclick="sendCmd('STOP', 'Alarme parado! 🟢')">✅ Parar Alarme</button>
-        </div>
+        <div class="card-title">⏰ Horários & Lembretes</div>
+        <p style="font-size:12px; color:var(--muted); margin-bottom:10px;">💧 O NUTR-E avisa para beber água automaticamente <b>de 1 em 1 hora</b>.</p>
+        
+        <div style="font-size:12px; font-weight:700; color:var(--accent); margin-bottom:6px;">🍽️ Horários de Alimentação:</div>
+        <div id="foodTimesContainer" style="margin-bottom:10px;"></div>
+        <button class="btn btn-purple" style="margin-bottom:10px;" onclick="addFoodTimeInput('15:00')">➕ Adicionar Horário</button>
+        <button class="btn btn-green" onclick="saveAlarms()">💾 Salvar Horários</button>
       </section>
 
       <!-- 4. POMODORO -->
@@ -727,11 +695,10 @@
       <!-- 5. MINI-GAME -->
       <section id="secGame" class="card hidden">
         <div class="card-title">
-          <span>🦖 MiniGame</span>
-          <span class="badge">Recorde: <strong id="dinoBest">0</strong></span>
+          <span>🦖 Pula-Cacto OLED</span>
         </div>
         <p style="font-size: 12px; color: var(--muted); margin-bottom: 12px;">
-          Inicie abaixo e use o botão do NUTR-E para saltar os obstáculos!
+          Inicie abaixo e use o botão do chapéu do NUTR-E para saltar os obstáculos na tela OLED!
         </p>
         <div class="btn-row">
           <button class="btn btn-cyan" onclick="sendCmd('GAME_START', 'Jogo iniciado! Use o chapéu! 🦖')">🎮 Iniciar Jogo</button>
@@ -750,7 +717,6 @@
 
     let bleDevice = null;
     let bleChar = null;
-    let alarmsLoaded = false;
     let isMuted = false;
     let deferredInstallPrompt = null;
 
@@ -767,6 +733,26 @@
       });
       toggleDrawer(false);
       window.scrollTo(0, 0);
+    }
+
+    function addFoodTimeInput(val) {
+      const container = document.getElementById('foodTimesContainer');
+      const row = document.createElement('div');
+      row.className = 'food-time-row';
+      row.innerHTML = `
+        <input type="time" class="food-time-input" value="${val}">
+        <button class="btn btn-red" style="width:44px;" onclick="this.parentElement.remove()">✕</button>
+      `;
+      container.appendChild(row);
+    }
+
+    async function saveAlarms() {
+      const inputs = document.querySelectorAll('.food-time-input');
+      const times = Array.from(inputs).map(i => i.value).filter(v => v);
+      const joined = times.join(',');
+      if (await writeBle("FOODS:" + joined)) {
+        showToast("Horários salvos! 💾");
+      }
     }
 
     // === SISTEMA DE AGENDA & COMPROMISSOS ===
@@ -867,7 +853,6 @@
         return;
       }
 
-      // Agora com apenas 2 botões bem destacados: Fixar (📌) e Deletar (✕)
       list.innerHTML = filtered.map(item => `
         <div class="agenda-item prio-${item.prio} ${item.done ? 'done' : ''}">
           <div class="item-left">
@@ -1004,16 +989,12 @@
 
         if (data.dnd !== undefined) { isMuted = data.dnd; updateMuteButtonUI(); }
 
-        if (data.food && data.water) {
-          document.getElementById('savedFoodTxt').innerText = data.food;
-          document.getElementById('savedWaterTxt').innerText = data.water;
-          if (!alarmsLoaded) {
-            document.getElementById('food').value = data.food;
-            document.getElementById('water').value = data.water;
-            alarmsLoaded = true;
+        if (data.food) {
+          const container = document.getElementById('foodTimesContainer');
+          if (container.children.length === 0) {
+            data.food.split(',').forEach(t => addFoodTimeInput(t));
           }
         }
-        if (data.hi !== undefined) { document.getElementById('dinoBest').innerText = data.hi; }
       } catch (e) {}
     }
 
@@ -1042,14 +1023,9 @@
       if (await writeBle("CLEAR_NOTE")) { showToast('Limpo na tela OLED.'); }
     }
 
-    async function saveAlarms() {
-      const f = document.getElementById('food').value;
-      const w = document.getElementById('water').value;
-      document.getElementById('savedFoodTxt').innerText = f;
-      document.getElementById('savedWaterTxt').innerText = w;
-      if (await writeBle("ALARMS:" + f + "," + w)) showToast('Horários salvos! 💾');
-    }
-
+    // Inicialização do painel
+    addFoodTimeInput("12:00");
+    addFoodTimeInput("19:00");
     loadAgenda();
     checkFirstTimeAndBrowser();
   </script>
