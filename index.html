@@ -13,8 +13,8 @@
   <style>
     :root {
       --bg: #070b14;
-      --panel: rgba(16, 23, 38, 0.94);
-      --card: rgba(22, 31, 50, 0.85);
+      --panel: rgba(16, 23, 38, 0.96);
+      --card: rgba(22, 31, 50, 0.9);
       --accent: #00e5ff;
       --accent-glow: rgba(0, 229, 255, 0.28);
       --text: #f1f5f9;
@@ -34,20 +34,20 @@
         linear-gradient(90deg, rgba(0, 229, 255, 0.025) 1px, transparent 1px);
       background-size: 100% 100%, 24px 24px, 24px 24px;
       color: var(--text);
-      padding: 14px;
-      max-width: 1180px;
+      padding: 12px;
+      max-width: 520px;
       margin: 0 auto;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      padding-bottom: 40px;
     }
 
     .hidden { display: none !important; }
 
     /* =====================================================
-       TELA DE PRIMEIRA VEZ (BOAS-VINDAS + TUTORIAL CHROME)
+       TELA DE BOAS-VINDAS (PRIMEIRA VEZ)
        ===================================================== */
-    #onboardingView { max-width: 480px; margin: 0 auto; width: 100%; }
     .welcome-hero { text-align: center; padding: 20px 12px 16px; margin-bottom: 14px; }
     .hero-icon {
       width: 105px; height: 105px; border-radius: 24px;
@@ -90,27 +90,49 @@
     }
 
     /* =====================================================
-       TOPO LIMPO: NUTR-E + STATUS ONLINE
+       TOPO LIMPO: BOTÃO HAMBÚRGUER (☰) + NUTR-E + STATUS
        ===================================================== */
     .brand-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       padding: 4px 2px;
     }
+    .brand-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .menu-toggle-btn {
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      color: var(--accent);
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .menu-toggle-btn:active { background: rgba(0, 229, 255, 0.25); }
+
     .brand-logo {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 900;
       letter-spacing: 3px;
       color: #fff;
       text-shadow: 0 0 12px var(--accent-glow);
     }
     .brand-logo span { color: var(--accent); }
+
     .status-badge {
       font-size: 11px;
       font-weight: 800;
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 20px;
       letter-spacing: 1px;
       background: rgba(239, 68, 68, 0.15);
@@ -151,33 +173,126 @@
     }
 
     /* =====================================================
-       GRID DE 2 LADOS: ESQUERDA (OPÇÕES) | DIREITA (MURAL GRANDE & AGENDA)
+       MENU LATERAL RETRÁTIL (DRAWER / GAVETA)
        ===================================================== */
-    .split-layout {
-      display: grid;
-      grid-template-columns: 320px 1fr;
-      gap: 16px;
-      flex: 1;
-      align-items: stretch;
+    .drawer-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(3, 6, 12, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+    .drawer-overlay.open {
+      opacity: 1;
+      visibility: visible;
     }
 
-    @media (max-width: 720px) {
-      .split-layout {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* COLUNA ESQUERDA: Todas as Opções Empilhadas */
-    .left-options-col {
+    .side-drawer {
+      position: fixed;
+      top: 0; left: -280px; width: 280px; height: 100%;
+      background: #0c1322;
+      border-right: 1px solid rgba(0, 229, 255, 0.22);
+      z-index: 1001;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      padding: 20px 16px;
+      box-shadow: 5px 0 30px rgba(0,0,0,0.7);
+      transition: left 0.25s ease;
+    }
+    .side-drawer.open {
+      left: 0;
     }
 
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .drawer-title {
+      font-size: 18px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 2px;
+    }
+    .drawer-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .drawer-menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+    .drawer-nav-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.15s;
+    }
+    .drawer-nav-item span { font-size: 18px; }
+    .drawer-nav-item.active {
+      background: rgba(0, 229, 255, 0.16);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .drawer-footer-actions {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Botão Simples de Mutar */
+    .mute-single-btn {
+      width: 100%;
+      padding: 11px;
+      border-radius: 11px;
+      border: 1px solid rgba(139, 92, 246, 0.45);
+      background: rgba(139, 92, 246, 0.15);
+      color: #ddd6fe;
+      font-weight: 800;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .mute-single-btn.muted {
+      background: var(--danger);
+      border-color: var(--danger);
+      color: #fff;
+    }
+
+    /* =====================================================
+       ESTILO DOS CARDS E TELAS
+       ===================================================== */
     .card {
       background: var(--panel);
       border-radius: 18px;
-      padding: 15px;
+      padding: 18px;
+      margin-bottom: 14px;
       border: 1px solid rgba(0, 229, 255, 0.16);
       box-shadow: 0 6px 20px rgba(0,0,0,0.35);
     }
@@ -186,7 +301,7 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       font-weight: 800;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       color: var(--accent);
       display: flex;
       justify-content: space-between;
@@ -201,131 +316,58 @@
       border: 1px solid rgba(0, 229, 255, 0.3);
     }
 
-    /* Relógio e Estado na Esquerda */
-    .clock-center { text-align: center; margin-bottom: 12px; }
+    /* Tela Inicial (Status Principal) */
+    .clock-center { text-align: center; margin-bottom: 16px; }
     .main-clock {
-      font-size: 40px;
+      font-size: 52px;
       font-weight: 900;
       color: #fff;
       letter-spacing: 2px;
-      text-shadow: 0 0 16px var(--accent-glow);
+      text-shadow: 0 0 18px var(--accent-glow);
       line-height: 1;
     }
     .mood-pill {
       display: inline-block;
-      margin-top: 8px;
+      margin-top: 10px;
       background: rgba(0, 229, 255, 0.1);
       border: 1px solid rgba(0, 229, 255, 0.28);
-      padding: 5px 12px;
+      padding: 6px 16px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
       color: #e2e8f0;
     }
     .saved-times-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 10px;
+      gap: 10px;
+      margin-bottom: 14px;
     }
     .time-chip {
       background: rgba(0, 0, 0, 0.32);
       border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 10px;
-      padding: 7px;
+      border-radius: 12px;
+      padding: 10px;
       text-align: center;
     }
     .time-chip-label { font-size: 10px; color: var(--muted); text-transform: uppercase; font-weight: 700; }
-    .time-chip-val { font-size: 15px; font-weight: 800; color: var(--accent); margin-top: 2px; }
+    .time-chip-val { font-size: 18px; font-weight: 800; color: var(--accent); margin-top: 2px; }
 
-    /* Botão Simples de Mutar */
-    .mute-single-btn {
-      width: 100%;
-      padding: 13px;
-      border-radius: 14px;
-      border: 1px solid rgba(139, 92, 246, 0.45);
-      background: rgba(139, 92, 246, 0.15);
-      color: #ddd6fe;
-      font-weight: 800;
-      font-size: 13px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.2s;
-    }
-    .mute-single-btn.muted {
-      background: var(--danger);
-      border-color: var(--danger);
-      color: #fff;
-      box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
-    }
-
-    /* =====================================================
-       COLUNA DIREITA: MURAL GRANDE DE COMPROMISSOS & AGENDA
-       ===================================================== */
-    .agenda-mural-panel {
-      background: linear-gradient(160deg, rgba(16, 23, 38, 0.96), rgba(10, 15, 26, 0.96));
-      border: 1px solid rgba(0, 229, 255, 0.22);
-      border-radius: 20px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
-      min-height: 100%;
-    }
-
-    .mural-top-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 14px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .mural-main-title {
-      font-size: 18px;
-      font-weight: 900;
-      color: #fff;
-      letter-spacing: 1px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .mural-date-sub {
-      font-size: 12px;
-      color: var(--accent);
-      font-weight: 700;
-    }
-
-    /* Display do que está na tela do NUTR-E agora */
-    .oled-live-banner {
+    /* Mural & Agenda Estilo */
+    .mural-active-screen {
       background: #03060c;
       border: 1px solid rgba(0, 229, 255, 0.35);
-      border-radius: 14px;
-      padding: 12px 16px;
-      margin-bottom: 16px;
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
-      box-shadow: inset 0 0 18px rgba(0, 229, 255, 0.08);
+      gap: 10px;
     }
-    .oled-live-info { flex: 1; min-width: 0; }
-    .oled-live-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--muted);
-      margin-bottom: 3px;
-    }
-    .oled-live-text {
+    .mural-active-text {
       font-family: monospace;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
       color: var(--accent);
       white-space: nowrap;
@@ -333,197 +375,82 @@
       text-overflow: ellipsis;
     }
 
-    /* Formulário de Novo Compromisso na Agenda */
     .agenda-add-box {
       background: rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 14px;
       padding: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .agenda-form-row {
       display: grid;
-      grid-template-columns: 105px 1fr 110px;
+      grid-template-columns: 95px 1fr 105px;
       gap: 8px;
       margin-bottom: 8px;
     }
-    @media (max-width: 520px) {
-      .agenda-form-row {
-        grid-template-columns: 1fr 1fr;
-      }
-      .agenda-form-row input[type="text"] {
-        grid-column: span 2;
-      }
+    @media (max-width: 480px) {
+      .agenda-form-row { grid-template-columns: 1fr 1fr; }
+      .agenda-form-row input[type="text"] { grid-column: span 2; }
     }
 
     select {
-      background: #070b14;
-      color: var(--text);
-      border: 1px solid rgba(0, 229, 255, 0.35);
-      padding: 9px 10px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 700;
-      outline: none;
+      background: #070b14; color: var(--text);
+      border: 1px solid rgba(0, 229, 255, 0.35); padding: 9px;
+      border-radius: 10px; font-size: 12px; font-weight: 700; outline: none;
     }
 
-    /*Filtros da Agenda*/
     .agenda-toolbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-      gap: 8px;
-      flex-wrap: wrap;
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 8px;
     }
     .filter-tabs { display: flex; gap: 6px; }
     .filter-chip {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: var(--muted);
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 800;
-      cursor: pointer;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      color: var(--muted); padding: 5px 10px; border-radius: 20px; font-size: 11px; font-weight: 800; cursor: pointer;
     }
-    .filter-chip.active {
-      background: rgba(0, 229, 255, 0.18);
-      border-color: var(--accent);
-      color: #fff;
-    }
+    .filter-chip.active { background: rgba(0, 229, 255, 0.18); border-color: var(--accent); color: #fff; }
 
-    /* Lista de Compromissos da Agenda */
     .agenda-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      max-height: 360px;
-      overflow-y: auto;
-      padding-right: 4px;
-      margin-bottom: 16px;
+      display: flex; flex-direction: column; gap: 8px; max-height: 320px; overflow-y: auto; margin-bottom: 14px;
     }
     .agenda-empty {
-      text-align: center;
-      padding: 32px 16px;
-      color: var(--muted);
-      font-size: 13px;
-      border: 1px dashed rgba(255,255,255,0.1);
-      border-radius: 14px;
+      text-align: center; padding: 24px; color: var(--muted); font-size: 13px;
+      border: 1px dashed rgba(255,255,255,0.1); border-radius: 12px;
     }
     .agenda-item {
-      background: rgba(22, 31, 50, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-left: 4px solid var(--accent);
-      border-radius: 12px;
-      padding: 10px 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      transition: all 0.15s;
+      background: rgba(22, 31, 50, 0.75); border: 1px solid rgba(255, 255, 255, 0.08);
+      border-left: 4px solid var(--accent); border-radius: 11px; padding: 10px;
+      display: flex; justify-content: space-between; align-items: center; gap: 8px;
     }
     .agenda-item.prio-alta { border-left-color: var(--danger); }
     .agenda-item.prio-rotina { border-left-color: var(--purple); }
-    .agenda-item.done {
-      opacity: 0.5;
-      border-left-color: var(--success);
-    }
+    .agenda-item.done { opacity: 0.5; border-left-color: var(--success); }
     .agenda-item.done .item-title { text-decoration: line-through; }
 
-    .item-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-      flex: 1;
-    }
+    .item-left { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; }
     .item-check {
-      width: 22px;
-      height: 22px;
-      border-radius: 6px;
-      border: 2px solid var(--accent);
-      background: transparent;
-      color: #fff;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      flex-shrink: 0;
+      width: 20px; height: 20px; border-radius: 5px; border: 2px solid var(--accent);
+      background: transparent; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0;
     }
-    .agenda-item.done .item-check {
-      background: var(--success);
-      border-color: var(--success);
-    }
+    .agenda-item.done .item-check { background: var(--success); border-color: var(--success); }
     .item-time {
-      font-family: monospace;
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--accent);
-      background: rgba(0, 229, 255, 0.1);
-      padding: 4px 7px;
-      border-radius: 6px;
-      flex-shrink: 0;
+      font-family: monospace; font-size: 12px; font-weight: 800; color: var(--accent);
+      background: rgba(0, 229, 255, 0.1); padding: 3px 6px; border-radius: 5px; flex-shrink: 0;
     }
-    .item-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .item-actions {
-      display: flex;
-      gap: 5px;
-      flex-shrink: 0;
-    }
+    .item-title { font-size: 13px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .item-actions { display: flex; gap: 4px; flex-shrink: 0; }
+
     .icon-btn {
-      background: #1e293b;
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #e2e8f0;
-      padding: 6px 9px;
-      border-radius: 8px;
-      font-size: 11px;
-      font-weight: 800;
-      cursor: pointer;
+      background: #1e293b; border: 1px solid rgba(255,255,255,0.1);
+      color: #e2e8f0; padding: 5px 8px; border-radius: 7px; font-size: 10px; font-weight: 800; cursor: pointer;
     }
-    .icon-btn:active { transform: scale(0.94); }
     .icon-btn.send { background: rgba(0, 229, 255, 0.15); border-color: rgba(0, 229, 255, 0.35); color: var(--accent); }
     .icon-btn.pin { background: rgba(139, 92, 246, 0.18); border-color: rgba(139, 92, 246, 0.4); color: #c4b5fd; }
     .icon-btn.del { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.35); color: #fca5a5; }
 
-    /* Recado Rápido Livre & Post-its */
-    .quick-mural-box {
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 14px;
-    }
-    .quick-notes-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-      margin-top: 8px;
-    }
-    @media (max-width: 520px) {
-      .quick-notes-grid { grid-template-columns: 1fr 1fr; }
-    }
-    .post-it {
-      background: rgba(0, 229, 255, 0.07);
-      border: 1px solid rgba(0, 229, 255, 0.22);
-      color: #e2e8f0;
-      padding: 8px;
-      border-radius: 9px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      text-align: center;
-    }
-
     /* Botões e Inputs Gerais */
     .btn {
       display: flex; align-items: center; justify-content: center;
-      width: 100%; padding: 10px; border: none; border-radius: 10px;
+      width: 100%; padding: 11px; border: none; border-radius: 11px;
       font-size: 12px; font-weight: 800; color: #fff; cursor: pointer;
       transition: transform 0.12s ease; user-select: none;
     }
@@ -532,16 +459,16 @@
     .btn-green { background: linear-gradient(135deg, #10b981, #059669); }
     .btn-red { background: linear-gradient(135deg, #ef4444, #dc2626); }
     .btn-purple { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
-    .btn-test { background: #1e293b; color: #cbd5e1; font-size: 11px; padding: 8px; border: 1px solid rgba(255,255,255,0.08); }
+    .btn-test { background: #1e293b; color: #cbd5e1; font-size: 11px; padding: 9px; border: 1px solid rgba(255,255,255,0.08); }
 
     .alarm-row {
       display: flex; justify-content: space-between; align-items: center;
-      background: rgba(0,0,0,0.3); padding: 8px 10px; border-radius: 10px; margin-bottom: 8px;
+      background: rgba(0,0,0,0.3); padding: 9px 12px; border-radius: 10px; margin-bottom: 8px;
     }
-    .alarm-label { font-size: 12px; font-weight: 600; color: var(--muted); }
+    .alarm-label { font-size: 13px; font-weight: 600; color: var(--muted); }
     input[type="time"], input[type="text"] {
       background: #070b14; color: var(--accent);
-      border: 1px solid rgba(0, 229, 255, 0.35); padding: 9px 10px;
+      border: 1px solid rgba(0, 229, 255, 0.35); padding: 9px 12px;
       border-radius: 10px; font-size: 13px; font-weight: 600; outline: none;
     }
     input[type="text"] { width: 100%; color: #fff; }
@@ -614,13 +541,16 @@
   </div>
 
   <!-- =========================================================
-       2. PAINEL PRINCIPAL: LADO ESQUERDO (OPÇÕES) | LADO DIREITO (MURAL & AGENDA)
+       2. PAINEL PRINCIPAL (MENU HAMBÚRGUER + TELA INICIAL LIMPA)
        ========================================================= -->
   <div id="dashboardView" class="hidden" style="display:flex; flex-direction:column; flex:1;">
 
-    <!-- Topo limpo: Apenas NUTR-E e ONLINE/OFFLINE -->
+    <!-- TOPO: Botão ☰ (Hambúrguer) + NUTR-E + Status Online/Offline -->
     <div class="brand-bar">
-      <div class="brand-logo">NUTR<span>-E</span></div>
+      <div class="brand-left">
+        <button class="menu-toggle-btn" onclick="toggleDrawer(true)">☰</button>
+        <div class="brand-logo">NUTR<span>-E</span></div>
+      </div>
       <div class="status-badge" id="bleTag">OFFLINE</div>
     </div>
 
@@ -628,176 +558,180 @@
       🔗 Conectar Bluetooth ao NUTR-E
     </button>
 
-    <div class="split-layout">
+    <!-- ===================================================
+         MENU LATERAL RETRÁTIL (GAVETA ☰)
+         ================================================   -->
+    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer(false)"></div>
+    <nav class="side-drawer" id="sideDrawer">
+      <div class="drawer-header">
+        <div class="drawer-title">NUTR-E</div>
+        <button class="drawer-close-btn" onclick="toggleDrawer(false)">✕</button>
+      </div>
 
-      <!-- ===================================================
-           LADO ESQUERDO: TODAS AS OPÇÕES E CONTROLES DO ROBÔ
-           =================================================== -->
-      <aside class="left-options-col">
-
-        <!-- 1. Relógio, Humor e Confirmação Rápida -->
-        <div class="card">
-          <div class="clock-center">
-            <div class="main-clock" id="clock">--:--</div>
-            <div class="mood-pill" id="mood">Aguardando conexão... 👀</div>
-          </div>
-
-          <div class="saved-times-grid">
-            <div class="time-chip">
-              <div class="time-chip-label">🍽️ Alimentar</div>
-              <div class="time-chip-val" id="savedFoodTxt">12:00</div>
-            </div>
-            <div class="time-chip">
-              <div class="time-chip-label">💧 Água</div>
-              <div class="time-chip-val" id="savedWaterTxt">14:00</div>
-            </div>
-          </div>
-
-          <div class="btn-row">
-            <button class="btn btn-green" onclick="sendCmd('FOOD', 'Alimentação confirmada! 🟢')">🍽️ Alimentei</button>
-            <button class="btn btn-cyan" onclick="sendCmd('WATER', 'Hidratação confirmada! 🟢')">💧 Bebi Água</button>
-          </div>
-        </div>
-
-        <!-- 2. Configurar Horários -->
-        <div class="card">
-          <div class="card-title">⏰ Horários de Lembrete</div>
-          <div class="alarm-row">
-            <span class="alarm-label">🍽️ Comer</span>
-            <input type="time" id="food" value="12:00">
-          </div>
-          <div class="alarm-row">
-            <span class="alarm-label">💧 Água</span>
-            <input type="time" id="water" value="14:00">
-          </div>
-          <div class="btn-row">
-            <button class="btn btn-green" onclick="saveAlarms()">💾 Salvar</button>
-            <button class="btn btn-red" onclick="sendCmd('STOP', 'Alarme parado! 🟢')">✅ Parar</button>
-          </div>
-          <div class="btn-row" style="margin-top: 6px;">
-            <button class="btn btn-test" onclick="sendCmd('TEST_FOOD', 'Testando COMER!')">🔔 Testar Comer</button>
-            <button class="btn btn-test" onclick="sendCmd('TEST_WATER', 'Testando AGUA!')">🔔 Testar Água</button>
-          </div>
-        </div>
-
-        <!-- 3. Modo Pomodoro (Separado) -->
-        <div class="card">
-          <div class="card-title">
-            <span>🎯 Pomodoro</span>
-            <span class="badge" id="pomoStatus">Inativo</span>
-          </div>
-          <div class="btn-row-3">
-            <button class="btn btn-cyan" onclick="sendCmd('POMO_FOCUS', 'Foco 25m iniciado! 🎯')">▶️ 25m</button>
-            <button class="btn btn-green" onclick="sendCmd('POMO_BREAK', 'Pausa 5m iniciada! ☕')">☕ 5m</button>
-            <button class="btn btn-red" onclick="sendCmd('POMO_STOP', 'Pomodoro parado.')">⏹️ Parar</button>
-          </div>
-        </div>
-
-        <!-- 4. Mini-Game Pula-Cacto (Separado) -->
-        <div class="card">
-          <div class="card-title">
-            <span>🦖 Mini-Game OLED</span>
-            <span class="badge">Recorde: <strong id="dinoBest">0</strong></span>
-          </div>
-          <div class="btn-row">
-            <button class="btn btn-cyan" onclick="sendCmd('GAME_START', 'Jogo iniciado no OLED! Use o chapéu! 🦖')">🎮 Jogar</button>
-            <button class="btn btn-red" onclick="sendCmd('GAME_STOP', 'Jogo encerrado.')">⏹️ Sair</button>
-          </div>
-        </div>
-
-        <!-- 5. Botão Direto de Mutar (Sem explicação extra) -->
-        <button class="mute-single-btn" id="muteBtn" onclick="toggleMute()">
-          <span id="muteIco">🔊</span>
-          <span id="muteTxt">Mutar</span>
+      <div class="drawer-menu-list">
+        <button class="drawer-nav-item active" id="navHome" onclick="switchSection('Home')">
+          <span>🏠</span> Início
         </button>
+        <button class="drawer-nav-item" id="navAgenda" onclick="switchSection('Agenda')">
+          <span>📅</span> Mural & Agenda
+        </button>
+        <button class="drawer-nav-item" id="navAlarms" onclick="switchSection('Alarms')">
+          <span>⏰</span> Horários
+        </button>
+        <button class="drawer-nav-item" id="navPomo" onclick="switchSection('Pomo')">
+          <span>🎯</span> Pomodoro
+        </button>
+        <button class="drawer-nav-item" id="navGame" onclick="switchSection('Game')">
+          <span>🦖</span> Mini-Game OLED
+        </button>
+      </div>
+
+      <div class="drawer-footer-actions">
+        <!-- Botão Direto de Mutar -->
+        <button class="mute-single-btn" id="muteBtn" onclick="toggleMute()">
+          <span id="muteIco">🔊</span> <span id="muteTxt">Mutar Som</span>
+        </button>
+        <button class="btn btn-test" onclick="sendCmd('SHOW_QR', 'QR Code no OLED! 📱'); toggleDrawer(false);">📱 QR no OLED</button>
+        <button class="btn btn-test" onclick="openTutorial()">❔ Tutorial</button>
+      </div>
+    </nav>
+
+
+    <!-- ===================================================
+         CONTEÚDO PRINCIPAL (EXIBE 1 SEÇÃO POR VEZ)
+         ================================================   -->
+    <main>
+
+      <!-- 1. TELA INICIAL (Apenas Status Importante) -->
+      <section id="secHome" class="card">
+        <div class="clock-center">
+          <div class="main-clock" id="clock">--:--</div>
+          <div class="mood-pill" id="mood">Aguardando conexão... 👀</div>
+        </div>
+
+        <div class="saved-times-grid">
+          <div class="time-chip">
+            <div class="time-chip-label">🍽️ Alimentar</div>
+            <div class="time-chip-val" id="savedFoodTxt">12:00</div>
+          </div>
+          <div class="time-chip">
+            <div class="time-chip-label">💧 Beber Água</div>
+            <div class="time-chip-val" id="savedWaterTxt">14:00</div>
+          </div>
+        </div>
 
         <div class="btn-row">
-          <button class="btn btn-test" onclick="sendCmd('SHOW_QR', 'QR Code exibido no OLED! 📱')">📱 QR no OLED</button>
-          <button class="btn btn-test" onclick="openTutorial()">❔ Tutorial</button>
+          <button class="btn btn-green" onclick="sendCmd('FOOD', 'Alimentação confirmada! 🟢')">🍽️ Já me Alimentei</button>
+          <button class="btn btn-cyan" onclick="sendCmd('WATER', 'Hidratação confirmada! 🟢')">💧 Bebi Água</button>
+        </div>
+      </section>
+
+      <!-- 2. MURAL & AGENDA DE COMPROMISSOS -->
+      <section id="secAgenda" class="card hidden">
+        <div class="card-title">
+          <span>📅 Mural & Agenda de Compromissos</span>
+          <span class="badge" id="agendaCountBadge">0 pendentes</span>
         </div>
 
-      </aside>
-
-      <!-- ===================================================
-           LADO DIREITO: MURAL GRANDE DE COMPROMISSOS & AGENDA
-           =================================================== -->
-      <main class="agenda-mural-panel">
-        <div>
-          <div class="mural-top-header">
-            <div>
-              <div class="mural-main-title">📅 Mural & Agenda do NUTR-E</div>
-              <div class="mural-date-sub" id="todayDateStr">Carregando data...</div>
-            </div>
-            <button class="btn btn-cyan" style="width:auto; padding:8px 14px;" onclick="sendNextCommitmentToOled()">
-              📡 Enviar Próximo ao OLED
-            </button>
+        <!-- Banner OLED Ativo -->
+        <div class="mural-active-screen">
+          <div style="min-width:0; flex:1;">
+            <div style="font-size:10px; text-transform:uppercase; color:var(--muted); margin-bottom:2px;">Na Tela do Robô</div>
+            <div class="mural-active-text" id="activeNotePreview">Nenhum compromisso ativo</div>
           </div>
-
-          <!-- Status do Recado Ativo na Tela OLED do Robô -->
-          <div class="oled-live-banner">
-            <div class="oled-live-info">
-              <div class="oled-live-label">Exibindo na Tela OLED do NUTR-E</div>
-              <div class="oled-live-text" id="activeNotePreview">Nenhum recado ou compromisso ativo</div>
-            </div>
-            <button class="icon-btn del" onclick="clearNote()">🗑️ Limpar OLED</button>
-          </div>
-
-          <!-- Adicionar Novo Compromisso na Agenda -->
-          <div class="agenda-add-box">
-            <div class="card-title" style="margin-bottom:8px;">
-              <span>➕ Novo Compromisso na Agenda</span>
-              <span class="badge" id="agendaCountBadge">0 pendentes</span>
-            </div>
-            <div class="agenda-form-row">
-              <input type="time" id="taskTime" value="09:00">
-              <input type="text" id="taskTitle" maxlength="28" placeholder="Ex: Entrega TCC, Reunião, Academia...">
-              <select id="taskPrio">
-                <option value="normal">🔹 Normal</option>
-                <option value="alta">🔴 Urgente</option>
-                <option value="rotina">🟣 Rotina</option>
-              </select>
-            </div>
-            <div class="btn-row">
-              <button class="btn btn-green" onclick="addAgendaItem(false)">➕ Salvar na Agenda</button>
-              <button class="btn btn-purple" onclick="addAgendaItem(true)">📌 Salvar e Fixar no OLED</button>
-            </div>
-          </div>
-
-          <!-- Barra de Filtro da Agenda -->
-          <div class="agenda-toolbar">
-            <div class="filter-tabs">
-              <button class="filter-chip active" id="fltAll" onclick="setAgendaFilter('all')">Todos</button>
-              <button class="filter-chip" id="fltPending" onclick="setAgendaFilter('pending')">Pendentes</button>
-              <button class="filter-chip" id="fltDone" onclick="setAgendaFilter('done')">Concluídos</button>
-            </div>
-            <button class="icon-btn del" onclick="clearDoneItems()">🧹 Limpar Concluídos</button>
-          </div>
-
-          <!-- Lista de Compromissos -->
-          <div class="agenda-list" id="agendaList"></div>
+          <button class="icon-btn del" onclick="clearNote()">Limpar</button>
         </div>
 
-        <!-- Rodapé do Mural: Recado Rápido Avulso -->
-        <div class="quick-mural-box">
-          <div class="card-title" style="margin-bottom:8px;">
-            <span>💬 Recado Rápido no OLED</span>
+        <!-- Adicionar Compromisso -->
+        <div class="agenda-add-box">
+          <div class="agenda-form-row">
+            <input type="time" id="taskTime" value="09:00">
+            <input type="text" id="taskTitle" maxlength="28" placeholder="Novo compromisso...">
+            <select id="taskPrio">
+              <option value="normal">🔹 Normal</option>
+              <option value="alta">🔴 Urgente</option>
+              <option value="rotina">🟣 Rotina</option>
+            </select>
           </div>
-          <div style="display:flex; gap:6px; margin-bottom:8px;">
-            <input type="text" id="noteInput" maxlength="28" placeholder="Digite uma frase rápida para o OLED...">
-            <button class="btn btn-cyan" style="width:110px;" onclick="sendNote(false)">👀 Alternar</button>
-            <button class="btn btn-purple" style="width:95px;" onclick="sendNote(true)">📌 Fixar</button>
-          </div>
-          <div class="quick-notes-grid">
-            <button class="post-it" onclick="quickNote('📚 Estudando')">📚 Estudando</button>
-            <button class="post-it" onclick="quickNote('☕ Pausa Café')">☕ Pausa Café</button>
-            <button class="post-it" onclick="quickNote('🎧 Em Reunião')">🎧 Em Reunião</button>
-            <button class="post-it" onclick="quickNote('⏳ Volto logo!')">⏳ Volto logo!</button>
+          <div class="btn-row">
+            <button class="btn btn-green" onclick="addAgendaItem(false)">➕ Salvar na Agenda</button>
+            <button class="btn btn-purple" onclick="addAgendaItem(true)">📌 Salvar e Fixar OLED</button>
           </div>
         </div>
 
-      </main>
+        <div class="agenda-toolbar">
+          <div class="filter-tabs">
+            <button class="filter-chip active" id="fltAll" onclick="setAgendaFilter('all')">Todos</button>
+            <button class="filter-chip" id="fltPending" onclick="setAgendaFilter('pending')">Pendentes</button>
+            <button class="filter-chip" id="fltDone" onclick="setAgendaFilter('done')">Concluídos</button>
+          </div>
+          <button class="icon-btn del" onclick="clearDoneItems()">🧹 Limpar Concluídos</button>
+        </div>
 
-    </div>
+        <div class="agenda-list" id="agendaList"></div>
+
+        <!-- Recado Rápido Livre -->
+        <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:12px; margin-top:10px;">
+          <div class="card-title" style="margin-bottom:6px;"><span>💬 Recado Rápido Avulso</span></div>
+          <input type="text" id="noteInput" maxlength="28" placeholder="Digite uma frase rápida...">
+          <div class="btn-row-3" style="margin-top:6px;">
+            <button class="btn btn-cyan" onclick="sendNote(false)">👀 Alternar</button>
+            <button class="btn btn-purple" onclick="sendNote(true)">📌 Fixar</button>
+            <button class="btn btn-red" onclick="clearNote()">🗑️ Limpar</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. HORÁRIOS -->
+      <section id="secAlarms" class="card hidden">
+        <div class="card-title">⏰ Configurar Horários</div>
+        <div class="alarm-row">
+          <span class="alarm-label">🍽️ Comer</span>
+          <input type="time" id="food" value="12:00">
+        </div>
+        <div class="alarm-row">
+          <span class="alarm-label">💧 Água</span>
+          <input type="time" id="water" value="14:00">
+        </div>
+        <div class="btn-row" style="margin-bottom: 10px;">
+          <button class="btn btn-green" onclick="saveAlarms()">💾 Salvar</button>
+          <button class="btn btn-red" onclick="sendCmd('STOP', 'Alarme parado! 🟢')">✅ Parar Alarme</button>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-test" onclick="sendCmd('TEST_FOOD', 'Testando COMER!')">🔔 Testar Comer</button>
+          <button class="btn btn-test" onclick="sendCmd('TEST_WATER', 'Testando AGUA!')">🔔 Testar Água</button>
+        </div>
+      </section>
+
+      <!-- 4. POMODORO -->
+      <section id="secPomo" class="card hidden">
+        <div class="card-title">
+          <span>🎯 Modo Pomodoro</span>
+          <span class="badge" id="pomoStatus">Inativo</span>
+        </div>
+        <div class="btn-row-3">
+          <button class="btn btn-cyan" onclick="sendCmd('POMO_FOCUS', 'Foco 25m iniciado! 🎯')">▶️ 25m</button>
+          <button class="btn btn-green" onclick="sendCmd('POMO_BREAK', 'Pausa 5m iniciada! ☕')">☕ 5m</button>
+          <button class="btn btn-red" onclick="sendCmd('POMO_STOP', 'Pomodoro parado.')">⏹️ Parar</button>
+        </div>
+      </section>
+
+      <!-- 5. MINI-GAME -->
+      <section id="secGame" class="card hidden">
+        <div class="card-title">
+          <span>🦖 Pula-Cacto OLED</span>
+          <span class="badge">Recorde: <strong id="dinoBest">0</strong></span>
+        </div>
+        <p style="font-size: 12px; color: var(--muted); margin-bottom: 12px;">
+          Inicie abaixo e use o botão do chapéu do NUTR-E para saltar os obstáculos na tela OLED!
+        </p>
+        <div class="btn-row">
+          <button class="btn btn-cyan" onclick="sendCmd('GAME_START', 'Jogo iniciado! Use o chapéu! 🦖')">🎮 Iniciar Jogo</button>
+          <button class="btn btn-red" onclick="sendCmd('GAME_STOP', 'Jogo encerrado.')">⏹️ Sair</button>
+        </div>
+      </section>
+
+    </main>
   </div>
 
   <div id="toast">Comando enviado ao NUTR-E!</div>
@@ -812,10 +746,24 @@
     let isMuted = false;
     let deferredInstallPrompt = null;
 
-    // === SISTEMA DE AGENDA & COMPROMISSOS (Salvo no localStorage) ===
+    // === CONTROLE DO MENU LATERAL (GAVETA ☰) ===
+    function toggleDrawer(open) {
+      document.getElementById('sideDrawer').classList.toggle('open', open);
+      document.getElementById('drawerOverlay').classList.toggle('open', open);
+    }
+
+    function switchSection(secName) {
+      ['Home', 'Agenda', 'Alarms', 'Pomo', 'Game'].forEach(s => {
+        document.getElementById('sec' + s).classList.toggle('hidden', s !== secName);
+        document.getElementById('nav' + s).classList.toggle('active', s === secName);
+      });
+      toggleDrawer(false);
+      window.scrollTo(0, 0);
+    }
+
+    // === SISTEMA DE AGENDA & COMPROMISSOS ===
     let agendaItems = [];
     let agendaFilter = 'all';
-    let lastAutoSentTaskMinute = '';
 
     function loadAgenda() {
       try {
@@ -825,24 +773,16 @@
         } else {
           agendaItems = [
             { id: 1, time: '09:00', title: 'Planejar o dia', prio: 'rotina', done: false },
-            { id: 2, time: '14:00', title: 'Revisar código ESP32', prio: 'alta', done: false },
-            { id: 3, time: '19:00', title: 'Faculdade / Estudos', prio: 'normal', done: false }
+            { id: 2, time: '14:00', title: 'Revisar código ESP32', prio: 'alta', done: false }
           ];
           saveAgendaStorage();
         }
       } catch (e) { agendaItems = []; }
       renderAgenda();
-      updateTodayDateHeader();
     }
 
     function saveAgendaStorage() {
       localStorage.setItem('nutre_agenda_v1', JSON.stringify(agendaItems));
-    }
-
-    function updateTodayDateHeader() {
-      const now = new Date();
-      const opts = { weekday: 'long', day: '2-digit', month: 'long' };
-      document.getElementById('todayDateStr').innerText = now.toLocaleDateString('pt-BR', opts).toUpperCase();
     }
 
     function setAgendaFilter(f) {
@@ -859,19 +799,9 @@
       const title = titleInput.value.trim();
       const prio = document.getElementById('taskPrio').value;
 
-      if (!title) {
-        showToast("Digite o título do compromisso!");
-        return;
-      }
+      if (!title) { showToast("Digite o título do compromisso!"); return; }
 
-      const newItem = {
-        id: Date.now(),
-        time,
-        title,
-        prio,
-        done: false
-      };
-
+      const newItem = { id: Date.now(), time, title, prio, done: false };
       agendaItems.push(newItem);
       agendaItems.sort((a, b) => a.time.localeCompare(b.time));
       saveAgendaStorage();
@@ -881,17 +811,13 @@
       if (pinToOled) {
         await sendAgendaItemToOled(newItem.id, true);
       } else {
-        showToast("Compromisso salvo na agenda! 📅");
+        showToast("Compromisso salvo! 📅");
       }
     }
 
     function toggleAgendaDone(id) {
       const item = agendaItems.find(i => i.id === id);
-      if (item) {
-        item.done = !item.done;
-        saveAgendaStorage();
-        renderAgenda();
-      }
+      if (item) { item.done = !item.done; saveAgendaStorage(); renderAgenda(); }
     }
 
     function deleteAgendaItem(id) {
@@ -904,7 +830,7 @@
       agendaItems = agendaItems.filter(i => !i.done);
       saveAgendaStorage();
       renderAgenda();
-      showToast("Compromissos concluídos removidos!");
+      showToast("Concluídos removidos!");
     }
 
     async function sendAgendaItemToOled(id, fixed) {
@@ -914,17 +840,8 @@
       const prefix = fixed ? "FIXED:" : "NOTE:";
       document.getElementById('activeNotePreview').innerText = (fixed ? "📌 " : "👀 ") + formatted;
       if (await writeBle(prefix + formatted)) {
-        showToast(fixed ? "Compromisso fixado no OLED! 📌" : "Compromisso alternando no OLED! 👀");
+        showToast(fixed ? "Fixado no OLED! 📌" : "Enviado ao OLED! 👀");
       }
-    }
-
-    async function sendNextCommitmentToOled() {
-      const pending = agendaItems.filter(i => !i.done);
-      if (pending.length === 0) {
-        showToast("Nenhum compromisso pendente na agenda!");
-        return;
-      }
-      await sendAgendaItemToOled(pending[0].id, false);
     }
 
     function renderAgenda() {
@@ -939,7 +856,7 @@
       });
 
       if (filtered.length === 0) {
-        list.innerHTML = `<div class="agenda-empty">Nenhum compromisso nesta visualização. Adicione acima! 📅</div>`;
+        list.innerHTML = `<div class="agenda-empty">Nenhum compromisso por aqui. Adicione acima! 📅</div>`;
         return;
       }
 
@@ -951,27 +868,13 @@
             <span class="item-title">${item.title}</span>
           </div>
           <div class="item-actions">
-            <button class="icon-btn send" title="Alternar no OLED" onclick="sendAgendaItemToOled(${item.id}, false)">👀 OLED</button>
-            <button class="icon-btn pin" title="Fixar no OLED" onclick="sendAgendaItemToOled(${item.id}, true)">📌</button>
-            <button class="icon-btn del" title="Excluir" onclick="deleteAgendaItem(${item.id})">✕</button>
+            <button class="icon-btn send" onclick="sendAgendaItemToOled(${item.id}, false)">👀</button>
+            <button class="icon-btn pin" onclick="sendAgendaItemToOled(${item.id}, true)">📌</button>
+            <button class="icon-btn del" onclick="deleteAgendaItem(${item.id})">✕</button>
           </div>
         </div>
       `).join('');
     }
-
-    // Dispara automaticamente para a tela OLED do NUTR-E quando chega o horário de um compromisso
-    setInterval(() => {
-      if (!bleChar) return;
-      const now = new Date();
-      const hm = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
-      if (hm === lastAutoSentTaskMinute) return;
-
-      const dueItem = agendaItems.find(i => !i.done && i.time === hm);
-      if (dueItem) {
-        lastAutoSentTaskMinute = hm;
-        sendAgendaItemToOled(dueItem.id, true);
-      }
-    }, 10000);
 
     // === BOTÃO SIMPLES DE MUTAR ===
     async function toggleMute() {
@@ -985,22 +888,19 @@
     function updateMuteButtonUI() {
       const btn = document.getElementById('muteBtn');
       document.getElementById('muteIco').innerText = isMuted ? '🔇' : '🔊';
-      document.getElementById('muteTxt').innerText = isMuted ? 'Mutado' : 'Mutar';
+      document.getElementById('muteTxt').innerText = isMuted ? 'Desmutar Som' : 'Mutar Som';
       btn.classList.toggle('muted', isMuted);
     }
 
-    // === CONTROLE DE PRIMEIRA VEZ (ONBOARDING) ===
+    // === ONBOARDING E BLUETOOTH ===
     function checkFirstTimeAndBrowser() {
       const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-      const banner = document.getElementById('chromeBanner');
       if (isChrome && navigator.bluetooth) {
-        banner.classList.add('ok');
+        document.getElementById('chromeBanner').classList.add('ok');
         document.getElementById('chromeBannerTitle').innerText = "✅ Google Chrome Detectado!";
-        document.getElementById('chromeBannerDesc').innerHTML = "Navegador pronto para instalar o app e conectar ao <b>NUTR-E</b>.";
+        document.getElementById('chromeBannerDesc').innerHTML = "Navegador pronto para conectar ao <b>NUTR-E</b>.";
       }
-      if (localStorage.getItem('nutre_onboarded') === 'true') {
-        finishTutorial();
-      }
+      if (localStorage.getItem('nutre_onboarded') === 'true') finishTutorial();
     }
 
     window.addEventListener('beforeinstallprompt', (e) => {
@@ -1014,7 +914,7 @@
       deferredInstallPrompt.prompt();
       const { outcome } = await deferredInstallPrompt.userChoice;
       if (outcome === 'accepted') {
-        showToast("Instalando aplicativo NUTR-E! 📲");
+        showToast("Instalando aplicativo! 📲");
         document.getElementById('installPwaBtn').classList.add('hidden');
       }
       deferredInstallPrompt = null;
@@ -1029,6 +929,7 @@
     function openTutorial() {
       document.getElementById('dashboardView').classList.add('hidden');
       document.getElementById('onboardingView').classList.remove('hidden');
+      toggleDrawer(false);
       window.scrollTo(0, 0);
     }
 
@@ -1037,7 +938,6 @@
       finishTutorial();
     }
 
-    // === BLUETOOTH E ATUALIZAÇÃO DO PAINEL ===
     function showToast(msg) {
       const t = document.getElementById('toast');
       t.innerText = msg;
@@ -1046,10 +946,7 @@
     }
 
     async function connectBLE() {
-      if (!navigator.bluetooth) {
-        showToast("Abra no navegador Google Chrome!");
-        return;
-      }
+      if (!navigator.bluetooth) { showToast("Abra no Google Chrome!"); return; }
       try {
         showToast("Procurando NUTR-E...");
         bleDevice = await navigator.bluetooth.requestDevice({
@@ -1078,9 +975,7 @@
         await writeBle("TIME:" + hh + ":" + mm + ":" + ss);
 
         showToast("NUTR-E Online! 🤖");
-      } catch (err) {
-        showToast("Erro: " + err.message);
-      }
+      } catch (err) { showToast("Erro: " + err.message); }
     }
 
     function onDisconnected() {
@@ -1100,10 +995,7 @@
         document.getElementById('mood').innerText = data.mood;
         document.getElementById('pomoStatus').innerText = data.pomo;
 
-        if (data.dnd !== undefined) {
-          isMuted = data.dnd;
-          updateMuteButtonUI();
-        }
+        if (data.dnd !== undefined) { isMuted = data.dnd; updateMuteButtonUI(); }
 
         if (data.food && data.water) {
           document.getElementById('savedFoodTxt').innerText = data.food;
@@ -1114,18 +1006,12 @@
             alarmsLoaded = true;
           }
         }
-
-        if (data.hi !== undefined) {
-          document.getElementById('dinoBest').innerText = data.hi;
-        }
+        if (data.hi !== undefined) { document.getElementById('dinoBest').innerText = data.hi; }
       } catch (e) {}
     }
 
     async function writeBle(text) {
-      if (!bleChar) {
-        showToast("Conecte ao NUTR-E primeiro!");
-        return false;
-      }
+      if (!bleChar) { showToast("Conecte ao NUTR-E primeiro!"); return false; }
       const encoder = new TextEncoder();
       await bleChar.writeValue(encoder.encode(text));
       return true;
@@ -1140,22 +1026,13 @@
       if (!txt) return;
       const prefix = fixed ? "FIXED:" : "NOTE:";
       document.getElementById('activeNotePreview').innerText = (fixed ? "📌 " : "👀 ") + txt;
-      if (await writeBle(prefix + txt)) {
-        showToast(fixed ? 'Recado fixado no NUTR-E! 📌' : 'Recado alternando no NUTR-E! 👀');
-      }
-    }
-
-    async function quickNote(txt) {
-      document.getElementById('noteInput').value = txt;
-      await sendNote(false);
+      if (await writeBle(prefix + txt)) { showToast("Enviado ao OLED! 📺"); }
     }
 
     async function clearNote() {
       document.getElementById('noteInput').value = '';
       document.getElementById('activeNotePreview').innerText = "Nenhum recado ou compromisso ativo";
-      if (await writeBle("CLEAR_NOTE")) {
-        showToast('Recado removido do NUTR-E.');
-      }
+      if (await writeBle("CLEAR_NOTE")) { showToast('Limpo na tela OLED.'); }
     }
 
     async function saveAlarms() {
@@ -1163,7 +1040,7 @@
       const w = document.getElementById('water').value;
       document.getElementById('savedFoodTxt').innerText = f;
       document.getElementById('savedWaterTxt').innerText = w;
-      if (await writeBle("ALARMS:" + f + "," + w)) showToast('Horários salvos no NUTR-E! 💾');
+      if (await writeBle("ALARMS:" + f + "," + w)) showToast('Horários salvos! 💾');
     }
 
     loadAgenda();
