@@ -13,9 +13,9 @@
   <style>
     :root {
       --bg: #070b14;
-      --card: rgba(18, 26, 43, 0.9);
+      --card: rgba(18, 26, 43, 0.92);
       --accent: #00e5ff;
-      --accent-glow: rgba(0, 229, 255, 0.35);
+      --accent-glow: rgba(0, 229, 255, 0.3);
       --text: #f1f5f9;
       --muted: #94a3b8;
       --success: #10b981;
@@ -28,283 +28,243 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: var(--bg);
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.14), transparent 60%),
-        linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+        radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.12), transparent 60%),
+        linear-gradient(rgba(0, 229, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 229, 255, 0.025) 1px, transparent 1px);
       background-size: 100% 100%, 24px 24px, 24px 24px;
       color: var(--text);
       padding: 16px;
       max-width: 480px;
       margin: 0 auto;
-      padding-bottom: 60px;
+      padding-bottom: 50px;
       min-height: 100vh;
     }
 
     .hidden { display: none !important; }
 
     /* =====================================================
-       TELA DE BOAS-VINDAS E TUTORIAL (PRIMEIRA VEZ)
+       TELA DE PRIMEIRA VEZ (BOAS-VINDAS + TUTORIAL CHROME)
        ===================================================== */
-    .welcome-hero {
-      text-align: center;
-      padding: 24px 16px 20px;
-      margin-bottom: 16px;
-    }
+    .welcome-hero { text-align: center; padding: 20px 12px 16px; margin-bottom: 14px; }
     .hero-icon {
-      width: 115px;
-      height: 115px;
-      border-radius: 26px;
-      border: 2px solid var(--accent);
-      box-shadow: 0 0 30px var(--accent-glow);
-      margin-bottom: 14px;
-      object-fit: cover;
+      width: 110px; height: 110px; border-radius: 24px;
+      border: 2px solid var(--accent); box-shadow: 0 0 28px var(--accent-glow);
+      margin-bottom: 12px; object-fit: cover;
     }
     .hero-title {
-      font-size: 34px;
-      font-weight: 900;
-      letter-spacing: 4px;
-      color: #fff;
-      text-shadow: 0 0 15px var(--accent);
-      margin-bottom: 8px;
+      font-size: 32px; font-weight: 900; letter-spacing: 4px;
+      color: #fff; text-shadow: 0 0 14px var(--accent); margin-bottom: 8px;
     }
     .hero-title span { color: var(--accent); }
-    .hero-subtitle {
-      font-size: 14px;
-      line-height: 1.5;
-      color: var(--muted);
-      max-width: 340px;
-      margin: 0 auto;
-    }
+    .hero-subtitle { font-size: 14px; line-height: 1.5; color: var(--muted); }
 
-    /* Aviso de Obrigatoriedade do Google Chrome */
     .chrome-alert {
-      background: rgba(245, 158, 11, 0.12);
-      border: 1px solid rgba(245, 158, 11, 0.5);
-      border-radius: 16px;
-      padding: 14px 16px;
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.5);
+      border-radius: 16px; padding: 14px; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px;
     }
-    .chrome-alert.ok {
-      background: rgba(16, 185, 129, 0.12);
-      border-color: rgba(16, 185, 129, 0.45);
-    }
-    .chrome-alert-icon { font-size: 26px; flex-shrink: 0; }
+    .chrome-alert.ok { background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.45); }
+    .chrome-alert-icon { font-size: 24px; }
     .chrome-alert-text { font-size: 13px; line-height: 1.4; color: #e2e8f0; }
-    .chrome-alert-text strong { color: #fbbf24; display: block; margin-bottom: 2px; font-size: 14px; }
+    .chrome-alert-text strong { color: #fbbf24; display: block; margin-bottom: 2px; }
     .chrome-alert.ok .chrome-alert-text strong { color: #34d399; }
 
-    /* Passos do Tutorial */
     .step-card {
-      background: var(--card);
-      border: 1px solid rgba(0, 229, 255, 0.18);
-      border-radius: 18px;
-      padding: 18px;
-      margin-bottom: 14px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-      position: relative;
+      background: var(--card); border: 1px solid rgba(0, 229, 255, 0.18);
+      border-radius: 18px; padding: 16px; margin-bottom: 14px;
     }
-    .step-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
+    .step-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
     .step-num {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: var(--accent);
-      color: #041019;
-      font-weight: 900;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 0 10px var(--accent-glow);
+      width: 26px; height: 26px; border-radius: 50%; background: var(--accent);
+      color: #041019; font-weight: 900; font-size: 13px;
+      display: flex; align-items: center; justify-content: center;
     }
-    .step-title {
-      font-size: 15px;
-      font-weight: 800;
-      color: #fff;
-    }
-    .step-desc {
-      font-size: 13px;
-      color: #cbd5e1;
-      line-height: 1.55;
-      margin-bottom: 12px;
-    }
-    .step-desc code {
-      background: rgba(0, 229, 255, 0.15);
-      color: var(--accent);
-      padding: 2px 6px;
-      border-radius: 6px;
-      font-weight: 700;
-    }
+    .step-title { font-size: 15px; font-weight: 800; color: #fff; }
+    .step-desc { font-size: 13px; color: #cbd5e1; line-height: 1.5; margin-bottom: 10px; }
     .chrome-steps-box {
-      background: rgba(0, 0, 0, 0.35);
-      border-radius: 12px;
-      padding: 12px;
-      font-size: 13px;
-      color: #e2e8f0;
-      border-left: 3px solid var(--accent);
-      margin-bottom: 12px;
-      line-height: 1.6;
+      background: rgba(0,0,0,0.35); border-radius: 12px; padding: 12px;
+      font-size: 13px; border-left: 3px solid var(--accent); line-height: 1.6;
     }
 
     /* =====================================================
-       ESTILOS DO PAINEL PRINCIPAL DO NUTR-E
+       TOPO LIMPO E RESUMO PRINCIPAL DO NUTR-E
        ===================================================== */
     .brand-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
-      padding: 6px 4px;
+      margin-bottom: 14px;
+      padding: 4px 2px;
     }
     .brand-logo {
-      font-size: 20px;
+      font-size: 24px;
       font-weight: 900;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       color: #fff;
-      text-shadow: 0 0 12px var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .brand-logo img {
-      width: 28px;
-      height: 28px;
-      border-radius: 7px;
-      border: 1px solid var(--accent);
+      text-shadow: 0 0 12px var(--accent-glow);
     }
     .brand-logo span { color: var(--accent); }
-    .top-actions { display: flex; gap: 6px; align-items: center; }
-    .sys-tag {
+    .status-badge {
       font-size: 11px;
-      font-weight: 700;
-      color: var(--accent);
-      background: rgba(0, 229, 255, 0.1);
-      border: 1px solid rgba(0, 229, 255, 0.3);
-      padding: 5px 10px;
+      font-weight: 800;
+      padding: 6px 12px;
       border-radius: 20px;
-      cursor: pointer;
+      letter-spacing: 1px;
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+    .status-badge.online {
+      background: rgba(16, 185, 129, 0.18);
+      color: #34d399;
+      border-color: rgba(16, 185, 129, 0.45);
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.25);
     }
 
     .ble-bar {
       width: 100%;
-      padding: 14px;
+      padding: 13px;
       border-radius: 14px;
       border: 1px solid var(--accent);
       background: linear-gradient(135deg, #00e5ff, #0284c7);
       color: #041019;
       font-weight: 800;
-      font-size: 14px;
+      font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 1px;
       cursor: pointer;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      box-shadow: 0 6px 20px var(--accent-glow);
-      transition: all 0.2s;
+      box-shadow: 0 5px 18px var(--accent-glow);
     }
     .ble-bar.connected {
-      background: rgba(16, 185, 129, 0.15);
+      background: rgba(16, 185, 129, 0.12);
       border-color: var(--success);
       color: #34d399;
-      box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+      box-shadow: none;
     }
 
-    .oled-pcb {
-      background: #0d131f;
-      border: 2px solid #1e293b;
-      border-radius: 16px;
-      padding: 12px 16px 16px;
-      margin-bottom: 18px;
-      position: relative;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6), inset 0 0 15px rgba(0, 229, 255, 0.08);
+    /* Cartão Principal de Horário e Estado */
+    .hero-status-card {
+      background: linear-gradient(145deg, rgba(22, 31, 48, 0.95), rgba(12, 18, 30, 0.95));
+      border: 1px solid rgba(0, 229, 255, 0.22);
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 14px;
       text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.45);
     }
-    .pcb-hole {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      border: 2px solid #475569;
-      background: #070b14;
-      position: absolute;
-    }
-    .pcb-hole.tl { top: 8px; left: 8px; }
-    .pcb-hole.tr { top: 8px; right: 8px; }
-    .pcb-hole.bl { bottom: 8px; left: 8px; }
-    .pcb-hole.br { bottom: 8px; right: 8px; }
-    .pcb-pins {
-      font-family: monospace;
-      font-size: 10px;
-      color: #64748b;
-      letter-spacing: 3px;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
-    .oled-glass {
-      background: #020408;
-      border: 2px solid rgba(0, 229, 255, 0.35);
-      border-radius: 8px;
-      width: 256px;
-      height: 128px;
-      margin: 0 auto;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 0 25px rgba(0, 229, 255, 0.15);
-    }
-    #oledPreview {
-      width: 100%;
-      height: 100%;
-      image-rendering: pixelated;
-    }
-    .oled-status-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 12px;
-      padding: 0 8px;
-    }
-    .clock-mini {
-      font-size: 24px;
-      font-weight: 800;
+    .main-clock {
+      font-size: 46px;
+      font-weight: 900;
       color: #fff;
-      text-shadow: 0 0 10px var(--accent-glow);
+      letter-spacing: 2px;
+      text-shadow: 0 0 18px var(--accent-glow);
+      line-height: 1.1;
     }
     .mood-pill {
+      display: inline-block;
+      margin-top: 8px;
       background: rgba(0, 229, 255, 0.12);
       border: 1px solid rgba(0, 229, 255, 0.3);
-      padding: 6px 12px;
+      padding: 6px 16px;
       border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 700;
       color: #e2e8f0;
     }
 
+    /* Resumo dos Horários Salvos na Tela Inicial */
+    .saved-times-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .time-chip {
+      background: rgba(0, 0, 0, 0.32);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+    }
+    .time-chip-label { font-size: 11px; color: var(--muted); text-transform: uppercase; font-weight: 700; }
+    .time-chip-val { font-size: 18px; font-weight: 800; color: var(--accent); margin-top: 2px; }
+
+    /* Barras de Vida Tamagotchi */
+    .tama-bar-group { margin-bottom: 10px; }
+    .tama-bar-group:last-child { margin-bottom: 0; }
+    .tama-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: #cbd5e1;
+    }
+    .tama-track {
+      width: 100%;
+      height: 10px;
+      background: rgba(0,0,0,0.45);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .tama-fill {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.4s ease;
+    }
+    .fill-food { background: linear-gradient(90deg, #10b981, #34d399); }
+    .fill-water { background: linear-gradient(90deg, #0284c7, #00e5ff); }
+    .fill-focus { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+
+    /* Menu de Navegação por Abas */
+    .tab-menu {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      background: rgba(15, 22, 36, 0.95);
+      padding: 6px;
+      border-radius: 16px;
+      border: 1px solid rgba(0, 229, 255, 0.18);
+      margin-bottom: 14px;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      padding: 10px 4px;
+      border-radius: 11px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: var(--accent);
+      color: #041019;
+      box-shadow: 0 3px 12px var(--accent-glow);
+    }
+
+    /* Cartões Gerais */
     .card {
       background: var(--card);
-      backdrop-filter: blur(10px);
       border-radius: 18px;
-      padding: 18px;
-      margin-bottom: 16px;
+      padding: 16px;
+      margin-bottom: 14px;
       border: 1px solid rgba(0, 229, 255, 0.14);
       box-shadow: 0 6px 20px rgba(0,0,0,0.35);
     }
     .card-title {
-      font-size: 14px;
+      font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 1px;
       font-weight: 800;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       color: var(--accent);
       display: flex;
       justify-content: space-between;
@@ -314,115 +274,66 @@
       font-size: 11px;
       background: rgba(0, 229, 255, 0.15);
       color: #fff;
-      padding: 4px 10px;
+      padding: 3px 9px;
       border-radius: 12px;
       border: 1px solid rgba(0, 229, 255, 0.3);
     }
 
+    /* Estúdio de Desenho */
     .draw-wrapper {
       background: #020408;
       border: 2px solid var(--accent);
       border-radius: 10px;
       width: 100%;
       aspect-ratio: 2 / 1;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       overflow: hidden;
       touch-action: none;
     }
-    #drawCanvas {
-      width: 100%;
-      height: 100%;
-      display: block;
-      image-rendering: pixelated;
-    }
-    .stamp-bar {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 10px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-    }
+    #drawCanvas { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+    .stamp-bar { display: flex; gap: 6px; margin-bottom: 10px; overflow-x: auto; padding-bottom: 4px; }
     .stamp-btn {
-      background: #1e293b;
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #e2e8f0;
-      padding: 7px 11px;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
-      flex: 1;
+      background: #1e293b; border: 1px solid rgba(255,255,255,0.1);
+      color: #e2e8f0; padding: 7px 10px; border-radius: 10px;
+      font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; flex: 1;
     }
-    .stamp-btn.active {
-      background: var(--accent);
-      color: #041019;
-      border-color: var(--accent);
-    }
+    .stamp-btn.active { background: var(--accent); color: #041019; }
 
+    /* Botões */
     .btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      padding: 13px;
-      border: none;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 800;
-      color: #fff;
-      cursor: pointer;
-      transition: transform 0.15s ease;
-      user-select: none;
-      margin-bottom: 10px;
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; padding: 12px; border: none; border-radius: 12px;
+      font-size: 13px; font-weight: 800; color: #fff; cursor: pointer;
+      transition: transform 0.12s ease; user-select: none;
     }
     .btn:active { transform: scale(0.96); }
-    .btn-cyan { background: linear-gradient(135deg, #00e5ff, #0099cc); color: #05101a; box-shadow: 0 4px 14px var(--accent-glow); }
+    .btn-cyan { background: linear-gradient(135deg, #00e5ff, #0099cc); color: #05101a; }
     .btn-green { background: linear-gradient(135deg, #10b981, #059669); }
     .btn-red { background: linear-gradient(135deg, #ef4444, #dc2626); }
     .btn-purple { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
     .btn-test { background: #1e293b; color: #cbd5e1; font-size: 12px; padding: 10px; border: 1px solid rgba(255,255,255,0.08); }
 
     .alarm-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(0,0,0,0.3);
-      padding: 10px 14px;
-      border-radius: 12px;
-      margin-bottom: 10px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(0,0,0,0.3); padding: 10px 14px; border-radius: 12px; margin-bottom: 10px;
     }
     .alarm-label { font-size: 14px; font-weight: 600; color: var(--muted); }
     input[type="time"], input[type="text"] {
-      background: #070b14;
-      color: var(--accent);
-      border: 1px solid rgba(0, 229, 255, 0.35);
-      padding: 10px 12px;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 600;
-      outline: none;
+      background: #070b14; color: var(--accent);
+      border: 1px solid rgba(0, 229, 255, 0.35); padding: 10px 12px;
+      border-radius: 10px; font-size: 15px; font-weight: 600; outline: none;
     }
     input[type="text"] { width: 100%; margin-bottom: 10px; color: #fff; }
-    .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px; }
-    .btn-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 6px; }
-    .btn-row .btn, .btn-row-3 .btn { margin-bottom: 0; }
+    .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .btn-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
 
     #toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
+      position: fixed; bottom: 20px; left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: var(--accent);
-      color: #05101a;
-      padding: 10px 22px;
-      border-radius: 30px;
-      font-weight: 800;
-      font-size: 13px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.6);
-      transition: transform 0.25s ease;
-      z-index: 999;
-      white-space: nowrap;
+      background: var(--accent); color: #05101a; padding: 10px 22px;
+      border-radius: 30px; font-weight: 800; font-size: 13px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.6); transition: transform 0.25s ease;
+      z-index: 999; white-space: nowrap;
     }
     #toast.show { transform: translateX(-50%) translateY(0); }
   </style>
@@ -430,113 +341,124 @@
 <body>
 
   <!-- =========================================================
-       1. TELA DE PRIMEIRA VEZ (BOAS-VINDAS + TUTORIAL CHROME)
+       1. TELA DE BOAS-VINDAS (PRIMEIRA VEZ)
        ========================================================= -->
   <div id="onboardingView">
     <div class="welcome-hero">
       <img src="icon.png" alt="NUTR-E" class="hero-icon">
       <div class="hero-title">NUTR<span>-E</span></div>
       <p class="hero-subtitle">
-        Bem-vindo! O seu companheiro robótico de escrivaninha está pronto. Siga o rápido tutorial abaixo para instalar o aplicativo e conectar ao seu <strong>NUTR-E</strong>.
+        Bem-vindo ao seu companheiro robótico! Siga os passos abaixo para instalar o aplicativo pelo Chrome e conectar ao seu <strong>NUTR-E</strong>.
       </p>
     </div>
 
-    <!-- Detector e Aviso Obrigatório do Google Chrome -->
     <div id="chromeBanner" class="chrome-alert">
       <div class="chrome-alert-icon">🌐</div>
       <div class="chrome-alert-text">
-        <strong id="chromeBannerTitle">⚠️ Obrigatório usar o Google Chrome!</strong>
-        <span id="chromeBannerDesc">Para que a comunicação Bluetooth direta com o NUTR-E e a instalação do aplicativo funcionem, abra este link utilizando o navegador <b>Google Chrome</b>.</span>
+        <strong id="chromeBannerTitle">⚠️ Utilize o Google Chrome!</strong>
+        <span id="chromeBannerDesc">Para conectar via Bluetooth ao NUTR-E e instalar o aplicativo, é necessário usar o navegador <b>Google Chrome</b>.</span>
       </div>
     </div>
 
-    <!-- PASSO 1: Instalar o Aplicativo pelo Chrome -->
     <div class="step-card">
       <div class="step-header">
         <div class="step-num">1</div>
-        <div class="step-title">Instalar o Aplicativo pelo Chrome</div>
+        <div class="step-title">Instalar pelo Google Chrome</div>
       </div>
-      <p class="step-desc">
-        Você pode transformar esta página em um aplicativo nativo na tela inicial do seu celular usando o <strong>Google Chrome</strong>:
-      </p>
       <div class="chrome-steps-box">
-        1️⃣ Verifique se você está no navegador <strong>Google Chrome</strong>.<br>
-        2️⃣ Toque no menu de <strong>3 pontinhos (⋮)</strong> no canto superior direito do Chrome.<br>
-        3️⃣ Selecione <strong>"Instalar aplicativo"</strong> (ou <em>"Adicionar à tela inicial"</em>) e confirme!
+        1️⃣ Abra este link no <strong>Google Chrome</strong>.<br>
+        2️⃣ Toque nos <strong>3 pontinhos (⋮)</strong> no canto superior.<br>
+        3️⃣ Toque em <strong>"Instalar aplicativo"</strong> (ou <em>"Adicionar à tela inicial"</em>).
       </div>
-      <button id="installPwaBtn" class="btn btn-purple hidden" onclick="installPWA()">
+      <button id="installPwaBtn" class="btn btn-purple hidden" style="margin-top:10px;" onclick="installPWA()">
         📲 Instalar Aplicativo NUTR-E Agora
       </button>
     </div>
 
-    <!-- PASSO 2: Ativar Bluetooth e Localização -->
     <div class="step-card">
       <div class="step-header">
         <div class="step-num">2</div>
-        <div class="step-title">Ativar Bluetooth e Localização</div>
+        <div class="step-title">Conectar ao Bluetooth do NUTR-E</div>
       </div>
       <p class="step-desc">
-        Ligue o <strong>Bluetooth</strong> e a <strong>Localização (GPS)</strong> na barra superior do seu celular (o Android exige o GPS ativo para o Chrome encontrar dispositivos Bluetooth próximos). Não é necessário parear nas configurações do celular!
-      </p>
-    </div>
-
-    <!-- PASSO 3: Conectar ao NUTR-E -->
-    <div class="step-card">
-      <div class="step-header">
-        <div class="step-num">3</div>
-        <div class="step-title">Conectar ao seu NUTR-E</div>
-      </div>
-      <p class="step-desc">
-        Toque no botão abaixo. Quando a janela do Chrome abrir, selecione o dispositivo <code>NUTRE</code> na lista e toque em <strong>Parear</strong>. O relógio do seu robô será sincronizado automaticamente!
+        Ative o <strong>Bluetooth</strong> e a <strong>Localização (GPS)</strong> do celular, toque no botão abaixo e escolha <strong>NUTRE</strong> na lista:
       </p>
       <button class="btn btn-cyan" onclick="connectFromTutorial()">
-        🔗 Conectar ao NUTR-E e Abrir Painel
+        🔗 Conectar ao NUTR-E Agora
       </button>
-      <button class="btn btn-test" style="margin-top: 8px; margin-bottom: 0;" onclick="finishTutorial()">
-        👉 Já conheço o painel (Entrar sem conectar agora)
+      <button class="btn btn-test" style="margin-top: 8px;" onclick="finishTutorial()">
+        👉 Abrir painel sem conectar
       </button>
     </div>
   </div>
 
   <!-- =========================================================
-       2. PAINEL DE CONTROLE PRINCIPAL DO NUTR-E
+       2. TELA INICIAL DO NUTR-E + MENU DE ABAS
        ========================================================= -->
   <div id="dashboardView" class="hidden">
+
+    <!-- Topo limpo: Apenas NUTR-E e Status ONLINE/OFFLINE -->
     <div class="brand-bar">
-      <div class="brand-logo">
-        <img src="icon.png" alt="NUTR-E">
-        <div>NUTR<span>-E</span></div>
-      </div>
-      <div class="top-actions">
-        <button class="sys-tag" onclick="openTutorial()">❔ Tutorial</button>
-        <div class="sys-tag" id="bleTag">OFFLINE</div>
-      </div>
+      <div class="brand-logo">NUTR<span>-E</span></div>
+      <div class="status-badge" id="bleTag">OFFLINE</div>
     </div>
 
     <button id="bleBtn" class="ble-bar" onclick="connectBLE()">
       🔗 Conectar Bluetooth ao NUTR-E
     </button>
 
-    <!-- MINI MONITOR OLED EM TEMPO REAL -->
-    <div class="oled-pcb">
-      <div class="pcb-hole tl"></div>
-      <div class="pcb-hole tr"></div>
-      <div class="pcb-hole bl"></div>
-      <div class="pcb-hole br"></div>
-      <div class="pcb-pins">GND &nbsp; VCC &nbsp; SCL &nbsp; SDA</div>
-      
-      <div class="oled-glass">
-        <canvas id="oledPreview" width="128" height="64"></canvas>
+    <!-- Informações Básicas + Horários Salvos + Confirmação Rápida -->
+    <div class="hero-status-card">
+      <div class="main-clock" id="clock">--:--</div>
+      <div class="mood-pill" id="mood">Aguardando conexão... 👀</div>
+
+      <div class="saved-times-grid">
+        <div class="time-chip">
+          <div class="time-chip-label">🍽️ Alimentar</div>
+          <div class="time-chip-val" id="savedFoodTxt">12:00</div>
+        </div>
+        <div class="time-chip">
+          <div class="time-chip-label">💧 Beber Água</div>
+          <div class="time-chip-val" id="savedWaterTxt">14:00</div>
+        </div>
       </div>
 
-      <div class="oled-status-bar">
-        <div class="clock-mini" id="clock">--:--</div>
-        <div class="mood-pill" id="mood">Simulador OLED Ativo 👀</div>
+      <div class="btn-row">
+        <button class="btn btn-green" onclick="sendCmd('FOOD', 'Alimentação confirmada! 🟢')">🍽️ Já me Alimentei</button>
+        <button class="btn btn-cyan" onclick="sendCmd('WATER', 'Hidratação confirmada! 🟢')">💧 Bebi Água</button>
       </div>
     </div>
 
-    <!-- 1. ESTÚDIO DE DESENHO PIXEL ART -->
+    <!-- Barras de Status "Tamagotchi" (Saciedade, Hidratação e Foco) -->
     <div class="card">
+      <div class="card-title">
+        <span>🔋 Energia Vital do NUTR-E</span>
+        <span class="badge">Tamagotchi</span>
+      </div>
+      <div class="tama-bar-group">
+        <div class="tama-header"><span>🍽️ Saciedade</span><span id="hungerVal">100%</span></div>
+        <div class="tama-track"><div class="tama-fill fill-food" id="hungerBar" style="width: 100%;"></div></div>
+      </div>
+      <div class="tama-bar-group">
+        <div class="tama-header"><span>💧 Hidratação</span><span id="thirstVal">100%</span></div>
+        <div class="tama-track"><div class="tama-fill fill-water" id="thirstBar" style="width: 100%;"></div></div>
+      </div>
+      <div class="tama-bar-group">
+        <div class="tama-header"><span>🎯 Nível de Foco</span><span id="focusVal">100%</span></div>
+        <div class="tama-track"><div class="tama-fill fill-focus" id="focusBar" style="width: 100%;"></div></div>
+      </div>
+    </div>
+
+    <!-- Menu de Abas: Desenhar | Horários | Pomodoro | Mural -->
+    <div class="tab-menu">
+      <button class="tab-btn active" id="btnTabDraw" onclick="switchTab('Draw')">🎨 Desenhar</button>
+      <button class="tab-btn" id="btnTabAlarms" onclick="switchTab('Alarms')">⏰ Horários</button>
+      <button class="tab-btn" id="btnTabPomo" onclick="switchTab('Pomo')">🎯 Pomodoro</button>
+      <button class="tab-btn" id="btnTabMural" onclick="switchTab('Mural')">📌 Mural</button>
+    </div>
+
+    <!-- ABA 1: DESENHAR -->
+    <div id="tabDraw" class="card">
       <div class="card-title">
         <span>🎨 Desenhar na Tela do NUTR-E</span>
         <span class="badge">OLED 32x16</span>
@@ -558,55 +480,9 @@
       </div>
     </div>
 
-    <!-- 2. HÁBITOS E CUIDADO -->
-    <div class="card">
-      <div class="card-title">💖 Cuidar do NUTR-E (LED Verde D18)</div>
-      <div class="btn-row">
-        <button class="btn btn-green" onclick="triggerPreviewMood('happy'); sendCmd('FOOD', 'Alimentação confirmada no NUTR-E! 🟢')">🍽️ Já me Alimentei</button>
-        <button class="btn btn-cyan" onclick="triggerPreviewMood('happy'); sendCmd('WATER', 'Hidratação confirmada no NUTR-E! 🟢')">💧 Bebi Água</button>
-      </div>
-    </div>
-
-    <!-- 3. MODO POMODORO -->
-    <div class="card">
-      <div class="card-title">
-        <span>🎯 Modo Pomodoro</span>
-        <span class="badge" id="pomoStatus">Inativo</span>
-      </div>
-      <div class="btn-row-3">
-        <button class="btn btn-cyan" onclick="triggerPreviewMood('focused'); sendCmd('POMO_FOCUS', 'Foco 25m iniciado! 🎯')">▶️ Foco 25m</button>
-        <button class="btn btn-green" onclick="triggerPreviewMood('happy'); sendCmd('POMO_BREAK', 'Pausa 5m iniciada! ☕')">☕ Pausa 5m</button>
-        <button class="btn btn-red" onclick="triggerPreviewMood('neutral'); sendCmd('POMO_STOP', 'Pomodoro parado.')">⏹️ Parar</button>
-      </div>
-    </div>
-
-    <!-- 4. MURAL DE RECADOS -->
-    <div class="card">
-      <div class="card-title">📌 Mural de Recados do NUTR-E</div>
-      <input type="text" id="noteInput" maxlength="28" placeholder="Ex: Em aula / Volto logo...">
-      <div class="btn-row-3">
-        <button class="btn btn-cyan" onclick="sendNote(false)">👀 Alternar</button>
-        <button class="btn btn-purple" onclick="sendNote(true)">📌 Fixar Tela</button>
-        <button class="btn btn-red" onclick="clearNote()">🗑️ Limpar</button>
-      </div>
-    </div>
-
-    <!-- 5. MODO NÃO PERTURBE E QR CODE NO ROBÔ -->
-    <div class="card">
-      <div class="card-title">
-        <span>🌙 Sistema & QR Code</span>
-        <span class="badge" id="dndBadge">ATIVO</span>
-      </div>
-      <button class="btn btn-purple" onclick="triggerPreviewMood('sleepy'); sendCmd('DND', 'Modo Não Perturbe alternado! 🌙')">🔇 Alternar Silencioso + Brilho Baixo</button>
-      <div class="btn-row">
-        <button class="btn btn-test" onclick="sendCmd('SHOW_QR', 'QR Code exibido na tela do NUTR-E! 📱')">📱 Mostrar QR no OLED</button>
-        <button class="btn btn-test" onclick="sendCmd('HIDE_QR', 'Olhos ativados no NUTR-E! 👀')">👀 Voltar para Olhos</button>
-      </div>
-    </div>
-
-    <!-- 6. HORÁRIOS DE ALARME -->
-    <div class="card">
-      <div class="card-title">⏰ Horários de Lembrete</div>
+    <!-- ABA 2: HORÁRIOS -->
+    <div id="tabAlarms" class="card hidden">
+      <div class="card-title">⏰ Configurar Horários</div>
       <div class="alarm-row">
         <span class="alarm-label">🍽️ Hora de Comer</span>
         <input type="time" id="food" value="12:00">
@@ -616,14 +492,61 @@
         <input type="time" id="water" value="14:00">
       </div>
       <div class="btn-row">
-        <button class="btn btn-green" onclick="saveAlarms()">💾 Salvar</button>
-        <button class="btn btn-red" onclick="triggerPreviewMood('happy'); sendCmd('STOP', 'Alarme confirmado! 🟢')">✅ Confirmar / Parar</button>
+        <button class="btn btn-green" onclick="saveAlarms()">💾 Salvar Horários</button>
+        <button class="btn btn-red" onclick="sendCmd('STOP', 'Alarme parado! 🟢')">✅ Parar Alarme</button>
       </div>
       <div class="btn-row" style="margin-top: 10px;">
-        <button class="btn btn-test" onclick="sendCmd('TEST_FOOD', 'Testando COMER no NUTR-E!')">🔔 Testar "COMER!"</button>
-        <button class="btn btn-test" onclick="sendCmd('TEST_WATER', 'Testando AGUA no NUTR-E!')">🔔 Testar "AGUA!"</button>
+        <button class="btn btn-test" onclick="sendCmd('TEST_FOOD', 'Testando alarme COMER!')">🔔 Testar "COMER!"</button>
+        <button class="btn btn-test" onclick="sendCmd('TEST_WATER', 'Testando alarme AGUA!')">🔔 Testar "AGUA!"</button>
       </div>
     </div>
+
+    <!-- ABA 3: POMODORO + MINI-GAME DINO -->
+    <div id="tabPomo" class="card hidden">
+      <div class="card-title">
+        <span>🎯 Modo Pomodoro</span>
+        <span class="badge" id="pomoStatus">Inativo</span>
+      </div>
+      <div class="btn-row-3" style="margin-bottom: 14px;">
+        <button class="btn btn-cyan" onclick="sendCmd('POMO_FOCUS', 'Foco 25m iniciado! 🎯')">▶️ Foco 25m</button>
+        <button class="btn btn-green" onclick="sendCmd('POMO_BREAK', 'Pausa 5m iniciada! ☕')">☕ Pausa 5m</button>
+        <button class="btn btn-red" onclick="sendCmd('POMO_STOP', 'Pomodoro parado.')">⏹️ Parar</button>
+      </div>
+
+      <div class="card-title" style="margin-top: 8px;">
+        <span>🦖 Mini-Game Pula-Cacto (Chapéu)</span>
+        <span class="badge">Recorde: <strong id="dinoBest">0</strong></span>
+      </div>
+      <p style="font-size: 12px; color: var(--muted); margin-bottom: 10px;">
+        Inicie abaixo (ou dê 2 cliques rápidos no chapéu do NUTR-E) e aperte o chapéu para pular os cactos na tela OLED!
+      </p>
+      <div class="btn-row">
+        <button class="btn btn-cyan" onclick="sendCmd('GAME_START', 'Jogo iniciado no OLED! Aperte o chapéu! 🦖')">🎮 Jogar no NUTR-E</button>
+        <button class="btn btn-red" onclick="sendCmd('GAME_STOP', 'Jogo encerrado.')">⏹️ Sair do Jogo</button>
+      </div>
+    </div>
+
+    <!-- ABA 4: MURAL & SISTEMA -->
+    <div id="tabMural" class="card hidden">
+      <div class="card-title">📌 Mural de Recados do NUTR-E</div>
+      <input type="text" id="noteInput" maxlength="28" placeholder="Ex: Em aula / Volto logo...">
+      <div class="btn-row-3" style="margin-bottom: 14px;">
+        <button class="btn btn-cyan" onclick="sendNote(false)">👀 Alternar</button>
+        <button class="btn btn-purple" onclick="sendNote(true)">📌 Fixar Tela</button>
+        <button class="btn btn-red" onclick="clearNote()">🗑️ Limpar</button>
+      </div>
+
+      <div class="card-title">
+        <span>🌙 Opções do NUTR-E</span>
+        <span class="badge" id="dndBadge">ATIVO</span>
+      </div>
+      <button class="btn btn-purple" style="margin-bottom: 10px;" onclick="sendCmd('DND', 'Modo Não Perturbe alternado! 🌙')">🔇 Alternar Modo Não Perturbe</button>
+      <div class="btn-row">
+        <button class="btn btn-test" onclick="sendCmd('SHOW_QR', 'QR Code exibido no NUTR-E! 📱')">📱 QR Code no OLED</button>
+        <button class="btn btn-test" onclick="openTutorial()">❔ Abrir Tutorial</button>
+      </div>
+    </div>
+
   </div>
 
   <div id="toast">Comando enviado ao NUTR-E!</div>
@@ -637,21 +560,24 @@
     let alarmsLoaded = false;
     let deferredInstallPrompt = null;
 
-    // === CONTROLE DE PRIMEIRA VEZ (ONBOARDING) E DETECÇÃO DO CHROME ===
+    // === NAVEGAÇÃO ENTRE AS 4 ABAS ===
+    function switchTab(tabName) {
+      ['Draw', 'Alarms', 'Pomo', 'Mural'].forEach(t => {
+        document.getElementById('tab' + t).classList.toggle('hidden', t !== tabName);
+        document.getElementById('btnTab' + t).classList.toggle('active', t === tabName);
+      });
+    }
+
+    // === CONTROLE DE PRIMEIRA VEZ (ONBOARDING) ===
     function checkFirstTimeAndBrowser() {
       const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
       const banner = document.getElementById('chromeBanner');
-      const title = document.getElementById('chromeBannerTitle');
-      const desc = document.getElementById('chromeBannerDesc');
-
       if (isChrome && navigator.bluetooth) {
         banner.classList.add('ok');
-        title.innerText = "✅ Google Chrome Detectado!";
-        desc.innerHTML = "Seu navegador é 100% compatível com a instalação do aplicativo e com o Bluetooth do <b>NUTR-E</b>.";
+        document.getElementById('chromeBannerTitle').innerText = "✅ Google Chrome Detectado!";
+        document.getElementById('chromeBannerDesc').innerHTML = "Navegador pronto para instalar o app e conectar ao <b>NUTR-E</b>.";
       }
-
-      const alreadyOnboarded = localStorage.getItem('nutre_onboarded');
-      if (alreadyOnboarded === 'true') {
+      if (localStorage.getItem('nutre_onboarded') === 'true') {
         finishTutorial();
       }
     }
@@ -678,7 +604,6 @@
       document.getElementById('onboardingView').classList.add('hidden');
       document.getElementById('dashboardView').classList.remove('hidden');
       renderDrawCanvas();
-      renderOledPreview();
     }
 
     function openTutorial() {
@@ -691,94 +616,6 @@
       await connectBLE();
       finishTutorial();
     }
-
-    // === SIMULADOR DO DISPLAY OLED AO VIVO ===
-    const oledCanvas = document.getElementById('oledPreview');
-    const oCtx = oledCanvas.getContext('2d');
-    let previewMode = 'eyes';
-    let previewMood = 'happy';
-    let previewNoteText = '';
-    let blinkState = 0;
-    let eyeOffsetX = 0;
-    let eyeOffsetY = 0;
-
-    function triggerPreviewMood(m) {
-      previewMode = 'eyes';
-      previewMood = m;
-    }
-
-    function renderOledPreview() {
-      oCtx.fillStyle = '#020408';
-      oCtx.fillRect(0, 0, 128, 64);
-      oCtx.fillStyle = '#00e5ff';
-      oCtx.strokeStyle = '#00e5ff';
-
-      if (previewMode === 'draw') {
-        for (let y = 0; y < 16; y++) {
-          for (let x = 0; x < 32; x++) {
-            if (pixelGrid[y][x]) oCtx.fillRect(x * 4, y * 4, 4, 4);
-          }
-        }
-        return;
-      }
-
-      if (previewMode === 'note' && previewNoteText !== '') {
-        oCtx.strokeRect(1, 1, 126, 62);
-        oCtx.fillRect(2, 2, 124, 13);
-        oCtx.fillStyle = '#020408';
-        oCtx.font = 'bold 9px monospace';
-        oCtx.fillText('MURAL DO NUTR-E', 22, 11);
-        oCtx.fillStyle = '#00e5ff';
-        oCtx.font = 'bold 12px sans-serif';
-        oCtx.fillText(previewNoteText.substring(0, 16), 10, 38);
-        return;
-      }
-
-      const lx = 38 + eyeOffsetX;
-      const rx = 90 + eyeOffsetX;
-      const cy = 32 + eyeOffsetY;
-
-      if (blinkState > 0 || previewMood === 'sleepy') {
-        oCtx.fillRect(lx - 18, cy, 36, 4);
-        oCtx.fillRect(rx - 18, cy, 36, 4);
-      } else if (previewMood === 'happy') {
-        for (let ex of [lx, rx]) {
-          oCtx.beginPath();
-          oCtx.arc(ex, cy + 6, 18, Math.PI, 0, false);
-          oCtx.fill();
-          oCtx.fillStyle = '#020408';
-          oCtx.beginPath();
-          oCtx.arc(ex, cy + 12, 14, Math.PI, 0, false);
-          oCtx.fill();
-          oCtx.fillStyle = '#00e5ff';
-        }
-      } else if (previewMood === 'focused') {
-        oCtx.fillRect(lx - 18, cy - 8, 36, 16);
-        oCtx.fillRect(rx - 18, cy - 8, 36, 16);
-      } else {
-        oCtx.beginPath();
-        oCtx.roundRect(lx - 16, cy - 14, 32, 28, 8);
-        oCtx.roundRect(rx - 16, cy - 14, 32, 28, 8);
-        oCtx.fill();
-      }
-
-      oCtx.fillStyle = 'rgba(2, 4, 8, 0.32)';
-      for (let y = 0; y < 64; y += 2) {
-        oCtx.fillRect(0, y, 128, 1);
-      }
-    }
-
-    setInterval(() => {
-      if (Math.random() < 0.18) {
-        blinkState = 1;
-        setTimeout(() => { blinkState = 0; renderOledPreview(); }, 160);
-      }
-      if (Math.random() < 0.3) {
-        eyeOffsetX = Math.floor(Math.random() * 9) - 4;
-        eyeOffsetY = Math.floor(Math.random() * 5) - 2;
-      }
-      renderOledPreview();
-    }, 900);
 
     // === ESTÚDIO DE PIXEL ART (32x16) ===
     const dCanvas = document.getElementById('drawCanvas');
@@ -802,7 +639,6 @@
           if (pixelGrid[y][x]) dCtx.fillRect(x, y, 1, 1);
         }
       }
-      if (previewMode === 'draw') renderOledPreview();
     }
 
     function paintAtEvent(e) {
@@ -813,7 +649,6 @@
       const y = Math.floor(((clientY - rect.top) / rect.height) * 16);
       if (x >= 0 && x < 32 && y >= 0 && y < 16) {
         pixelGrid[y][x] = drawTool;
-        previewMode = 'draw';
         renderDrawCanvas();
       }
     }
@@ -829,34 +664,23 @@
       for (let y = 0; y < 16; y++)
         for (let x = 0; x < 32; x++)
           pixelGrid[y][x] = pixelGrid[y][x] ? 0 : 1;
-      previewMode = 'draw';
       renderDrawCanvas();
     }
 
     function clearDrawing() {
       pixelGrid = Array.from({ length: 16 }, () => Array(32).fill(0));
-      previewMode = 'eyes';
       renderDrawCanvas();
-      renderOledPreview();
       if (bleChar) writeBle("CLEAR_DRAW");
-      showToast("Tela de desenho limpa!");
+      showToast("Desenho limpo!");
     }
 
     function loadStamp(type) {
       pixelGrid = Array.from({ length: 16 }, () => Array(32).fill(0));
       if (type === 'heart') {
         const h = [
-          "0011100011100",
-          "0111110111110",
-          "1111111111111",
-          "1111111111111",
-          "1111111111111",
-          "0111111111110",
-          "0011111111100",
-          "0001111111000",
-          "0000111110000",
-          "0000011100000",
-          "0000001000000"
+          "0011100011100","0111110111110","1111111111111","1111111111111",
+          "1111111111111","0111111111110","0011111111100","0001111111000",
+          "0000111110000","0000011100000","0000001000000"
         ];
         h.forEach((row, r) => {
           for (let c = 0; c < row.length; c++)
@@ -877,7 +701,6 @@
         pixelGrid[2][13] = 1; pixelGrid[3][12] = 1;
         pixelGrid[2][17] = 1; pixelGrid[3][16] = 1;
       }
-      previewMode = 'draw';
       renderDrawCanvas();
     }
 
@@ -902,10 +725,10 @@
         await writeBle("D" + i + ":" + chunk);
         await new Promise(r => setTimeout(r, 45));
       }
-      showToast("Desenho exibido no OLED do NUTR-E! 🎨");
+      showToast("Desenho exibido no NUTR-E! 🎨");
     }
 
-    // === FUNÇÕES BLUETOOTH ===
+    // === BLUETOOTH E ATUALIZAÇÃO DO PAINEL ===
     function showToast(msg) {
       const t = document.getElementById('toast');
       t.innerText = msg;
@@ -915,7 +738,7 @@
 
     async function connectBLE() {
       if (!navigator.bluetooth) {
-        showToast("Abra este link no navegador Google Chrome!");
+        showToast("Abra no navegador Google Chrome!");
         return;
       }
       try {
@@ -934,8 +757,10 @@
         bleChar.addEventListener('characteristicvaluechanged', handleNotification);
 
         document.getElementById('bleBtn').classList.add('connected');
-        document.getElementById('bleBtn').innerText = "🟢 NUTR-E Conectado via Bluetooth";
-        document.getElementById('bleTag').innerText = "ONLINE";
+        document.getElementById('bleBtn').innerText = "🟢 NUTR-E Conectado";
+        const tag = document.getElementById('bleTag');
+        tag.innerText = "ONLINE";
+        tag.classList.add('online');
 
         const now = new Date();
         const hh = String(now.getHours()).padStart(2, '0');
@@ -943,7 +768,7 @@
         const ss = String(now.getSeconds()).padStart(2, '0');
         await writeBle("TIME:" + hh + ":" + mm + ":" + ss);
 
-        showToast("NUTR-E conectado e sincronizado! 🤖");
+        showToast("NUTR-E Online! 🤖");
       } catch (err) {
         showToast("Erro: " + err.message);
       }
@@ -952,7 +777,9 @@
     function onDisconnected() {
       document.getElementById('bleBtn').classList.remove('connected');
       document.getElementById('bleBtn').innerText = "🔗 Conectar Bluetooth ao NUTR-E";
-      document.getElementById('bleTag').innerText = "OFFLINE";
+      const tag = document.getElementById('bleTag');
+      tag.innerText = "OFFLINE";
+      tag.classList.remove('online');
       document.getElementById('mood').innerText = "NUTR-E Desconectado";
     }
 
@@ -965,18 +792,31 @@
         document.getElementById('pomoStatus').innerText = data.pomo;
         document.getElementById('dndBadge').innerText = data.dnd ? 'SILENCIOSO' : 'ATIVO';
 
-        if (previewMode === 'eyes') {
-          if (data.dnd || data.mood.includes('Dormindo')) previewMood = 'sleepy';
-          else if (data.mood.includes('Focado')) previewMood = 'focused';
-          else if (data.mood.includes('Feliz') || data.mood.includes('Humor')) previewMood = 'happy';
-          else previewMood = 'neutral';
-          renderOledPreview();
+        if (data.food && data.water) {
+          document.getElementById('savedFoodTxt').innerText = data.food;
+          document.getElementById('savedWaterTxt').innerText = data.water;
+          if (!alarmsLoaded) {
+            document.getElementById('food').value = data.food;
+            document.getElementById('water').value = data.water;
+            alarmsLoaded = true;
+          }
         }
 
-        if (!alarmsLoaded && data.food && data.water) {
-          document.getElementById('food').value = data.food;
-          document.getElementById('water').value = data.water;
-          alarmsLoaded = true;
+        // Atualiza Barras Tamagotchi
+        if (data.hg !== undefined) {
+          document.getElementById('hungerVal').innerText = data.hg + '%';
+          document.getElementById('hungerBar').style.width = data.hg + '%';
+        }
+        if (data.th !== undefined) {
+          document.getElementById('thirstVal').innerText = data.th + '%';
+          document.getElementById('thirstBar').style.width = data.th + '%';
+        }
+        if (data.fc !== undefined) {
+          document.getElementById('focusVal').innerText = data.fc + '%';
+          document.getElementById('focusBar').style.width = data.fc + '%';
+        }
+        if (data.hi !== undefined) {
+          document.getElementById('dinoBest').innerText = data.hi;
         }
       } catch (e) {}
     }
@@ -998,9 +838,6 @@
     async function sendNote(fixed) {
       const txt = document.getElementById('noteInput').value.trim();
       if (!txt) return;
-      previewMode = 'note';
-      previewNoteText = txt;
-      renderOledPreview();
       const prefix = fixed ? "FIXED:" : "NOTE:";
       if (await writeBle(prefix + txt)) {
         showToast(fixed ? 'Recado fixado no NUTR-E! 📌' : 'Recado alternando no NUTR-E! 👀');
@@ -1009,14 +846,14 @@
 
     async function clearNote() {
       document.getElementById('noteInput').value = '';
-      previewMode = 'eyes';
-      renderOledPreview();
       if (await writeBle("CLEAR_NOTE")) showToast('Recado removido do NUTR-E.');
     }
 
     async function saveAlarms() {
       const f = document.getElementById('food').value;
       const w = document.getElementById('water').value;
+      document.getElementById('savedFoodTxt').innerText = f;
+      document.getElementById('savedWaterTxt').innerText = w;
       if (await writeBle("ALARMS:" + f + "," + w)) showToast('Horários salvos no NUTR-E! 💾');
     }
 
