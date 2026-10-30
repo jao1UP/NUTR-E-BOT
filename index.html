@@ -668,7 +668,7 @@
         </div>
       </section>
 
-      <!-- 3. HORÁRIOS (Múltiplas alimentações + Água 1h) -->
+      <!-- 3. HORÁRIOS (Sem opções de teste) -->
       <section id="secAlarms" class="card hidden">
         <div class="card-title">⏰ Horários & Lembretes</div>
         <p style="font-size:12px; color:var(--muted); margin-bottom:10px;">💧 O NUTR-E avisa para beber água automaticamente <b>de 1 em 1 hora</b>.</p>
@@ -755,7 +755,7 @@
       }
     }
 
-    // === SISTEMA DE AGENDA & COMPROMISSOS ===
+    // === SISTEMA DE AGENDA & COMPROMISSOS (Inicia limpo) ===
     let agendaItems = [];
     let agendaFilter = 'all';
 
@@ -765,10 +765,7 @@
         if (saved) {
           agendaItems = JSON.parse(saved);
         } else {
-          agendaItems = [
-            { id: 1, time: '09:00', title: 'Planejar o dia', prio: 'rotina', done: false },
-            { id: 2, time: '14:00', title: 'Revisar código ESP32', prio: 'alta', done: false }
-          ];
+          agendaItems = []; // Iniciado totalmente vazio para o usuário adicionar
           saveAgendaStorage();
         }
       } catch (e) { agendaItems = []; }
