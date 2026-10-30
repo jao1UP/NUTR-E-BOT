@@ -13,13 +13,13 @@
   <style>
     :root {
       --bg: #070b14;
-      --card: rgba(18, 26, 43, 0.92);
+      --panel: rgba(16, 23, 38, 0.94);
+      --card: rgba(22, 31, 50, 0.85);
       --accent: #00e5ff;
-      --accent-glow: rgba(0, 229, 255, 0.3);
+      --accent-glow: rgba(0, 229, 255, 0.28);
       --text: #f1f5f9;
       --muted: #94a3b8;
       --success: #10b981;
-      --warning: #f59e0b;
       --danger: #ef4444;
       --purple: #8b5cf6;
     }
@@ -33,11 +33,12 @@
         linear-gradient(90deg, rgba(0, 229, 255, 0.025) 1px, transparent 1px);
       background-size: 100% 100%, 24px 24px, 24px 24px;
       color: var(--text);
-      padding: 16px;
-      max-width: 480px;
+      padding: 12px;
+      max-width: 780px;
       margin: 0 auto;
-      padding-bottom: 50px;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     .hidden { display: none !important; }
@@ -47,7 +48,7 @@
        ===================================================== */
     .welcome-hero { text-align: center; padding: 20px 12px 16px; margin-bottom: 14px; }
     .hero-icon {
-      width: 110px; height: 110px; border-radius: 24px;
+      width: 105px; height: 105px; border-radius: 24px;
       border: 2px solid var(--accent); box-shadow: 0 0 28px var(--accent-glow);
       margin-bottom: 12px; object-fit: cover;
     }
@@ -56,7 +57,7 @@
       color: #fff; text-shadow: 0 0 14px var(--accent); margin-bottom: 8px;
     }
     .hero-title span { color: var(--accent); }
-    .hero-subtitle { font-size: 14px; line-height: 1.5; color: var(--muted); }
+    .hero-subtitle { font-size: 14px; line-height: 1.5; color: var(--muted); max-width: 380px; margin: 0 auto; }
 
     .chrome-alert {
       background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.5);
@@ -70,7 +71,7 @@
     .chrome-alert.ok .chrome-alert-text strong { color: #34d399; }
 
     .step-card {
-      background: var(--card); border: 1px solid rgba(0, 229, 255, 0.18);
+      background: var(--panel); border: 1px solid rgba(0, 229, 255, 0.18);
       border-radius: 18px; padding: 16px; margin-bottom: 14px;
     }
     .step-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
@@ -87,17 +88,17 @@
     }
 
     /* =====================================================
-       TOPO LIMPO E RESUMO PRINCIPAL DO NUTR-E
+       TOPO LIMPO: NUTR-E + STATUS ONLINE
        ===================================================== */
     .brand-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
       padding: 4px 2px;
     }
     .brand-logo {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 900;
       letter-spacing: 3px;
       color: #fff;
@@ -107,7 +108,7 @@
     .status-badge {
       font-size: 11px;
       font-weight: 800;
-      padding: 6px 12px;
+      padding: 5px 12px;
       border-radius: 20px;
       letter-spacing: 1px;
       background: rgba(239, 68, 68, 0.15);
@@ -123,8 +124,8 @@
 
     .ble-bar {
       width: 100%;
-      padding: 13px;
-      border-radius: 14px;
+      padding: 12px;
+      border-radius: 12px;
       border: 1px solid var(--accent);
       background: linear-gradient(135deg, #00e5ff, #0284c7);
       color: #041019;
@@ -133,12 +134,12 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       cursor: pointer;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      box-shadow: 0 5px 18px var(--accent-glow);
+      box-shadow: 0 4px 15px var(--accent-glow);
     }
     .ble-bar.connected {
       background: rgba(16, 185, 129, 0.12);
@@ -147,120 +148,83 @@
       box-shadow: none;
     }
 
-    /* Cartão Principal de Horário e Estado */
-    .hero-status-card {
-      background: linear-gradient(145deg, rgba(22, 31, 48, 0.95), rgba(12, 18, 30, 0.95));
-      border: 1px solid rgba(0, 229, 255, 0.22);
-      border-radius: 20px;
-      padding: 18px;
-      margin-bottom: 14px;
-      text-align: center;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.45);
-    }
-    .main-clock {
-      font-size: 46px;
-      font-weight: 900;
-      color: #fff;
-      letter-spacing: 2px;
-      text-shadow: 0 0 18px var(--accent-glow);
-      line-height: 1.1;
-    }
-    .mood-pill {
-      display: inline-block;
-      margin-top: 8px;
-      background: rgba(0, 229, 255, 0.12);
-      border: 1px solid rgba(0, 229, 255, 0.3);
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #e2e8f0;
-    }
-
-    /* Resumo dos Horários Salvos na Tela Inicial */
-    .saved-times-grid {
+    /* =====================================================
+       ESTRUTURA PRINCIPAL: BARRA LATERAL ESQUERDA + RESTO DA TELA
+       ===================================================== */
+    .workspace {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin: 14px 0;
+      grid-template-columns: 96px 1fr;
+      gap: 12px;
+      flex: 1;
+      align-items: stretch;
     }
-    .time-chip {
-      background: rgba(0, 0, 0, 0.32);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 12px;
-      padding: 10px;
-      text-align: center;
-    }
-    .time-chip-label { font-size: 11px; color: var(--muted); text-transform: uppercase; font-weight: 700; }
-    .time-chip-val { font-size: 18px; font-weight: 800; color: var(--accent); margin-top: 2px; }
 
-    /* Barras de Vida Tamagotchi */
-    .tama-bar-group { margin-bottom: 10px; }
-    .tama-bar-group:last-child { margin-bottom: 0; }
-    .tama-header {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 5px;
-      color: #cbd5e1;
-    }
-    .tama-track {
-      width: 100%;
-      height: 10px;
-      background: rgba(0,0,0,0.45);
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-    .tama-fill {
-      height: 100%;
-      border-radius: 10px;
-      transition: width 0.4s ease;
-    }
-    .fill-food { background: linear-gradient(90deg, #10b981, #34d399); }
-    .fill-water { background: linear-gradient(90deg, #0284c7, #00e5ff); }
-    .fill-focus { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
-
-    /* Menu de Navegação por Abas */
-    .tab-menu {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-      background: rgba(15, 22, 36, 0.95);
-      padding: 6px;
-      border-radius: 16px;
+    /* Menu Lateral Esquerdo */
+    .left-sidebar {
+      background: var(--panel);
       border: 1px solid rgba(0, 229, 255, 0.18);
-      margin-bottom: 14px;
+      border-radius: 18px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
     }
-    .tab-btn {
-      background: transparent;
-      border: none;
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       color: var(--muted);
-      padding: 10px 4px;
-      border-radius: 11px;
-      font-size: 12px;
-      font-weight: 800;
+      border-radius: 14px;
+      padding: 12px 4px;
       cursor: pointer;
-      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 800;
+      transition: all 0.18s ease;
     }
-    .tab-btn.active {
-      background: var(--accent);
-      color: #041019;
-      box-shadow: 0 3px 12px var(--accent-glow);
+    .nav-btn .ico { font-size: 20px; line-height: 1; }
+    .nav-btn.active {
+      background: rgba(0, 229, 255, 0.16);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 14px var(--accent-glow);
+    }
+    .sidebar-spacer { flex: 1; }
+
+    /* Botão Simples de Mutar na Lateral */
+    .mute-btn {
+      background: rgba(139, 92, 246, 0.14);
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      color: #ddd6fe;
+    }
+    .mute-btn.muted {
+      background: var(--danger);
+      border-color: var(--danger);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
     }
 
-    /* Cartões Gerais */
+    /* Coluna Direita (Conteúdo + Mural de Recados) */
+    .right-stage {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0;
+    }
+
     .card {
-      background: var(--card);
+      background: var(--panel);
       border-radius: 18px;
       padding: 16px;
-      margin-bottom: 14px;
-      border: 1px solid rgba(0, 229, 255, 0.14);
+      border: 1px solid rgba(0, 229, 255, 0.16);
       box-shadow: 0 6px 20px rgba(0,0,0,0.35);
     }
     .card-title {
-      font-size: 13px;
+      font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 1px;
       font-weight: 800;
@@ -279,31 +243,108 @@
       border: 1px solid rgba(0, 229, 255, 0.3);
     }
 
-    /* Estúdio de Desenho */
-    .draw-wrapper {
-      background: #020408;
-      border: 2px solid var(--accent);
-      border-radius: 10px;
-      width: 100%;
-      aspect-ratio: 2 / 1;
-      margin-bottom: 10px;
-      overflow: hidden;
-      touch-action: none;
+    /* Seção Início: Relógio, Estado e Horários Salvos */
+    .clock-center { text-align: center; margin-bottom: 12px; }
+    .main-clock {
+      font-size: 42px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 2px;
+      text-shadow: 0 0 16px var(--accent-glow);
+      line-height: 1;
     }
-    #drawCanvas { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
-    .stamp-bar { display: flex; gap: 6px; margin-bottom: 10px; overflow-x: auto; padding-bottom: 4px; }
-    .stamp-btn {
-      background: #1e293b; border: 1px solid rgba(255,255,255,0.1);
-      color: #e2e8f0; padding: 7px 10px; border-radius: 10px;
-      font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; flex: 1;
+    .mood-pill {
+      display: inline-block;
+      margin-top: 8px;
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.28);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #e2e8f0;
     }
-    .stamp-btn.active { background: var(--accent); color: #041019; }
+    .saved-times-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .time-chip {
+      background: rgba(0, 0, 0, 0.32);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 12px;
+      padding: 8px;
+      text-align: center;
+    }
+    .time-chip-label { font-size: 10px; color: var(--muted); text-transform: uppercase; font-weight: 700; }
+    .time-chip-val { font-size: 16px; font-weight: 800; color: var(--accent); margin-top: 2px; }
 
-    /* Botões */
+    /* =====================================================
+       MURAL DE RECADOS (OCUPA O RESTO DA TELA)
+       ===================================================== */
+    .mural-board {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(160deg, rgba(16, 23, 38, 0.96), rgba(10, 15, 26, 0.96));
+    }
+    .mural-active-screen {
+      background: #03060c;
+      border: 1px solid rgba(0, 229, 255, 0.35);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+      text-align: center;
+      box-shadow: inset 0 0 15px rgba(0, 229, 255, 0.1);
+    }
+    .mural-active-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .mural-active-text {
+      font-family: monospace;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--accent);
+      word-break: break-word;
+    }
+    .quick-notes-title {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 700;
+      margin: 12px 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .quick-notes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .post-it {
+      background: rgba(0, 229, 255, 0.07);
+      border: 1px solid rgba(0, 229, 255, 0.22);
+      color: #e2e8f0;
+      padding: 10px 8px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s;
+    }
+    .post-it:active { transform: scale(0.96); background: rgba(0, 229, 255, 0.2); }
+
+    /* Botões e Inputs */
     .btn {
       display: flex; align-items: center; justify-content: center;
-      width: 100%; padding: 12px; border: none; border-radius: 12px;
-      font-size: 13px; font-weight: 800; color: #fff; cursor: pointer;
+      width: 100%; padding: 11px; border: none; border-radius: 11px;
+      font-size: 12px; font-weight: 800; color: #fff; cursor: pointer;
       transition: transform 0.12s ease; user-select: none;
     }
     .btn:active { transform: scale(0.96); }
@@ -311,27 +352,27 @@
     .btn-green { background: linear-gradient(135deg, #10b981, #059669); }
     .btn-red { background: linear-gradient(135deg, #ef4444, #dc2626); }
     .btn-purple { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
-    .btn-test { background: #1e293b; color: #cbd5e1; font-size: 12px; padding: 10px; border: 1px solid rgba(255,255,255,0.08); }
+    .btn-test { background: #1e293b; color: #cbd5e1; font-size: 11px; padding: 9px; border: 1px solid rgba(255,255,255,0.08); }
 
     .alarm-row {
       display: flex; justify-content: space-between; align-items: center;
-      background: rgba(0,0,0,0.3); padding: 10px 14px; border-radius: 12px; margin-bottom: 10px;
+      background: rgba(0,0,0,0.3); padding: 9px 12px; border-radius: 12px; margin-bottom: 8px;
     }
-    .alarm-label { font-size: 14px; font-weight: 600; color: var(--muted); }
+    .alarm-label { font-size: 13px; font-weight: 600; color: var(--muted); }
     input[type="time"], input[type="text"] {
       background: #070b14; color: var(--accent);
       border: 1px solid rgba(0, 229, 255, 0.35); padding: 10px 12px;
-      border-radius: 10px; font-size: 15px; font-weight: 600; outline: none;
+      border-radius: 10px; font-size: 14px; font-weight: 600; outline: none;
     }
     input[type="text"] { width: 100%; margin-bottom: 10px; color: #fff; }
-    .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .btn-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .btn-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
 
     #toast {
-      position: fixed; bottom: 20px; left: 50%;
+      position: fixed; bottom: 18px; left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: var(--accent); color: #05101a; padding: 10px 22px;
-      border-radius: 30px; font-weight: 800; font-size: 13px;
+      background: var(--accent); color: #05101a; padding: 10px 20px;
+      border-radius: 30px; font-weight: 800; font-size: 12px;
       box-shadow: 0 5px 20px rgba(0,0,0,0.6); transition: transform 0.25s ease;
       z-index: 999; white-space: nowrap;
     }
@@ -393,11 +434,11 @@
   </div>
 
   <!-- =========================================================
-       2. TELA INICIAL DO NUTR-E + MENU DE ABAS
+       2. PAINEL PRINCIPAL (MENU LATERAL ESQUERDO + MURAL)
        ========================================================= -->
-  <div id="dashboardView" class="hidden">
+  <div id="dashboardView" class="hidden" style="display:flex; flex-direction:column; flex:1;">
 
-    <!-- Topo limpo: Apenas NUTR-E e Status ONLINE/OFFLINE -->
+    <!-- Topo limpo: Apenas NUTR-E e ONLINE/OFFLINE -->
     <div class="brand-bar">
       <div class="brand-logo">NUTR<span>-E</span></div>
       <div class="status-badge" id="bleTag">OFFLINE</div>
@@ -407,144 +448,146 @@
       🔗 Conectar Bluetooth ao NUTR-E
     </button>
 
-    <!-- Informações Básicas + Horários Salvos + Confirmação Rápida -->
-    <div class="hero-status-card">
-      <div class="main-clock" id="clock">--:--</div>
-      <div class="mood-pill" id="mood">Aguardando conexão... 👀</div>
+    <!-- Área dividida: Opções na Esquerda | Conteúdo e Mural no Resto da Tela -->
+    <div class="workspace">
 
-      <div class="saved-times-grid">
-        <div class="time-chip">
-          <div class="time-chip-label">🍽️ Alimentar</div>
-          <div class="time-chip-val" id="savedFoodTxt">12:00</div>
-        </div>
-        <div class="time-chip">
-          <div class="time-chip-label">💧 Beber Água</div>
-          <div class="time-chip-val" id="savedWaterTxt">14:00</div>
-        </div>
-      </div>
+      <!-- LATERAL ESQUERDA: Menu de Opções + Botão Simples de Mutar -->
+      <aside class="left-sidebar">
+        <button class="nav-btn active" id="navHome" onclick="selectSidePanel('Home')">
+          <span class="ico">🏠</span>
+          <span>Início</span>
+        </button>
+        <button class="nav-btn" id="navAlarms" onclick="selectSidePanel('Alarms')">
+          <span class="ico">⏰</span>
+          <span>Horários</span>
+        </button>
+        <button class="nav-btn" id="navPomo" onclick="selectSidePanel('Pomo')">
+          <span class="ico">🎯</span>
+          <span>Pomodoro</span>
+        </button>
+        <button class="nav-btn" id="navGame" onclick="selectSidePanel('Game')">
+          <span class="ico">🦖</span>
+          <span>Mini-Game</span>
+        </button>
 
-      <div class="btn-row">
-        <button class="btn btn-green" onclick="sendCmd('FOOD', 'Alimentação confirmada! 🟢')">🍽️ Já me Alimentei</button>
-        <button class="btn btn-cyan" onclick="sendCmd('WATER', 'Hidratação confirmada! 🟢')">💧 Bebi Água</button>
-      </div>
-    </div>
+        <div class="sidebar-spacer"></div>
 
-    <!-- Barras de Status "Tamagotchi" (Saciedade, Hidratação e Foco) -->
-    <div class="card">
-      <div class="card-title">
-        <span>🔋 Energia Vital do NUTR-E</span>
-        <span class="badge">Tamagotchi</span>
-      </div>
-      <div class="tama-bar-group">
-        <div class="tama-header"><span>🍽️ Saciedade</span><span id="hungerVal">100%</span></div>
-        <div class="tama-track"><div class="tama-fill fill-food" id="hungerBar" style="width: 100%;"></div></div>
-      </div>
-      <div class="tama-bar-group">
-        <div class="tama-header"><span>💧 Hidratação</span><span id="thirstVal">100%</span></div>
-        <div class="tama-track"><div class="tama-fill fill-water" id="thirstBar" style="width: 100%;"></div></div>
-      </div>
-      <div class="tama-bar-group">
-        <div class="tama-header"><span>🎯 Nível de Foco</span><span id="focusVal">100%</span></div>
-        <div class="tama-track"><div class="tama-fill fill-focus" id="focusBar" style="width: 100%;"></div></div>
-      </div>
-    </div>
+        <!-- Botão Direto de Mutar (Sem textos extras) -->
+        <button class="nav-btn mute-btn" id="muteBtn" onclick="toggleMute()">
+          <span class="ico" id="muteIco">🔊</span>
+          <span id="muteTxt">Mutar</span>
+        </button>
+      </aside>
 
-    <!-- Menu de Abas: Desenhar | Horários | Pomodoro | Mural -->
-    <div class="tab-menu">
-      <button class="tab-btn active" id="btnTabDraw" onclick="switchTab('Draw')">🎨 Desenhar</button>
-      <button class="tab-btn" id="btnTabAlarms" onclick="switchTab('Alarms')">⏰ Horários</button>
-      <button class="tab-btn" id="btnTabPomo" onclick="switchTab('Pomo')">🎯 Pomodoro</button>
-      <button class="tab-btn" id="btnTabMural" onclick="switchTab('Mural')">📌 Mural</button>
-    </div>
+      <!-- RESTO DA TELA (DIREITA): Painel Selecionado + Mural de Recados -->
+      <main class="right-stage">
 
-    <!-- ABA 1: DESENHAR -->
-    <div id="tabDraw" class="card">
-      <div class="card-title">
-        <span>🎨 Desenhar na Tela do NUTR-E</span>
-        <span class="badge">OLED 32x16</span>
-      </div>
-      <div class="draw-wrapper">
-        <canvas id="drawCanvas" width="32" height="16"></canvas>
-      </div>
-      <div class="stamp-bar">
-        <button class="stamp-btn active" id="toolPen" onclick="setDrawTool(1)">✏️ Lápis</button>
-        <button class="stamp-btn" id="toolEraser" onclick="setDrawTool(0)">🧽 Borracha</button>
-        <button class="stamp-btn" onclick="loadStamp('heart')">❤️ Coração</button>
-        <button class="stamp-btn" onclick="loadStamp('happy')">😊 Feliz</button>
-        <button class="stamp-btn" onclick="loadStamp('coffee')">☕ Café</button>
-      </div>
-      <div class="btn-row-3">
-        <button class="btn btn-cyan" onclick="sendDrawingToNutre()">📡 Enviar</button>
-        <button class="btn btn-purple" onclick="invertDrawing()">🌗 Inverter</button>
-        <button class="btn btn-red" onclick="clearDrawing()">🗑️ Limpar</button>
-      </div>
-    </div>
+        <!-- OPÇÃO 1: TELA INICIAL (Horário, Estado, Horários Salvos e Confirmar) -->
+        <section id="panelHome" class="card">
+          <div class="clock-center">
+            <div class="main-clock" id="clock">--:--</div>
+            <div class="mood-pill" id="mood">Aguardando conexão... 👀</div>
+          </div>
 
-    <!-- ABA 2: HORÁRIOS -->
-    <div id="tabAlarms" class="card hidden">
-      <div class="card-title">⏰ Configurar Horários</div>
-      <div class="alarm-row">
-        <span class="alarm-label">🍽️ Hora de Comer</span>
-        <input type="time" id="food" value="12:00">
-      </div>
-      <div class="alarm-row">
-        <span class="alarm-label">💧 Beber Água</span>
-        <input type="time" id="water" value="14:00">
-      </div>
-      <div class="btn-row">
-        <button class="btn btn-green" onclick="saveAlarms()">💾 Salvar Horários</button>
-        <button class="btn btn-red" onclick="sendCmd('STOP', 'Alarme parado! 🟢')">✅ Parar Alarme</button>
-      </div>
-      <div class="btn-row" style="margin-top: 10px;">
-        <button class="btn btn-test" onclick="sendCmd('TEST_FOOD', 'Testando alarme COMER!')">🔔 Testar "COMER!"</button>
-        <button class="btn btn-test" onclick="sendCmd('TEST_WATER', 'Testando alarme AGUA!')">🔔 Testar "AGUA!"</button>
-      </div>
-    </div>
+          <div class="saved-times-grid">
+            <div class="time-chip">
+              <div class="time-chip-label">🍽️ Alimentar</div>
+              <div class="time-chip-val" id="savedFoodTxt">12:00</div>
+            </div>
+            <div class="time-chip">
+              <div class="time-chip-label">💧 Beber Água</div>
+              <div class="time-chip-val" id="savedWaterTxt">14:00</div>
+            </div>
+          </div>
 
-    <!-- ABA 3: POMODORO + MINI-GAME DINO -->
-    <div id="tabPomo" class="card hidden">
-      <div class="card-title">
-        <span>🎯 Modo Pomodoro</span>
-        <span class="badge" id="pomoStatus">Inativo</span>
-      </div>
-      <div class="btn-row-3" style="margin-bottom: 14px;">
-        <button class="btn btn-cyan" onclick="sendCmd('POMO_FOCUS', 'Foco 25m iniciado! 🎯')">▶️ Foco 25m</button>
-        <button class="btn btn-green" onclick="sendCmd('POMO_BREAK', 'Pausa 5m iniciada! ☕')">☕ Pausa 5m</button>
-        <button class="btn btn-red" onclick="sendCmd('POMO_STOP', 'Pomodoro parado.')">⏹️ Parar</button>
-      </div>
+          <div class="btn-row">
+            <button class="btn btn-green" onclick="sendCmd('FOOD', 'Alimentação confirmada! 🟢')">🍽️ Alimentei</button>
+            <button class="btn btn-cyan" onclick="sendCmd('WATER', 'Hidratação confirmada! 🟢')">💧 Bebi Água</button>
+          </div>
+        </section>
 
-      <div class="card-title" style="margin-top: 8px;">
-        <span>🦖 Mini-Game Pula-Cacto (Chapéu)</span>
-        <span class="badge">Recorde: <strong id="dinoBest">0</strong></span>
-      </div>
-      <p style="font-size: 12px; color: var(--muted); margin-bottom: 10px;">
-        Inicie o jogo no botão abaixo e use o chapéu do NUTR-E para pular os cactos na tela OLED!
-      </p>
-      <div class="btn-row">
-        <button class="btn btn-cyan" onclick="sendCmd('GAME_START', 'Jogo iniciado no OLED! Aperte o chapéu! 🦖')">🎮 Jogar no NUTR-E</button>
-        <button class="btn btn-red" onclick="sendCmd('GAME_STOP', 'Jogo encerrado.')">⏹️ Sair do Jogo</button>
-      </div>
-    </div>
+        <!-- OPÇÃO 2: HORÁRIOS -->
+        <section id="panelAlarms" class="card hidden">
+          <div class="card-title">⏰ Configurar Horários</div>
+          <div class="alarm-row">
+            <span class="alarm-label">🍽️ Comer</span>
+            <input type="time" id="food" value="12:00">
+          </div>
+          <div class="alarm-row">
+            <span class="alarm-label">💧 Água</span>
+            <input type="time" id="water" value="14:00">
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-green" onclick="saveAlarms()">💾 Salvar</button>
+            <button class="btn btn-red" onclick="sendCmd('STOP', 'Alarme parado! 🟢')">✅ Parar</button>
+          </div>
+          <div class="btn-row" style="margin-top: 8px;">
+            <button class="btn btn-test" onclick="sendCmd('TEST_FOOD', 'Testando COMER!')">🔔 Testar Comer</button>
+            <button class="btn btn-test" onclick="sendCmd('TEST_WATER', 'Testando AGUA!')">🔔 Testar Água</button>
+          </div>
+        </section>
 
-    <!-- ABA 4: MURAL & SISTEMA -->
-    <div id="tabMural" class="card hidden">
-      <div class="card-title">📌 Mural de Recados do NUTR-E</div>
-      <input type="text" id="noteInput" maxlength="28" placeholder="Ex: Em aula / Volto logo...">
-      <div class="btn-row-3" style="margin-bottom: 14px;">
-        <button class="btn btn-cyan" onclick="sendNote(false)">👀 Alternar</button>
-        <button class="btn btn-purple" onclick="sendNote(true)">📌 Fixar Tela</button>
-        <button class="btn btn-red" onclick="clearNote()">🗑️ Limpar</button>
-      </div>
+        <!-- OPÇÃO 3: POMODORO (Separado do Mini-Game) -->
+        <section id="panelPomo" class="card hidden">
+          <div class="card-title">
+            <span>🎯 Modo Pomodoro</span>
+            <span class="badge" id="pomoStatus">Inativo</span>
+          </div>
+          <div class="btn-row-3">
+            <button class="btn btn-cyan" onclick="sendCmd('POMO_FOCUS', 'Foco 25m iniciado! 🎯')">▶️ Foco 25m</button>
+            <button class="btn btn-green" onclick="sendCmd('POMO_BREAK', 'Pausa 5m iniciada! ☕')">☕ Pausa 5m</button>
+            <button class="btn btn-red" onclick="sendCmd('POMO_STOP', 'Pomodoro parado.')">⏹️ Parar</button>
+          </div>
+        </section>
 
-      <div class="card-title">
-        <span>🌙 Opções do NUTR-E</span>
-        <span class="badge" id="dndBadge">ATIVO</span>
-      </div>
-      <button class="btn btn-purple" style="margin-bottom: 10px;" onclick="sendCmd('DND', 'Modo Não Perturbe alternado! 🌙')">🔇 Alternar Modo Não Perturbe</button>
-      <div class="btn-row">
-        <button class="btn btn-test" onclick="sendCmd('SHOW_QR', 'QR Code exibido no NUTR-E! 📱')">📱 QR Code no OLED</button>
-        <button class="btn btn-test" onclick="openTutorial()">❔ Abrir Tutorial</button>
-      </div>
+        <!-- OPÇÃO 4: MINI-GAME (Separado do Pomodoro) -->
+        <section id="panelGame" class="card hidden">
+          <div class="card-title">
+            <span>🦖 Pula-Cacto no OLED</span>
+            <span class="badge">Recorde: <strong id="dinoBest">0</strong></span>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-cyan" onclick="sendCmd('GAME_START', 'Jogo iniciado! Aperte o chapéu para pular! 🦖')">🎮 Iniciar Jogo</button>
+            <button class="btn btn-red" onclick="sendCmd('GAME_STOP', 'Jogo encerrado.')">⏹️ Sair</button>
+          </div>
+        </section>
+
+        <!-- MURAL DE RECADOS (SEMPRE VISÍVEL NO RESTO DA TELA) -->
+        <section class="card mural-board">
+          <div>
+            <div class="card-title">
+              <span>📌 Mural de Recados</span>
+              <span class="badge">OLED</span>
+            </div>
+
+            <div class="mural-active-screen">
+              <div class="mural-active-label">Recado Ativo no NUTR-E</div>
+              <div class="mural-active-text" id="activeNotePreview">Nenhum recado ativo</div>
+            </div>
+
+            <input type="text" id="noteInput" maxlength="28" placeholder="Digite um recado para a tela...">
+            <div class="btn-row-3">
+              <button class="btn btn-cyan" onclick="sendNote(false)">👀 Alternar</button>
+              <button class="btn btn-purple" onclick="sendNote(true)">📌 Fixar</button>
+              <button class="btn btn-red" onclick="clearNote()">🗑️ Limpar</button>
+            </div>
+
+            <div class="quick-notes-title">⚡ Notas Rápidas (Toque para enviar)</div>
+            <div class="quick-notes-grid">
+              <button class="post-it" onclick="quickNote('📚 Estudando / Foco')">📚 Estudando</button>
+              <button class="post-it" onclick="quickNote('☕ Pausa pro Café')">☕ Pausa Café</button>
+              <button class="post-it" onclick="quickNote('🎧 Em Reunião')">🎧 Em Reunião</button>
+              <button class="post-it" onclick="quickNote('⏳ Volto já!')">⏳ Volto já!</button>
+            </div>
+          </div>
+
+          <div class="btn-row" style="margin-top: 12px;">
+            <button class="btn btn-test" onclick="sendCmd('SHOW_QR', 'QR Code exibido no OLED! 📱')">📱 QR Code no OLED</button>
+            <button class="btn btn-test" onclick="openTutorial()">❔ Tutorial</button>
+          </div>
+        </section>
+
+      </main>
     </div>
 
   </div>
@@ -558,14 +601,31 @@
     let bleDevice = null;
     let bleChar = null;
     let alarmsLoaded = false;
+    let isMuted = false;
     let deferredInstallPrompt = null;
 
-    // === NAVEGAÇÃO ENTRE AS 4 ABAS ===
-    function switchTab(tabName) {
-      ['Draw', 'Alarms', 'Pomo', 'Mural'].forEach(t => {
-        document.getElementById('tab' + t).classList.toggle('hidden', t !== tabName);
-        document.getElementById('btnTab' + t).classList.toggle('active', t === tabName);
+    // === NAVEGAÇÃO DA BARRA LATERAL ESQUERDA ===
+    function selectSidePanel(name) {
+      ['Home', 'Alarms', 'Pomo', 'Game'].forEach(p => {
+        document.getElementById('panel' + p).classList.toggle('hidden', p !== name);
+        document.getElementById('nav' + p).classList.toggle('active', p === name);
       });
+    }
+
+    // === BOTÃO SIMPLES DE MUTAR ===
+    async function toggleMute() {
+      if (await writeBle('DND')) {
+        isMuted = !isMuted;
+        updateMuteButtonUI();
+        showToast(isMuted ? "NUTR-E Mutado 🔇" : "Som Ativado 🔊");
+      }
+    }
+
+    function updateMuteButtonUI() {
+      const btn = document.getElementById('muteBtn');
+      document.getElementById('muteIco').innerText = isMuted ? '🔇' : '🔊';
+      document.getElementById('muteTxt').innerText = isMuted ? 'Mutado' : 'Mutar';
+      btn.classList.toggle('muted', isMuted);
     }
 
     // === CONTROLE DE PRIMEIRA VEZ (ONBOARDING) ===
@@ -603,7 +663,6 @@
       localStorage.setItem('nutre_onboarded', 'true');
       document.getElementById('onboardingView').classList.add('hidden');
       document.getElementById('dashboardView').classList.remove('hidden');
-      renderDrawCanvas();
     }
 
     function openTutorial() {
@@ -615,117 +674,6 @@
     async function connectFromTutorial() {
       await connectBLE();
       finishTutorial();
-    }
-
-    // === ESTÚDIO DE PIXEL ART (32x16) ===
-    const dCanvas = document.getElementById('drawCanvas');
-    const dCtx = dCanvas.getContext('2d');
-    let pixelGrid = Array.from({ length: 16 }, () => Array(32).fill(0));
-    let isDrawing = false;
-    let drawTool = 1;
-
-    function setDrawTool(val) {
-      drawTool = val;
-      document.getElementById('toolPen').classList.toggle('active', val === 1);
-      document.getElementById('toolEraser').classList.toggle('active', val === 0);
-    }
-
-    function renderDrawCanvas() {
-      dCtx.fillStyle = '#020408';
-      dCtx.fillRect(0, 0, 32, 16);
-      dCtx.fillStyle = '#00e5ff';
-      for (let y = 0; y < 16; y++) {
-        for (let x = 0; x < 32; x++) {
-          if (pixelGrid[y][x]) dCtx.fillRect(x, y, 1, 1);
-        }
-      }
-    }
-
-    function paintAtEvent(e) {
-      const rect = dCanvas.getBoundingClientRect();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      const x = Math.floor(((clientX - rect.left) / rect.width) * 32);
-      const y = Math.floor(((clientY - rect.top) / rect.height) * 16);
-      if (x >= 0 && x < 32 && y >= 0 && y < 16) {
-        pixelGrid[y][x] = drawTool;
-        renderDrawCanvas();
-      }
-    }
-
-    dCanvas.addEventListener('mousedown', e => { isDrawing = true; paintAtEvent(e); });
-    window.addEventListener('mousemove', e => { if (isDrawing) paintAtEvent(e); });
-    window.addEventListener('mouseup', () => isDrawing = false);
-    dCanvas.addEventListener('touchstart', e => { e.preventDefault(); isDrawing = true; paintAtEvent(e); }, { passive: false });
-    dCanvas.addEventListener('touchmove', e => { e.preventDefault(); if (isDrawing) paintAtEvent(e); }, { passive: false });
-    dCanvas.addEventListener('touchend', () => isDrawing = false);
-
-    function invertDrawing() {
-      for (let y = 0; y < 16; y++)
-        for (let x = 0; x < 32; x++)
-          pixelGrid[y][x] = pixelGrid[y][x] ? 0 : 1;
-      renderDrawCanvas();
-    }
-
-    function clearDrawing() {
-      pixelGrid = Array.from({ length: 16 }, () => Array(32).fill(0));
-      renderDrawCanvas();
-      if (bleChar) writeBle("CLEAR_DRAW");
-      showToast("Desenho limpo!");
-    }
-
-    function loadStamp(type) {
-      pixelGrid = Array.from({ length: 16 }, () => Array(32).fill(0));
-      if (type === 'heart') {
-        const h = [
-          "0011100011100","0111110111110","1111111111111","1111111111111",
-          "1111111111111","0111111111110","0011111111100","0001111111000",
-          "0000111110000","0000011100000","0000001000000"
-        ];
-        h.forEach((row, r) => {
-          for (let c = 0; c < row.length; c++)
-            if (row[c] === '1') pixelGrid[r + 2][c + 9] = 1;
-        });
-      } else if (type === 'happy') {
-        for (let x = 5; x <= 12; x++) { pixelGrid[5][x] = 1; pixelGrid[6][x] = 1; }
-        for (let x = 19; x <= 26; x++) { pixelGrid[5][x] = 1; pixelGrid[6][x] = 1; }
-        for (let x = 10; x <= 21; x++) pixelGrid[12][x] = 1;
-        pixelGrid[11][9] = 1; pixelGrid[11][22] = 1;
-        pixelGrid[10][8] = 1; pixelGrid[10][23] = 1;
-      } else if (type === 'coffee') {
-        for (let y = 5; y <= 12; y++)
-          for (let x = 10; x <= 20; x++) pixelGrid[y][x] = 1;
-        pixelGrid[6][21] = 1; pixelGrid[6][22] = 1; pixelGrid[7][22] = 1;
-        pixelGrid[8][22] = 1; pixelGrid[9][21] = 1; pixelGrid[9][22] = 1;
-        for (let x = 8; x <= 22; x++) pixelGrid[13][x] = 1;
-        pixelGrid[2][13] = 1; pixelGrid[3][12] = 1;
-        pixelGrid[2][17] = 1; pixelGrid[3][16] = 1;
-      }
-      renderDrawCanvas();
-    }
-
-    async function sendDrawingToNutre() {
-      if (!bleChar) {
-        showToast("Conecte ao NUTR-E primeiro!");
-        return;
-      }
-      let hexStr = "";
-      for (let y = 0; y < 16; y++) {
-        for (let xByte = 0; xByte < 4; xByte++) {
-          let b = 0;
-          for (let bit = 0; bit < 8; bit++) {
-            if (pixelGrid[y][xByte * 8 + bit]) b |= (1 << (7 - bit));
-          }
-          hexStr += b.toString(16).padStart(2, '0').toUpperCase();
-        }
-      }
-      showToast("Enviando desenho ao NUTR-E...");
-      for (let i = 0; i < 8; i++) {
-        const chunk = hexStr.substring(i * 16, (i + 1) * 16);
-        await writeBle("D" + i + ":" + chunk);
-        await new Promise(r => setTimeout(r, 45));
-      }
-      showToast("Desenho exibido no NUTR-E! 🎨");
     }
 
     // === BLUETOOTH E ATUALIZAÇÃO DO PAINEL ===
@@ -790,7 +738,11 @@
         document.getElementById('clock').innerText = data.time;
         document.getElementById('mood').innerText = data.mood;
         document.getElementById('pomoStatus').innerText = data.pomo;
-        document.getElementById('dndBadge').innerText = data.dnd ? 'SILENCIOSO' : 'ATIVO';
+
+        if (data.dnd !== undefined) {
+          isMuted = data.dnd;
+          updateMuteButtonUI();
+        }
 
         if (data.food && data.water) {
           document.getElementById('savedFoodTxt').innerText = data.food;
@@ -802,19 +754,6 @@
           }
         }
 
-        // Atualiza Barras Tamagotchi
-        if (data.hg !== undefined) {
-          document.getElementById('hungerVal').innerText = data.hg + '%';
-          document.getElementById('hungerBar').style.width = data.hg + '%';
-        }
-        if (data.th !== undefined) {
-          document.getElementById('thirstVal').innerText = data.th + '%';
-          document.getElementById('thirstBar').style.width = data.th + '%';
-        }
-        if (data.fc !== undefined) {
-          document.getElementById('focusVal').innerText = data.fc + '%';
-          document.getElementById('focusBar').style.width = data.fc + '%';
-        }
         if (data.hi !== undefined) {
           document.getElementById('dinoBest').innerText = data.hi;
         }
@@ -840,13 +779,22 @@
       if (!txt) return;
       const prefix = fixed ? "FIXED:" : "NOTE:";
       if (await writeBle(prefix + txt)) {
+        document.getElementById('activeNotePreview').innerText = (fixed ? "📌 " : "👀 ") + txt;
         showToast(fixed ? 'Recado fixado no NUTR-E! 📌' : 'Recado alternando no NUTR-E! 👀');
       }
     }
 
+    async function quickNote(txt) {
+      document.getElementById('noteInput').value = txt;
+      await sendNote(false);
+    }
+
     async function clearNote() {
       document.getElementById('noteInput').value = '';
-      if (await writeBle("CLEAR_NOTE")) showToast('Recado removido do NUTR-E.');
+      if (await writeBle("CLEAR_NOTE")) {
+        document.getElementById('activeNotePreview').innerText = "Nenhum recado ativo";
+        showToast('Recado removido do NUTR-E.');
+      }
     }
 
     async function saveAlarms() {
