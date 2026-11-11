@@ -32,7 +32,6 @@ O projeto integra microeletrônica com desenvolvimento web para entregar a melho
 
 *   **Hardware / Microeletrônica:** `ESP32` | `C++ (Arduino IDE)`
 *   **Interface Física:** Display `OLED 0.96" SSD1306` | Switches Mecânicos
-*   **Controle / Backend:** `Node.js` | `Express` | `PWA` (Painel Web)
 
 ---
 
@@ -42,7 +41,6 @@ Para replicar, testar ou compilar o código deste projeto, você precisará de:
 
 *   [**Arduino IDE**](https://www.arduino.cc/en/software) configurado com as placas da família **ESP32**.
 *   Bibliotecas ( `Adafruit_SSD1306, Async TCP, ESP Async WebServer, QRCode `).
-*   [**Node.js**](https://nodejs.org/en/) (Para rodar o painel web PWA localmente).
 
 ---
 
@@ -52,17 +50,3 @@ Para replicar, testar ou compilar o código deste projeto, você precisará de:
 *   Abra o arquivo `.ino` na Arduino IDE.
 *   Certifique-se de instalar as bibliotecas necessárias.
 *   Selecione sua placa ESP32 e a porta COM correspondente, depois clique em "Carregar".
-
-**2. Rodando o Painel Web Local:**
-```bash
-# Clone o repositório
-git clone [https://github.com/seu-usuario/nutr-e.git](https://github.com/seu-usuario/nutr-e.git)
-
-# Acesse a pasta do painel web
-cd nutr-e/painel-web
-
-# Instale as dependências
-npm install
-
-# Execute a aplicação do painel
-npm start
