@@ -39,7 +39,7 @@ O projeto integra microeletrônica com desenvolvimento web para entregar a melho
 
 Para replicar, testar ou compilar o código deste projeto, você precisará de:
 
-*   [**Arduino IDE**](https://www.arduino.cc/en/software) configurado com as placas da família **ESP32**.
+*   [**Arduino IDE**](https://www.arduino.cc/en/software).
 *   Bibliotecas (`Adafruit_SSD1306`, `Async TCP`, `ESP Async WebServer`, `QRCode`).
 
 ---
