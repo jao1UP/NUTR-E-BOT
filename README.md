@@ -58,7 +58,7 @@ Para replicar, testar ou compilar o código deste projeto, você precisará de:
 
 <p align="center">
   <!-- Substitua os nomes 'print-dashboard.png' e 'print-agenda.png' pelo caminho dos seus prints -->
-  <img src="print-dashboard.png" alt="Dashboard Principal" width="400">&nbsp;&nbsp;&nbsp;
+  <img width="628" height="843" alt="print1" src="https://github.com/user-attachments/assets/20d71429-08c5-4a89-b0a7-682aaaec422d" />
   <img src="print-agenda.png" alt="Tela de Agenda e Lembretes" width="400">
 </p>
 <p align="center">
