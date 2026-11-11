@@ -12,7 +12,7 @@
   <img src="icon.png" alt="Logo" width="200">
 </p>
 
-> **Resumo:** Um simpático e interativo robô assistente de mesa projetado para o escritório de nutricionistas. Ele une hardware e software para auxiliar na organização diária, gestão de agendas, controle de hábitos e emissão de lembretes, tornando o ambiente de trabalho mais produtivo e tecnológico.
+> **Resumo:** Um simpático e interativo robô assistente de mesa projetado para o escritório. Ele une hardware e software para auxiliar na organização diária, gestão de agendas, controle de hábitos e emissão de lembretes, tornando o ambiente de trabalho mais produtivo e tecnológico.
 
 ---
 
