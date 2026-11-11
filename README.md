@@ -18,9 +18,9 @@
 
 ## 🎯 **Principais Funcionalidades**
 
-*   📅 **Gestão de Agenda e Organização:** Lembretes automáticos sobre horários de consultas e tarefas do consultório.
-*   🔔 **Alertas de Hábitos (Lembretes):** Avisos visuais e sonoros programáveis (ex: hora de beber água, pausas ergonômicas).
-*   📱 **Painel de Controle Web (PWA):** Interface amigável para a nutricionista configurar horários, alertas e interagir com o robô de forma remota.
+*   📅 **Gestão de Agenda e Organização:** Lembretes automáticos sobre horários marcados e tarefas do escritório.
+*   🔔 **Alertas de Hábitos (Lembretes):** Avisos visuais e sonoros programáveis (ex: hora de beber água, hora de se alimentar).
+*   📱 **Painel de Controle Web (PWA):** Interface amigável para configurar horários, alertas e interagir com o robô de forma remota.
 *   👀 **Interação Procedural:** Olhinhos animados renderizados no display OLED, garantindo "personalidade" e feedback visual imediato.
 *   ⌨️ **Interação Tátil:** Botões com switches mecânicos de teclado para confirmar tarefas ou silenciar alarmes com um clique satisfatório.
 
@@ -33,7 +33,6 @@ O projeto integra microeletrônica com desenvolvimento web para entregar a melho
 *   **Hardware / Microeletrônica:** `ESP32` | `C++ (Arduino IDE)`
 *   **Interface Física:** Display `OLED 0.96" SSD1306` | Switches Mecânicos
 *   **Controle / Backend:** `Node.js` | `Express` | `PWA` (Painel Web)
-*   **Banco de Dados:** `SQLite` (Armazenamento local de rotinas e lembretes)
 
 ---
 
@@ -42,7 +41,7 @@ O projeto integra microeletrônica com desenvolvimento web para entregar a melho
 Para replicar, testar ou compilar o código deste projeto, você precisará de:
 
 *   [**Arduino IDE**](https://www.arduino.cc/en/software) configurado com as placas da família **ESP32**.
-*   Bibliotecas do display OLED (ex: `Adafruit_SSD1306`).
+*   Bibliotecas do display OLED (ex: `Adafruit_SSD1306, Async TCP, ESP Async WebServer, QRCode `).
 *   [**Node.js**](https://nodejs.org/en/) (Para rodar o painel web PWA localmente).
 
 ---
