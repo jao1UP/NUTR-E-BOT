@@ -1,10 +1,9 @@
 <h1 align="center"> 
-  🚀 Nome do Seu Projeto
+  NUTR-E BOT 🤖
 </h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Status-Em%20Desenvolvimento-green" alt="Status">
-  <img src="https://img.shields.io/badge/Vers%C3%A3o-1.0.0-blue" alt="Versão">
 </p>
 
 > **Resumo:** Um parágrafo de impacto explicando o propósito do projeto.  
