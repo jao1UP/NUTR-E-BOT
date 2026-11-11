@@ -41,7 +41,7 @@ O projeto integra microeletrônica com desenvolvimento web para entregar a melho
 Para replicar, testar ou compilar o código deste projeto, você precisará de:
 
 *   [**Arduino IDE**](https://www.arduino.cc/en/software) configurado com as placas da família **ESP32**.
-*   Bibliotecas do display OLED (ex: `Adafruit_SSD1306, Async TCP, ESP Async WebServer, QRCode `).
+*   Bibliotecas ( `Adafruit_SSD1306, Async TCP, ESP Async WebServer, QRCode `).
 *   [**Node.js**](https://nodejs.org/en/) (Para rodar o painel web PWA localmente).
 
 ---
