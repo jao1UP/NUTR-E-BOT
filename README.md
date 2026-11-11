@@ -39,6 +39,7 @@ O projeto integra microeletrônica com desenvolvimento web para entregar a melho
 
 Para replicar, testar ou compilar o código deste projeto, você precisará de:
 
+*   (https://jao1up.github.io/NUTR-E-BOT/)
 *   [**Arduino IDE**](https://www.arduino.cc/en/software).
 *   Bibliotecas (`Adafruit_SSD1306`, `Async TCP`, `ESP Async WebServer`, `QRCode`).
 
