@@ -50,3 +50,17 @@ Para replicar, testar ou compilar o código deste projeto, você precisará de:
 *   Abra o arquivo `.ino` na Arduino IDE.
 *   Certifique-se de instalar as bibliotecas necessárias.
 *   Selecione sua placa ESP32 e a porta COM correspondente, depois clique em "Carregar".
+
+
+## 📸 **Telas do Painel (Screenshots)**
+
+> *Confira abaixo a interface do Painel Web PWA utilizado para gerenciar e configurar o NUTR-E.*
+
+<p align="center">
+  <!-- Substitua os nomes 'print-dashboard.png' e 'print-agenda.png' pelo caminho dos seus prints -->
+  <img src="print-dashboard.png" alt="Dashboard Principal" width="400">&nbsp;&nbsp;&nbsp;
+  <img src="print-agenda.png" alt="Tela de Agenda e Lembretes" width="400">
+</p>
+<p align="center">
+  <i>Esquerda: Dashboard principal de controle. Direita: Configuração de agenda e disparo de alertas.</i>
+</p>
