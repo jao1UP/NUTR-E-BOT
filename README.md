@@ -4,7 +4,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Status-Em%20Desenvolvimento-green" alt="Status">
-  <img src="icon.png" alt="Logo">
+  <img src="icon.png" alt="Logo" style="width: 50%;>
 </p>
 
 > **Resumo:** Um parágrafo de impacto explicando o propósito do projeto.  
