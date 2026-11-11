@@ -40,7 +40,7 @@ O projeto integra microeletrônica com desenvolvimento web para entregar a melho
 Para replicar, testar ou compilar o código deste projeto, você precisará de:
 
 *   [**Arduino IDE**](https://www.arduino.cc/en/software) configurado com as placas da família **ESP32**.
-*   Bibliotecas ( `Adafruit_SSD1306, Async TCP, ESP Async WebServer, QRCode `).
+*   Bibliotecas (`Adafruit_SSD1306`, `Async TCP`, `ESP Async WebServer`, `QRCode`).
 
 ---
 
@@ -57,9 +57,9 @@ Para replicar, testar ou compilar o código deste projeto, você precisará de:
 > *Confira abaixo a interface do Painel WEB utilizado para gerenciar e configurar o NUTR-E.*
 
 <p align="center">
-  <img width="628" height="843" alt="print1" src="https://github.com/user-attachments/assets/20d71429-08c5-4a89-b0a7-682aaaec422d" />
-  <img width="988" height="1600" alt="print2" src="https://github.com/user-attachments/assets/e4048f6a-929f-4536-bc6c-38c8c3b04f81" />
-  <img width="986" height="1600" alt="print3" src="https://github.com/user-attachments/assets/af0e9444-62ad-4777-81a3-930e965a007e" />
-  <img width="984" height="1600" alt="print4" src="https://github.com/user-attachments/assets/b6b5cdb2-ba0a-4ff5-97cd-395f54045477" />
-  <img width="986" height="1600" alt="print5" src="https://github.com/user-attachments/assets/ec744d19-0363-46b2-8bc6-670756dd97db" />
+  <img width="19%" alt="print1" src="https://github.com/user-attachments/assets/20d71429-08c5-4a89-b0a7-682aaaec422d" />
+  <img width="19%" alt="print2" src="https://github.com/user-attachments/assets/e4048f6a-929f-4536-bc6c-38c8c3b04f81" />
+  <img width="19%" alt="print3" src="https://github.com/user-attachments/assets/af0e9444-62ad-4777-81a3-930e965a007e" />
+  <img width="19%" alt="print4" src="https://github.com/user-attachments/assets/b6b5cdb2-ba0a-4ff5-97cd-395f54045477" />
+  <img width="19%" alt="print5" src="https://github.com/user-attachments/assets/ec744d19-0363-46b2-8bc6-670756dd97db" />
 </p>
