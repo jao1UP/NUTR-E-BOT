@@ -1,9 +1,10 @@
 <h1 align="center"> 
-  🚀 Nome do Seu Projeto
+  🤖 NUTR-E (NutriBot)
 </h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Status-Em%20Desenvolvimento-green" alt="Status">
+  <img src="https://img.shields.io/badge/Hardware-ESP32-blue" alt="Hardware">
   <img src="https://img.shields.io/badge/Vers%C3%A3o-1.0.0-blue" alt="Versão">
 </p>
 
@@ -11,46 +12,58 @@
   <img src="icon.png" alt="Logo" width="200">
 </p>
 
-> **Resumo:** Um parágrafo de impacto explicando o propósito do projeto.  
-> *Exemplo: Sistema de frente de caixa (PDV) de alta performance, 100% offline, projetado para garantir operação contínua sem dependência de internet.*
+> **Resumo:** Um simpático e interativo robô assistente de mesa projetado para o escritório de nutricionistas. Ele une hardware e software para auxiliar na organização diária, gestão de agendas, controle de hábitos e emissão de lembretes, tornando o ambiente de trabalho mais produtivo e tecnológico.
 
 ---
 
 ## 🎯 **Principais Funcionalidades**
 
-*   📦 **Gestão de Estoque Local:** Controle em tempo real, sem latência de nuvem.
-*   🔌 **Operação 100% Offline:** Arquitetura desenhada para resiliência máxima e independência de rede.
-*   🤖 **Integração de Hardware:** Conexão direta com dispositivos externos e atuadores.
-*   ⚡ **Interface Fluida:** Resposta imediata focada na usabilidade do operador.
+*   📅 **Gestão de Agenda e Organização:** Lembretes automáticos sobre horários de consultas e tarefas do consultório.
+*   🔔 **Alertas de Hábitos (Lembretes):** Avisos visuais e sonoros programáveis (ex: hora de beber água, pausas ergonômicas).
+*   📱 **Painel de Controle Web (PWA):** Interface amigável para a nutricionista configurar horários, alertas e interagir com o robô de forma remota.
+*   👀 **Interação Procedural:** Olhinhos animados renderizados no display OLED, garantindo "personalidade" e feedback visual imediato.
+*   ⌨️ **Interação Tátil:** Botões com switches mecânicos de teclado para confirmar tarefas ou silenciar alarmes com um clique satisfatório.
 
 ---
 
 ## 💻 **Tecnologias Utilizadas**
 
-O projeto foi construído utilizando as seguintes ferramentas:
+O projeto integra microeletrônica com desenvolvimento web para entregar a melhor experiência:
 
-*   **Core / Backend:** `Node.js` | `Express`
-*   **Banco de Dados:** `SQLite3` (Operação exclusivamente local)
 *   **Hardware / Microeletrônica:** `ESP32` | `C++ (Arduino IDE)`
-*   **Linguagens Auxiliares:** `Python`
-*   **Versionamento:** `Git`
+*   **Interface Física:** Display `OLED 0.96" SSD1306` | Switches Mecânicos
+*   **Controle / Backend:** `Node.js` | `Express` | `PWA` (Painel Web)
+*   **Banco de Dados:** `SQLite` (Armazenamento local de rotinas e lembretes)
 
 ---
 
 ## ⚙️ **Pré-requisitos**
 
-Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas em seu ambiente local:
+Para replicar, testar ou compilar o código deste projeto, você precisará de:
 
-*   [**Node.js**](https://nodejs.org/en/) (Versão 18.x ou superior)
-*   [**Git**](https://git-scm.com/)
-*   **Arduino IDE** (Caso precise compilar o código do microcontrolador)
+*   [**Arduino IDE**](https://www.arduino.cc/en/software) configurado com as placas da família **ESP32**.
+*   Bibliotecas do display OLED (ex: `Adafruit_SSD1306`).
+*   [**Node.js**](https://nodejs.org/en/) (Para rodar o painel web PWA localmente).
 
 ---
 
 ## 🚀 **Instalação e Execução**
 
-Siga os passos abaixo para configurar o ambiente de desenvolvimento:
+**1. Configurando o Hardware (ESP32):**
+*   Abra o arquivo `.ino` na Arduino IDE.
+*   Certifique-se de instalar as bibliotecas necessárias.
+*   Selecione sua placa ESP32 e a porta COM correspondente, depois clique em "Carregar".
 
-**1. Clone o repositório para sua máquina:**
+**2. Rodando o Painel Web Local:**
 ```bash
-git clone [https://github.com/seu-usuario/nome-do-projeto.git](https://github.com/seu-usuario/nome-do-projeto.git)
+# Clone o repositório
+git clone [https://github.com/seu-usuario/nutr-e.git](https://github.com/seu-usuario/nutr-e.git)
+
+# Acesse a pasta do painel web
+cd nutr-e/painel-web
+
+# Instale as dependências
+npm install
+
+# Execute a aplicação do painel
+npm start
