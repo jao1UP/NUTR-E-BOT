@@ -54,13 +54,12 @@ Para replicar, testar ou compilar o código deste projeto, você precisará de:
 
 ## 📸 **Telas do Painel (Screenshots)**
 
-> *Confira abaixo a interface do Painel Web PWA utilizado para gerenciar e configurar o NUTR-E.*
+> *Confira abaixo a interface do Painel WEB utilizado para gerenciar e configurar o NUTR-E.*
 
 <p align="center">
-  <!-- Substitua os nomes 'print-dashboard.png' e 'print-agenda.png' pelo caminho dos seus prints -->
   <img width="628" height="843" alt="print1" src="https://github.com/user-attachments/assets/20d71429-08c5-4a89-b0a7-682aaaec422d" />
-  <img src="print-agenda.png" alt="Tela de Agenda e Lembretes" width="400">
-</p>
-<p align="center">
-  <i>Esquerda: Dashboard principal de controle. Direita: Configuração de agenda e disparo de alertas.</i>
+  <img width="988" height="1600" alt="print2" src="https://github.com/user-attachments/assets/e4048f6a-929f-4536-bc6c-38c8c3b04f81" />
+  <img width="986" height="1600" alt="print3" src="https://github.com/user-attachments/assets/af0e9444-62ad-4777-81a3-930e965a007e" />
+  <img width="984" height="1600" alt="print4" src="https://github.com/user-attachments/assets/b6b5cdb2-ba0a-4ff5-97cd-395f54045477" />
+  <img width="986" height="1600" alt="print5" src="https://github.com/user-attachments/assets/ec744d19-0363-46b2-8bc6-670756dd97db" />
 </p>
